@@ -1,0 +1,136 @@
+id = "beta-hospital"
+title = "Beta: detained surgical staff"
+summary = """
+Health for All (HfA), an international medical NGO, decided with little local consultation to close \
+its surgical unit at a rural district hospital in Beta and move the team to a war zone elsewhere. \
+Local armed tribesmen have confined nine international staff to their residence. A delegation from \
+HfA headquarters must negotiate with the tribal leaders for the staff's safe release.
+"""
+source_root = "Cases/Simulation 1"
+
+[[roles]]
+id = "hfa"
+name = "HfA delegation"
+counterpart = "Tribal council"
+brief = """
+You lead the Health for All delegation sent from Geneva to Iguwafe, where tribesmen have confined \
+nine of your international surgical staff to their residence after HfA announced it was closing its \
+surgical operations. HfA has a strict no-ransom policy and its main donors want the team redeployed. \
+You have met many local and international actors; their accounts are in your documents. Next, you \
+negotiate with the tribal leaders.
+"""
+
+[[roles]]
+id = "tribal-council"
+name = "Tribal council"
+counterpart = "HfA delegation"
+brief = """
+You speak for the tribal leadership of Beta Town, whose people have confined nine HfA surgeons to \
+their residence after HfA announced, without consulting you, that it would close the surgical unit \
+at the district hospital. Your documents include press coverage and reports passed to you by \
+informants about HfA's meetings.
+"""
+
+[[documents]]
+id = "hfa-case"
+title = "HfA case packet"
+kind = "Meeting report"
+visible_to = ["hfa"]
+source = "OriginalCase.docx"
+split = "numbered-sources"
+
+[[documents]]
+id = "gamma-news-de"
+title = "News article on Gamma (German source)"
+kind = "News"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/02_News_Article_on_Gamma_German_Source.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "beta-news-ch"
+title = "News article on Beta (Swiss source)"
+kind = "News"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/03_News_Article_on_Beta_Swiss_Source.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "x-post-citizen"
+title = "X post from a citizen of Beta City"
+kind = "Social media"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/05_X_Post_from_a_Citizen_of_Beta_City.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "x-post-surgeon-child"
+title = "X post from the head surgeon's child"
+kind = "Social media"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/07_X_Post_from_the_Child_of_the_Head_Surgeon.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "hfa-website"
+title = "Public post on the HfA website"
+kind = "Press release"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/08_Public_Post_on_HfA_Website.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "un-statement"
+title = "Statement from the UN Humanitarian Coordinator"
+kind = "Informant report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/12_Statement_from_the_UN_Humanitarian_Coordinator.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "fwb-meeting"
+title = "HfA meeting with the Food Without Borders director"
+kind = "Informant report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/13_Meeting_with_Food_Without_Borders_Country_Director.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "police-meeting"
+title = "HfA meeting with the local head of police"
+kind = "Meeting report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/18_Meeting_with_Local_Head_of_Police.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "district-meeting"
+title = "HfA meeting with the district administration head"
+kind = "Informant report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/19_Meeting_with_District_Administration_Head.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "hospital-meeting"
+title = "HfA meeting with local hospital staff"
+kind = "Meeting report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/22_Meeting_with_Local_Hospital_Staff.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "guards-meeting"
+title = "HfA meeting with local guards and families"
+kind = "Meeting report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/23_Meeting_with_Local_Guards_and_Families.pdf"
+drop_leading = 1
+
+[[documents]]
+id = "tribespeople-meeting"
+title = "Encounter with tribespeople at the residence"
+kind = "Meeting report"
+visible_to = ["tribal-council"]
+source = "Negotiation_Source_Documents/24_Meeting_with_Tribespeople.pdf"
+drop_leading = 1

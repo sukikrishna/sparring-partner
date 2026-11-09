@@ -1,0 +1,261 @@
+id = "qiso"
+title = "Qiso: refugees at the border town"
+summary = """
+Several thousand people have fled from Chiasa into Qiso, a farming town on Sitwan's border. \
+Many come from Kiman, whose families have worked Qiso's almond and pecan harvest for generations. \
+The national Border Authority wants every Chiasan in Qiso gathered in the municipal stadium and \
+transferred to Refugee Detention Facilities within two weeks, and has sent an officer to agree a \
+plan with the Mayor.
+"""
+source_root = "Cases/Final"
+
+# Visibility rule used below: files in a role's own folder are visible to that
+# role only; files in either "Shared" folder are visible to both roles.
+
+[[roles]]
+id = "mayor"
+name = "Mayor of Qiso"
+counterpart = "Officer of the Border Authority"
+starter_notes_file = "mayor_notes.txt"
+brief = """
+You are the Mayor of Qiso, a farming town on Sitwan's eastern border with Chiasa. Several thousand \
+people from Chiasa, many of them from the neighbouring town of Kiman, have fled into Qiso. The \
+Border Authority has written that your police must gather every Chiasan in the municipal stadium so \
+they can be registered and bussed to Refugee Detention Facilities (RDFs). An officer of the Border \
+Authority arrives this week to agree a timeline with you. Messages from your residents, farmers, \
+churches, school, police chief and finance department are in your documents.
+"""
+
+[[roles]]
+id = "border-officer"
+name = "Border Authority officer"
+counterpart = "Mayor of Qiso"
+brief = """
+You are an officer of Sitwan's Border Authority, sent to Qiso to work with the Mayor to register \
+the Chiasans in the town and transfer them to Refugee Detention Facilities within two weeks. Your \
+role card and your instructions from headquarters are in your documents.
+"""
+
+# ---------------------------------------------------------------- Mayor only
+
+[[documents]]
+id = "finance-memo"
+title = "Fiscal implications of the stadium request"
+kind = "Memo"
+visible_to = ["mayor"]
+source = "Mayor/Message from Qiso Finance.docx"
+
+[[documents]]
+id = "police-memo"
+title = "Police staffing and public order"
+kind = "Memo"
+visible_to = ["mayor"]
+source = "Mayor/Message from Qiso Police Chief.docx"
+
+[[documents]]
+id = "farmers-letter"
+title = "Letter from an almond grower (Farmers' Association)"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Farmers 3.docx"
+
+[[documents]]
+id = "farmer-private"
+title = "Private letter from a Farmers' Association member"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Farmers 4.docx"
+
+[[documents]]
+id = "church-letter"
+title = "Letter from the Qiso Church Association"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Messaage from Qiso Church Association.docx"
+
+[[documents]]
+id = "kiman-elders"
+title = "Letter from the Elders of Kiman"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Message from Kiman Elders.docx"
+
+[[documents]]
+id = "school-letter"
+title = "Letter from the school principal"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Message from School.docx"
+
+[[documents]]
+id = "parents-letter-1"
+title = "Parent complaint: integrating Chiasan pupils"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Message from Parents 2.docx"
+
+[[documents]]
+id = "parents-letter-2"
+title = "Parent complaint: vaccinations at the school gym"
+kind = "Letter"
+visible_to = ["mayor"]
+source = "Mayor/Message from Parents 3.docx"
+
+# ------------------------------------------------------- Border officer only
+
+[[documents]]
+id = "officer-rolecard"
+title = "Role card: Officer of the Border Authority"
+kind = "Role card"
+visible_to = ["border-officer"]
+source = "Border Authority Officer/Rolecard_ Officer from Border Authority.docx"
+
+[[documents]]
+id = "hq-instructions"
+title = "Deployment to Qiso (restricted instructions)"
+kind = "Instructions"
+visible_to = ["border-officer"]
+source = "Border Authority Officer/Message from Central Border Authority.docx"
+
+# ------------------------------------------------------------------- Shared
+
+[[documents]]
+id = "ba-letter"
+title = "Official letter from the Border Authority to the Mayor"
+kind = "Letter"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Official Message from Border Authority to the Mayor of Qiso.docx"
+
+[[documents]]
+id = "protocols"
+title = "Refugee Processing and Transport Protocols"
+kind = "Regulation"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of Refugee Processing and Transport Protocols.docx"
+
+[[documents]]
+id = "ngo-list"
+title = "NGOs active in Sitwan (Mayor's Office list)"
+kind = "Reference"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/List of NGOs in Sitwan.docx"
+
+[[documents]]
+id = "about-chiasa"
+title = "About Chiasa: country background brief"
+kind = "Background"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/About Chiasa.docx"
+
+[[documents]]
+id = "intl-news-1"
+title = "Conditions in Sitwan's refugee facilities draw concern"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/International News 1.docx"
+
+[[documents]]
+id = "intl-news-2"
+title = "Parents left in the dark as children are moved"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/International News 2.docx"
+
+[[documents]]
+id = "intl-news-3"
+title = "Leaky shelters raise disease fears in RDFs"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of International News 3.docx"
+
+[[documents]]
+id = "intl-news-4"
+title = "How a train attack in Chiasa set off a refugee crisis"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/International News 4.docx"
+
+[[documents]]
+id = "national-news-2"
+title = "Disturbance at the Capital Square market"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of National News 2.docx"
+
+[[documents]]
+id = "national-news-3"
+title = "Tali restaurant owners say they cannot keep feeding migrants"
+kind = "News"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/National News 3.docx"
+
+[[documents]]
+id = "groupchat-traders"
+title = "Market Street Traders group chat"
+kind = "Group chat"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Qiso GroupChat 1.docx"
+fixups = [["Visit planned this weekMarket Street", "Market Street"]]
+
+[[documents]]
+id = "groupchat-neighbors"
+title = "Hill District neighbours group chat"
+kind = "Group chat"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Qiso GroupChat 3.docx"
+
+[[documents]]
+id = "groupchat-parents"
+title = "Qiso parents group chat"
+kind = "Group chat"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Qiso GroupChat 4.docx"
+
+[[documents]]
+id = "social-trending"
+title = "Trending in Sitwan (48-hour feed)"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Social Media Feed.docx"
+
+[[documents]]
+id = "social-schools"
+title = "Thread: Chiasan pupils and test scores"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Social Media 2.docx"
+
+[[documents]]
+id = "social-cholera"
+title = "Thread: cholera rumour at the Qiso clinic"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Mayor/Shared/Social Media 3.docx"
+
+[[documents]]
+id = "social-red-scarves"
+title = "Post: '7 signs of a Chiasa militia'"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of Social Media 4.docx"
+
+[[documents]]
+id = "social-respect"
+title = "Thread: 'Stay away from our women'"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of Social Media 5.docx"
+
+[[documents]]
+id = "social-rdf-prisons"
+title = "Thread: 'RDFs are prisons'"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of Social Media 6.docx"
+
+[[documents]]
+id = "social-terraces"
+title = "Thread: 'Our grandparents built your terraces'"
+kind = "Social media"
+visible_to = ["mayor", "border-officer"]
+source = "Border Authority Officer/Shared Information/Copy of Social Media 7.docx"

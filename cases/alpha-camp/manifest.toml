@@ -1,0 +1,184 @@
+id = "alpha-camp"
+title = "Alpha: food access at the refugee camp"
+summary = """
+After unrest in Omega, refugees have poured into neighbouring Alpha; the largest camp holds about \
+160,000 people guarded by about 700 militia-linked guards. Food Without Borders (FWB) needs the Camp \
+Commander's agreement to distribute food, while the Commander faces unpaid guards, a suspicious \
+government and pressure to keep the camp under control.
+"""
+source_root = "Cases/Simulation 2"
+
+[[roles]]
+id = "fwb"
+name = "FWB delegate"
+counterpart = "Camp Commander"
+brief = """
+You are the newly arrived Food Without Borders (FWB) delegate for Northern Alpha. You must secure \
+the Camp Commander's agreement to distribute food in Alpha's largest refugee camp. Your Country \
+Director has set FWB's neutrality as a red line: no direct transfer of food or resources to anyone \
+linked to security structures. Messages from your director, local contacts and officials are in \
+your documents.
+"""
+
+[[roles]]
+id = "commander"
+name = "Camp Commander"
+counterpart = "FWB delegate"
+brief = """
+You command Alpha's largest refugee camp: about 160,000 refugees from Omega and about 700 guards \
+drawn from local militias, many of them unpaid. A new FWB delegate wants access to distribute food. \
+Your role card and the messages you have received are in your documents.
+"""
+
+# ------------------------------------------------------------------ FWB only
+
+[[documents]]
+id = "fwb-director"
+title = "Message from the FWB Country Director"
+kind = "Message"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/Message from FWB Country Director.docx"
+
+[[documents]]
+id = "defense-minister"
+title = "Message from the Minister of Defense"
+kind = "Message"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/Message from Minister of Defense.docx"
+
+[[documents]]
+id = "mayor-to-fwb"
+title = "Message from the Mayor"
+kind = "Message"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/Mayor Message.docx"
+
+[[documents]]
+id = "contact-note-2"
+title = "Note from a local contact (guards' militia roots)"
+kind = "Note"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/2 Note from local contact.docx"
+
+[[documents]]
+id = "contact-note-3"
+title = "Note from a camp guard"
+kind = "Note"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/3 Note from local contact.docx"
+
+[[documents]]
+id = "contact-note-6"
+title = "Forwarded guard chat (unverified)"
+kind = "Note"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/6 Note from local contact.docx"
+
+[[documents]]
+id = "contact-note-8"
+title = "Message on behalf of the senior militia leader"
+kind = "Note"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/8 Note from local contact.docx"
+
+[[documents]]
+id = "security-log"
+title = "Leaked camp security log"
+kind = "Log"
+visible_to = ["fwb"]
+source = "For Students - FWB and Shared/FWB/Security Log.docx"
+
+# ------------------------------------------------------------ Commander only
+
+[[documents]]
+id = "commander-rolecard"
+title = "Role card: Camp Commander"
+kind = "Role card"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/Rolecard.docx"
+
+[[documents]]
+id = "fwb-minutes"
+title = "Minutes: FWB field officer with Camp Commander and militia leaders"
+kind = "Minutes"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/MoM FWB Field Officer with Camp Commander & Militia Leaders.docx"
+
+[[documents]]
+id = "militia-voice-1"
+title = "Voice message 1: senior militia leader"
+kind = "Transcript"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/1 Voice message transcript – Senior Militia Leader.docx"
+
+[[documents]]
+id = "militia-voice-3"
+title = "Voice message 3: senior militia leader"
+kind = "Transcript"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/3 Voice message transcript – Senior Militia Leader.docx"
+
+[[documents]]
+id = "militia-voice-4"
+title = "Voice message 4: senior militia leader"
+kind = "Transcript"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/4 Voice message transcript – Senior Militia Leader.docx"
+
+[[documents]]
+id = "mayor-to-commander"
+title = "Message from the Mayor"
+kind = "Message"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/2 Messae from Mayor.docx"
+
+[[documents]]
+id = "guard-message-1"
+title = "Guard message 1"
+kind = "Message"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/Guard message 1.docx"
+
+[[documents]]
+id = "guard-message-4"
+title = "Guard message 4"
+kind = "Message"
+visible_to = ["commander"]
+source = "For Students - Camp Commander and Shared/Camp Commander/Guard message 4.docx"
+
+# ------------------------------------------------------------------- Shared
+
+[[documents]]
+id = "ao-encyclopedia"
+title = "Encyclopedia page: the AO delta"
+kind = "Background"
+visible_to = ["fwb", "commander"]
+source = "Shared/Encyclopedia Page on the AO Delta.docx"
+
+[[documents]]
+id = "news-aid-groups"
+title = "International aid groups support Omega refugees in Alpha"
+kind = "News"
+visible_to = ["fwb", "commander"]
+source = "Shared/International news_ International Aid Groups Support Omega Refugees in Alpha.docx"
+
+[[documents]]
+id = "news-refugee-crisis"
+title = "Refugee crisis in Alpha following unrest in Omega"
+kind = "News"
+visible_to = ["fwb", "commander"]
+source = "For Students - FWB and Shared/Copy of International News_ Refugee Crisis in Alpha following Unrest in Omega.docx"
+
+[[documents]]
+id = "news-camp-conditions"
+title = "Poor conditions in the largest refugee camp in Alpha"
+kind = "News"
+visible_to = ["fwb", "commander"]
+source = "For Students - FWB and Shared/Copy of International News_ Poor Conditions in Largest Refugee Camp in Alpha.docx"
+
+[[documents]]
+id = "media-monitoring"
+title = "Media monitoring: local news excerpt"
+kind = "News"
+visible_to = ["fwb", "commander"]
+source = "For Students - FWB and Shared/Copy of MEDIA MONITORING – LOCAL NEWS EXCERPT.docx"
