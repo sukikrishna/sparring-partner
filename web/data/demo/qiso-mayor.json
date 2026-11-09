@@ -1,0 +1,576 @@
+{
+  "case_id": "qiso",
+  "role_id": "mayor",
+  "about": "Scripted demo. Gaps, answers and the structured view below were written by hand from the case documents so the interface can be explored without a language model. Every citation points at a real paragraph.",
+  "gaps": [
+    {
+      "id": "g1",
+      "quote": "BA pays 6 SD per person per day so that should mostly cover it, and we can float anything extra from the reserve until the money comes through.",
+      "title": "Stadium costs are covered",
+      "question": "What would a week in the stadium actually cost the town, and how long could the reserve carry it before any compensation arrives?",
+      "assumption": "Border Authority compensation will cover most of the stadium's cost, and the reserve can bridge the rest.",
+      "lens": "Resources",
+      "doc_ids": ["finance-memo", "ba-letter", "protocols"],
+      "severity": "high"
+    },
+    {
+      "id": "g2",
+      "quote": "police can handle gathering people at the stadium, the chief will grumble but they manage the crowds every harvest festival.",
+      "title": "Police can do the round-up",
+      "question": "How many officers are actually free, and what does the chief expect would happen if people were moved by force?",
+      "assumption": "The municipal police have the capacity to gather everyone into the stadium without serious resistance.",
+      "lens": "Resources",
+      "doc_ids": ["police-memo", "kiman-elders"],
+      "severity": "high"
+    },
+    {
+      "id": "g3",
+      "quote": "the farmers will be upset but they'll come round once it's done, harvest isn't for another month anyway.",
+      "title": "Farmers will come round",
+      "question": "What have the farmers said they would do, and what would a lost harvest mean for the town's own budget?",
+      "assumption": "The farmers' opposition is temporary and the harvest is unaffected by removals carried out now.",
+      "lens": "Stakeholders",
+      "doc_ids": ["farmers-letter", "farmer-private", "finance-memo"],
+      "severity": "high"
+    },
+    {
+      "id": "g4",
+      "quote": "we should just send them what we have, they're a big legit NGO and people need food.",
+      "title": "Share the refugee list with EI",
+      "question": "Who else could end up holding a list of names and locations, and what could they do with it?",
+      "assumption": "Sharing personal data with Emergency International is low-risk and only affects food planning.",
+      "lens": "Process",
+      "doc_ids": ["ngo-list", "intl-news-2", "protocols"],
+      "severity": "medium"
+    }
+  ],
+  "doc_qa": {
+    "finance-memo": [
+      {
+        "id": "fm1",
+        "gaps": ["g1"],
+        "q": "How much would the stadium cost per week?",
+        "keys": ["cost", "week", "stadium", "much", "spend", "price", "budget", "655"],
+        "answer": "The memo estimates SD 655,000 a week to house 6,000 people in the stadium, with food alone at SD 378,000. Border Authority compensation at SD 6 per person per day would come to SD 252,000, leaving a shortfall of about SD 403,000 every week.",
+        "cites": [18, 24, 25, 26],
+        "key_finding": "The finance memo puts the stadium at SD 655,000 a week against SD 252,000 in compensation: a shortfall of about SD 403,000 every week."
+      },
+      {
+        "id": "fm2",
+        "gaps": ["g1"],
+        "q": "When would the Border Authority's money actually arrive?",
+        "keys": ["when", "arrive", "paid", "payment", "compensation", "money", "reserve", "90", "days", "upfront", "tali", "long"],
+        "answer": "Only after 90 days, and only once a verified register is submitted, so Qiso would pay everything upfront. The SD 1.2 million reserve covers roughly three weeks of the stadium plan with nothing left for anything else. The memo also mentions an unconfirmed report that Tali has not yet received any of its compensation.",
+        "cites": [27],
+        "key_finding": "Compensation is paid 90 days after a verified register is submitted; the SD 1.2M reserve lasts about three weeks of the stadium plan, and Tali reportedly hasn't been paid yet."
+      },
+      {
+        "id": "fm3",
+        "gaps": [],
+        "q": "How sure are we about the 6,000 figure?",
+        "keys": ["6,000", "6000", "number", "count", "figure", "estimate", "sure", "accurate"],
+        "answer": "Not very. Finance put a question mark next to it. The rough breakdown is about 500 in municipal shelters, 900 with churches, 2,500 camping in orchards and perhaps 2,000 with friends or in public places, and it 'could easily be off by a thousand in either direction'.",
+        "cites": [28, 29],
+        "key_finding": "Qiso's own count is rough: about 500 in shelters, 900 with churches, 2,500 in orchards and ~2,000 elsewhere, give or take 1,000."
+      },
+      {
+        "id": "fm4",
+        "gaps": ["g3"],
+        "q": "How much does the harvest matter to the town budget?",
+        "keys": ["harvest", "revenue", "budget", "almond", "pecan", "58", "levy", "income"],
+        "answer": "A great deal. The almond and pecan harvest provides about 58% of municipal revenue, roughly SD 4.8 million in a normal year. If it fails or is significantly reduced, the town faces cuts to the school, clinic subsidies and road maintenance next year, whatever happens with the refugees.",
+        "cites": [31],
+        "key_finding": "The harvest funds about 58% of Qiso's budget (SD 4.8M); losing it would force cuts to the school, clinic and roads."
+      }
+    ],
+    "police-memo": [
+      {
+        "id": "pm1",
+        "gaps": ["g2"],
+        "q": "How many officers are actually available?",
+        "keys": ["how many", "officers", "staff", "available", "number", "22", "shifts", "capacity"],
+        "answer": "22 sworn officers, two of them on medical leave. Everyone is already on twelve-hour shifts six days a week with leave cancelled. Calls have gone from about 15 to over 60 a day, and roughly a third are reports of 'suspicious Chiasans' who turn out to be doing nothing illegal.",
+        "cites": [6],
+        "key_finding": "Qiso has about 20 working officers, already on 12-hour shifts; calls have quadrupled, a third of them about people doing nothing illegal."
+      },
+      {
+        "id": "pm2",
+        "gaps": ["g2"],
+        "q": "What does the chief think would happen if people were moved by force?",
+        "keys": ["force", "round", "gather", "resist", "happen", "guard", "stadium", "safety"],
+        "answer": "He says the force does not have the numbers to round up 6,000 people and guard them around the clock. He expects resistance, especially from families sheltering in the orchards, thinks some Qiso residents may side with them, and says he cannot guarantee anyone's safety.",
+        "cites": [8],
+        "key_finding": "The police chief says a forced round-up is beyond the force's capacity and would likely meet resistance, possibly from Qiso residents too."
+      },
+      {
+        "id": "pm3",
+        "gaps": ["g2"],
+        "q": "Is the harvest-festival comparison fair?",
+        "keys": ["harvest", "festival", "crowd", "usually", "normal", "1,000", "compare", "every year"],
+        "answer": "The chief draws the contrast himself: the town usually welcomes about 1,000 Kiman workers each autumn, who come to work. Now there are about 6,000 people, a month before harvest, with no jobs. He describes many small altercations and worries that 'at some point it will all snap'.",
+        "cites": [5],
+        "key_finding": "Today's population is roughly six times the usual seasonal workforce and idle a month before harvest; the chief fears things will 'snap'."
+      },
+      {
+        "id": "pm4",
+        "gaps": [],
+        "q": "Is anyone else trying to police the town?",
+        "keys": ["vigilante", "heritage", "watch", "groups", "chase", "flyers", "residents"],
+        "answer": "Yes. Some residents go out in groups to 'chase off' Chiasans from the market, and a group called Sitwan Heritage Watch is circulating flyers asking people to call a private number instead of the police. The chief calls vigilante groups 'the last thing we need'.",
+        "cites": [7],
+        "key_finding": "Vigilante activity is emerging (resident groups, Sitwan Heritage Watch flyers), which the police chief sees as a serious risk."
+      },
+      {
+        "id": "pm5",
+        "gaps": ["g2"],
+        "q": "Has the chief asked for anything?",
+        "keys": ["ask", "request", "reinforcement", "retired", "tali", "help", "need"],
+        "answer": "Authorization to bring back retired officers temporarily and to ask the Tali district for reinforcements, though he doubts Tali can spare anyone.",
+        "cites": [9],
+        "key_finding": "The chief has asked to recall retired officers and request reinforcements from Tali, which he doubts will come."
+      }
+    ],
+    "kiman-elders": [
+      {
+        "id": "ke1",
+        "gaps": ["g2"],
+        "q": "What are the Kiman elders offering?",
+        "keys": ["offer", "elders", "help", "walk", "patrol", "work", "teachers", "nurses"],
+        "answer": "They offer to appoint respected men and women from their community to walk with your police in the market and near the school, so trouble can be settled quickly. They add that many among them are teachers, nurses and builders who would gladly work.",
+        "cites": [7],
+        "key_finding": "The Kiman elders offer joint patrols with the police and a pool of teachers, nurses and builders willing to work."
+      },
+      {
+        "id": "ke2",
+        "gaps": [],
+        "q": "What are the elders worried about?",
+        "keys": ["worry", "worried", "concern", "youth", "fear", "react", "insult", "women"],
+        "answer": "Accusations of vandalism against their youth, which they deny; disrespect toward their women and girls by Qiso youth, which they reported to the police without result; and Chiasans with no ties to Qiso, who they fear may react angrily 'if you fan the flames by going after our youth'.",
+        "cites": [5, 6],
+        "key_finding": "The elders warn that targeting their youth could inflame Chiasans with no ties to Qiso; incidents they reported to police got no response."
+      },
+      {
+        "id": "ke3",
+        "gaps": ["g3"],
+        "q": "What leverage do they hint at?",
+        "keys": ["leverage", "harvest", "livelihood", "hands", "depend", "orchards"],
+        "answer": "Mutual dependence. They depend on Qiso now, but 'your livelihood – through the harvest, through the continued safety of your orchards – also lies in our hands. We must work together, or all of us will suffer.'",
+        "cites": [8],
+        "key_finding": "The elders frame the relationship as mutual dependence, explicitly linking it to the harvest and the safety of the orchards."
+      }
+    ],
+    "farmers-letter": [
+      {
+        "id": "fl1",
+        "gaps": ["g3"],
+        "q": "What do the farmers say they will do?",
+        "keys": ["do", "resist", "farmers", "action", "plan", "react", "gates", "lawyers"],
+        "answer": "The grower says many farmers will 'resist in every way we can': lawyers, the newspapers, their representatives in the capital and, if it comes to it, standing at the orchard gates themselves. They say this is not a threat but a statement of where they stand.",
+        "cites": [6],
+        "key_finding": "Farmers say they will resist removals through lawyers, the press, representatives in the capital and, if needed, physically at the orchard gates."
+      },
+      {
+        "id": "fl2",
+        "gaps": ["g3"],
+        "q": "Why do the workers matter so much to them?",
+        "keys": ["why", "workers", "matter", "depend", "family", "200", "bank"],
+        "answer": "The writer's family runs eleven orchards, a hulling shed and a share in the packing cooperative, all depending on about two hundred workers in the season. Without them 'the nuts stay on the ground and rot, and the bank still wants its payments'.",
+        "cites": [3, 4],
+        "key_finding": "Farm families depend on Kiman workers (about 200 for one family's orchards) to bring in the harvest and service their debts."
+      }
+    ],
+    "farmer-private": [
+      {
+        "id": "fp1",
+        "gaps": ["g3"],
+        "q": "What is the rumour about militias?",
+        "keys": ["militia", "rumour", "rumor", "sabotage", "fire", "armed", "young men", "irrigation"],
+        "answer": "An agricultural worker told the writer that some people from Kiman and surrounding areas have formed militias, and that some may sabotage harvests if deportations begin, for example by burning hulling sheds or cutting irrigation lines. The writer stresses it is unverified and involves mostly young men who are not from Kiman.",
+        "cites": [4, 5],
+        "key_finding": "Unverified report: if deportations start, some young men (mostly not from Kiman) may sabotage the harvest, e.g. burn hulling sheds or cut irrigation."
+      },
+      {
+        "id": "fp2",
+        "gaps": ["g3"],
+        "q": "Why hasn't this been reported to the police?",
+        "keys": ["police", "report", "told", "why", "border authority", "confidential", "share", "name"],
+        "answer": "The writer fears that if it reaches the Border Authority 'they will use it as a reason to round everyone up', and asks you not to share the letter or their name.",
+        "cites": [2, 7],
+        "key_finding": "The militia rumour was shared in confidence; the source fears it would be used to justify a round-up."
+      }
+    ],
+    "ngo-list": [
+      {
+        "id": "ng1",
+        "gaps": ["g4"],
+        "q": "What exactly is EI asking for?",
+        "keys": ["ei", "emergency", "asking", "list", "names", "want", "request", "need"],
+        "answer": "A list of the names, gender, age and locations of all refugees in the county, to plan quantities and avoid duplicate distributions. EI has not said whether it would share the list with any other organization or government department.",
+        "cites": [21, 22],
+        "key_finding": "EI wants names, ages, gender and locations of every refugee but hasn't said whether it would share the list with anyone else, including government."
+      },
+      {
+        "id": "ng2",
+        "gaps": ["g4"],
+        "q": "What lists does the town actually hold?",
+        "keys": ["hold", "have", "register", "lists", "our", "500", "complete"],
+        "answer": "Only registers for about 500 people in the municipal shelters (school gym, temple courtyard and truck parking lot). There is no complete list.",
+        "cites": [22],
+        "key_finding": "Qiso holds registers for only ~500 people in municipal shelters; there is no complete list."
+      },
+      {
+        "id": "ng3",
+        "gaps": ["g4"],
+        "q": "Who else is collecting information on Chiasans?",
+        "keys": ["who else", "heritage", "watch", "collecting", "report", "suspicious", "flyers", "information"],
+        "answer": "Sitwan Heritage Watch runs 'community safety patrols' and reports 'illegal migrants'. Its flyers in the market ask residents to report 'suspicious Chiasans' to a phone number not affiliated with the police.",
+        "cites": [17, 24],
+        "key_finding": "Sitwan Heritage Watch is collecting reports on 'suspicious Chiasans' via a private number, a risk if location data spreads."
+      },
+      {
+        "id": "ng4",
+        "gaps": [],
+        "q": "Is any other organization offering help we could use?",
+        "keys": ["help", "other", "offer", "clinic", "vaccination", "medical", "red crescent", "ngo"],
+        "answer": "Medical Aid Without Borders has offered one mobile clinic (clinics, rehydration, vaccinations). The Sitwan Red Crescent has two volunteers in Qiso doing first aid and family tracing. The Church Association, Friends of Kiman and the Rotary Club are also active locally.",
+        "cites": [7, 8, 10, 11, 19],
+        "key_finding": "Medical Aid Without Borders has offered a mobile clinic that can vaccinate, and the Red Crescent does family tracing in Qiso."
+      }
+    ],
+    "intl-news-2": [
+      {
+        "id": "in2a",
+        "gaps": ["g4"],
+        "q": "What happened to children in the RDFs?",
+        "keys": ["children", "separated", "parents", "happened", "kids", "moved", "teen"],
+        "answer": "At an RDF north of Tali, children taken for health checks or schooling sometimes did not come back, and parents were not told where they were. An eight-year-old was kept overnight with a fever; a 16-year-old was questioned over a suspected documentation error and transferred to another RDF without his parents' knowledge.",
+        "cites": [4, 7, 8],
+        "key_finding": "Reported at a Tali RDF: children moved or held without notifying parents, including a teenager transferred after a documentation error."
+      },
+      {
+        "id": "in2b",
+        "gaps": [],
+        "q": "What does the Border Authority say about it?",
+        "keys": ["border authority", "say", "deny", "statement", "respond", "official"],
+        "answer": "It denies that children were 'separated', says they are 'temporarily accommodated in health screening areas', and that transfers are operational. It did not say how parents are notified. Child-protection specialists attribute the reports to record-keeping failures rather than deliberate policy.",
+        "cites": [9, 10],
+        "key_finding": "The Border Authority denies separations but hasn't said how parents are notified: a concrete point to raise in any agreement."
+      }
+    ],
+    "protocols": [
+      {
+        "id": "pr1",
+        "gaps": [],
+        "q": "Is it legal for the churches to host people?",
+        "keys": ["church", "legal", "host", "shelter", "homes", "private", "allowed", "fine"],
+        "answer": "Section 7 says citizens and organizations may not provide long-term shelter to unregistered non-citizens, and those who knowingly do so without reporting them may be fined. Emergency humanitarian assistance, such as food or first aid, is not prohibited.",
+        "cites": [18, 19],
+        "key_finding": "Under section 7, long-term private shelter is prohibited only for unregistered people; food and first aid are allowed, so registration is the deciding factor."
+      },
+      {
+        "id": "pr2",
+        "gaps": ["g3"],
+        "q": "Do seasonal workers have to register?",
+        "keys": ["seasonal", "workers", "permit", "harvest", "register", "registered"],
+        "answer": "Workers who entered under a valid harvest permit count as registered for the permit's duration. Once it expires, or if they cannot return home, they must register again.",
+        "cites": [10],
+        "key_finding": "Seasonal workers with valid harvest permits already count as registered while the permit lasts."
+      },
+      {
+        "id": "pr3",
+        "gaps": [],
+        "q": "Do we have to use the stadium?",
+        "keys": ["stadium", "must", "required", "place", "large", "detain", "venue"],
+        "answer": "Section 4 asks local authorities to hold large arrivals 'in a suitably large place – a school gym, a stadium, etc.' The stadium is what the officer's letter asks for, not something the protocol itself requires.",
+        "cites": [12],
+        "key_finding": "The protocol requires 'a suitably large place', not specifically the stadium, so the venue is open to negotiation."
+      },
+      {
+        "id": "pr4",
+        "gaps": ["g4"],
+        "q": "Do registers have to be handed to the Border Authority?",
+        "keys": ["register", "share", "hand", "list", "names", "border authority"],
+        "answer": "Yes. Local authorities must keep a written register of all persons detained, including names, ages and gender, and hand it to the Border Authority on request.",
+        "cites": [13],
+        "key_finding": "Any register Qiso keeps of detained persons must be handed to the Border Authority on request."
+      },
+      {
+        "id": "pr5",
+        "gaps": ["g1"],
+        "q": "What does the protocol say about compensation?",
+        "keys": ["compensation", "pay", "rate", "claim", "6"],
+        "answer": "SD 6 per detained person per day. Claims must include a verified register and are payable within 90 days.",
+        "cites": [17],
+        "key_finding": null
+      }
+    ],
+    "ba-letter": [
+      {
+        "id": "ba1",
+        "gaps": [],
+        "q": "What does the officer want me to bring to the meeting?",
+        "keys": ["bring", "meeting", "want", "prepare", "asks", "agenda"],
+        "answer": "Your best estimate of the number of Chiasans and their locations; a plan for the stadium including security and sanitation; the number of police officers available; and any lists or registers your office has compiled.",
+        "cites": [11, 12, 13, 14, 15],
+        "key_finding": "The officer expects four things: numbers and locations, a stadium plan, police numbers, and any registers. Each is something the Mayor can shape."
+      },
+      {
+        "id": "ba2",
+        "gaps": ["g1"],
+        "q": "What has the Border Authority promised in return?",
+        "keys": ["promise", "return", "offer", "compensate", "provide", "support", "guarantee"],
+        "answer": "Compensation of SD 6 per person per day, payable within 90 days of a verified register; additional costs 'may be submitted for consideration but cannot be guaranteed'. It also promises registration, buses, and that everyone will be vaccinated and given shelter, food, clothing, healthcare and schooling in the RDFs.",
+        "cites": [9, 10],
+        "key_finding": "The Border Authority guarantees only SD 6 per person per day; any additional costs 'cannot be guaranteed'."
+      },
+      {
+        "id": "ba3",
+        "gaps": ["g3"],
+        "q": "Does the order include the seasonal workers?",
+        "keys": ["seasonal", "workers", "agricultural", "kiman", "harvest", "include", "farms"],
+        "answer": "Yes. The letter says Chiasans present as seasonal agricultural workers before the unrest must also register, and the stadium order covers people on agricultural land and in private homes.",
+        "cites": [8],
+        "key_finding": "The Border Authority's order explicitly covers pre-existing seasonal workers and people living on farms and in homes."
+      }
+    ],
+    "church-letter": [
+      {
+        "id": "ch1",
+        "gaps": [],
+        "q": "How many people are the churches hosting?",
+        "keys": ["how many", "hosting", "900", "people", "number", "halls"],
+        "answer": "About 900 people across fourteen congregations: around 350 in church halls and the rest in members' homes. Volunteers serve two hot meals a day and run a clothing exchange.",
+        "cites": [7],
+        "key_finding": "The churches host about 900 people (350 in halls) with meals and clothing: existing shelter capacity inside Qiso."
+      },
+      {
+        "id": "ch2",
+        "gaps": [],
+        "q": "Would the churches cooperate with registration?",
+        "keys": ["cooperate", "register", "registration", "share", "numbers", "border authority", "work with"],
+        "answer": "They say they cannot stop sheltering people, but are 'happy to share with your office the number of people in our care' and to work on any arrangement that keeps families together and in Qiso. Their ministers offer to speak to the Border Authority officer.",
+        "cites": [8, 9],
+        "key_finding": "The churches will share numbers and meet the Border Authority officer, as long as families stay together in Qiso."
+      }
+    ],
+    "school-letter": [
+      {
+        "id": "sc1",
+        "gaps": [],
+        "q": "How many of the children in the gym are vaccinated?",
+        "keys": ["vaccin", "children", "cards", "how many", "31", "93"],
+        "answer": "The school nurse found that 31 of the 93 children in the gym have vaccination cards; the status of the rest is unknown. The principal asks whether the Medical Aid Without Borders mobile clinic could vaccinate them at the school.",
+        "cites": [8, 10],
+        "key_finding": "Only 31 of 93 children in the gym have vaccination cards; the principal suggests the mobile clinic vaccinate them at the school."
+      },
+      {
+        "id": "sc2",
+        "gaps": [],
+        "q": "What are the families in the gym like?",
+        "keys": ["families", "gym", "polite", "mothers", "help", "lessons"],
+        "answer": "Mostly polite and grateful. Many mothers have offered to help with cleaning, and some older children have asked to attend lessons. The principal has also had to speak to Qiso pupils about name-calling and comments to Chiasan girls.",
+        "cites": [9],
+        "key_finding": "Families in the gym offer to help clean and want schooling; some Qiso pupils have harassed Chiasan girls."
+      }
+    ],
+    "social-cholera": [
+      {
+        "id": "so1",
+        "gaps": [],
+        "q": "Is there actually cholera at the clinic?",
+        "keys": ["cholera", "true", "clinic", "disease", "measles", "rumour"],
+        "answer": "Not according to the people who work there. A clinic nurse says there is no cholera, that two children tested negative for measles, and that the clinic feels 'really bad' because the waiting room is packed. The claim started with a QisoWatch post; the nurse points to a notice on the clinic door.",
+        "cites": [2, 11, 15],
+        "key_finding": "The cholera rumour traces to a QisoWatch post; a clinic nurse and a notice on the clinic door say there is no cholera and two measles tests were negative."
+      }
+    ],
+    "intl-news-4": [
+      {
+        "id": "n4a",
+        "gaps": [],
+        "q": "Is the 40,000 figure real?",
+        "keys": ["40,000", "40000", "number", "figure", "real", "17,000", "count", "how many"],
+        "answer": "It is disputed. NGOs count about 17,000 arrivals nationally. The Border Authority says 'over 40,000', which NGOs say may include seasonal workers already in Sitwan legally and people counted twice as they move. The Border Authority has not published its method.",
+        "cites": [4, 8],
+        "key_finding": "NGOs count ~17,000 arrivals nationally versus the Border Authority's 40,000+, which may include legal seasonal workers and double counting."
+      }
+    ],
+    "intl-news-1": [
+      {
+        "id": "n1a",
+        "gaps": [],
+        "q": "What are conditions like in the RDFs?",
+        "keys": ["conditions", "rdf", "facilities", "mud", "medicine", "shelter", "like"],
+        "answer": "Aid workers describe shortages of basic medicines, shelters unfit for the rainy season, sewage overflow and long lines for few water points and latrines. The Border Authority says all RDFs meet or exceed the standards and that problems are temporary.",
+        "cites": [4, 6, 7, 8],
+        "key_finding": "RDFs are reported to lack medicines, adequate shelter and sanitation; the Border Authority says they meet standards."
+      }
+    ]
+  },
+  "case_qa": [
+    {
+      "id": "cq1",
+      "q": "How many Chiasans are actually in Qiso?",
+      "keys": ["how many", "number", "count", "6,000", "20,000", "people", "total", "figure", "estimate"],
+      "answer": "No one knows precisely. The finance department estimates about 6,000 (roughly 500 in shelters, 900 with churches, 2,500 in orchards, 2,000 elsewhere), give or take a thousand, and the police chief uses the same figure. Online, QisoWatch claims 20,000, which residents in the group chats question. Nationally, NGOs count about 17,000 arrivals, while the Border Authority's 40,000+ may include seasonal workers who are in Sitwan legally.",
+      "citations": [
+        { "doc_id": "finance-memo", "paragraph": 29 },
+        { "doc_id": "police-memo", "paragraph": 5 },
+        { "doc_id": "social-trending", "paragraph": 12 },
+        { "doc_id": "groupchat-neighbors", "paragraph": 29 },
+        { "doc_id": "intl-news-4", "paragraph": 8 }
+      ],
+      "key_finding": "Best local estimate is ~6,000 (± 1,000); the 20,000 figure comes from QisoWatch, and national counts range from 17,000 (NGOs) to 40,000+ (Border Authority)."
+    },
+    {
+      "id": "cq2",
+      "q": "Is it legal for the churches to keep hosting people?",
+      "keys": ["church", "legal", "host", "hosting", "shelter", "homes", "allowed"],
+      "answer": "The protocols forbid long-term private shelter only for unregistered non-citizens; emergency food and first aid are allowed. The churches say they will keep sheltering people but will share their numbers with your office and talk to the Border Authority. Registration in place would therefore address the legal problem without moving anyone.",
+      "citations": [
+        { "doc_id": "protocols", "paragraph": 19 },
+        { "doc_id": "church-letter", "paragraph": 8 }
+      ],
+      "key_finding": "Hosting is unlawful only for unregistered people; registering the ~900 church guests in place would remove the legal issue."
+    },
+    {
+      "id": "cq3",
+      "q": "Who could help with vaccinations?",
+      "keys": ["vaccin", "vaccinate", "measles", "clinic", "health", "immuniz"],
+      "answer": "Medical Aid Without Borders has offered a mobile clinic that does vaccinations, and the school principal has asked whether it could vaccinate the children in the gym. Many adult Kiman workers were already vaccinated through Qiso's harvest programme, but their children were not; childhood vaccination coverage in Chiasa is about 41%.",
+      "citations": [
+        { "doc_id": "ngo-list", "paragraph": 7 },
+        { "doc_id": "school-letter", "paragraph": 10 },
+        { "doc_id": "social-cholera", "paragraph": 19 },
+        { "doc_id": "about-chiasa", "paragraph": 13 }
+      ],
+      "key_finding": "The MAWB mobile clinic could vaccinate on site; many adult Kiman workers are already vaccinated through the harvest programme, but most children are not."
+    },
+    {
+      "id": "cq4",
+      "q": "What could I offer the Border Authority instead of the stadium?",
+      "keys": ["offer", "instead", "alternative", "propose", "trade", "border authority", "option"],
+      "answer": "The documents point to several possibilities. The protocol only requires 'a suitably large place', not the stadium. The officer wants numbers, locations and registers, which the churches have offered to share. Seasonal workers with valid permits already count as registered. The Kiman elders offer joint patrols with the police. Whether the officer can accept registration in place is not something your documents answer.",
+      "citations": [
+        { "doc_id": "protocols", "paragraph": 12 },
+        { "doc_id": "ba-letter", "paragraph": 12 },
+        { "doc_id": "church-letter", "paragraph": 8 },
+        { "doc_id": "protocols", "paragraph": 10 },
+        { "doc_id": "kiman-elders", "paragraph": 7 }
+      ],
+      "key_finding": "Possible offers: register people where they are (churches will share numbers), recognise permit-holding seasonal workers, and joint patrols with Kiman elders; the protocol does not require the stadium."
+    },
+    {
+      "id": "cq5",
+      "q": "What is happening in the RDFs?",
+      "keys": ["rdf", "detention", "facilities", "conditions", "camps", "happening"],
+      "answer": "International reporting describes shortages of medicine, leaky shelters on bare earth, standing water and sanitation problems, and cases of children moved or held without parents being told. The Border Authority says the facilities meet the standards and denies separations.",
+      "citations": [
+        { "doc_id": "intl-news-1", "paragraph": 4 },
+        { "doc_id": "intl-news-3", "paragraph": 5 },
+        { "doc_id": "intl-news-2", "paragraph": 4 },
+        { "doc_id": "intl-news-2", "paragraph": 9 }
+      ],
+      "key_finding": "Reports from the RDFs describe poor shelter and sanitation and children moved without parents being told; the Border Authority disputes them."
+    },
+    {
+      "id": "cq6",
+      "q": "Who is spreading rumours in town?",
+      "keys": ["rumour", "rumor", "misinformation", "qisowatch", "social", "online", "spreading", "fake"],
+      "answer": "Several viral claims trace to partisan accounts: QisoWatch posted the 20,000 figure and the cholera rumour; PatriotPulse claimed the whole capital centre closed; The Real Story Network promoted the 'red scarves' militia sign. Residents and official sources contradict each: a clinic notice says no cholera, the Herald reports the market reopened next day, and a local trader says she sells red scarves mostly to Sitwani grandmothers.",
+      "citations": [
+        { "doc_id": "social-trending", "paragraph": 12 },
+        { "doc_id": "social-cholera", "paragraph": 11 },
+        { "doc_id": "national-news-2", "paragraph": 11 },
+        { "doc_id": "social-red-scarves", "paragraph": 15 }
+      ],
+      "key_finding": "Key rumours (20,000 people, cholera, 'red scarf' militias) trace to partisan accounts and are contradicted by clinic staff, the Herald and residents."
+    }
+  ],
+  "structured": {
+    "objective": [
+      { "text": "Keep Qiso calm.", "basis": "notes", "ref": "keep qiso calm" },
+      { "text": "Keep Kiman families together.", "basis": "notes", "ref": "keep kiman families together" },
+      { "text": "Avoid bankrupting the town.", "basis": "notes", "ref": "don't bankrupt the town" },
+      { "text": "Save the harvest.", "basis": "notes", "ref": "save the harvest" },
+      { "text": "Stay on good terms with the Border Authority.", "basis": "notes", "ref": "don't get on the wrong side of the BA" }
+    ],
+    "parties": [
+      {
+        "party": "You (Mayor of Qiso)",
+        "position": [
+          { "text": "Open to the stadium as a short-term measure.", "basis": "notes", "ref": "the stadium might be ok short term" }
+        ],
+        "interests": [
+          { "text": "Municipal solvency.", "basis": "notes", "ref": "don't bankrupt the town" },
+          { "text": "Public order in town.", "basis": "notes", "ref": "keep qiso calm" },
+          { "text": "A good relationship with a national body close to the President.", "basis": "notes", "ref": "they report straight to the president" }
+        ],
+        "values": [
+          { "text": "Families should not be split up.", "basis": "notes", "ref": "keep kiman families together" }
+        ]
+      },
+      {
+        "party": "Border Authority officer",
+        "position": [
+          { "text": "Every Chiasan in the stadium and bussed to RDFs within two weeks.", "basis": "notes", "ref": "they want every chiasan in qiso in the stadium and bussed to the RDFs within 2 weeks" }
+        ],
+        "interests": [],
+        "values": []
+      },
+      {
+        "party": "Farmers",
+        "position": [
+          { "text": "Upset by removals.", "basis": "notes", "ref": "the farmers will be upset" }
+        ],
+        "interests": [],
+        "values": []
+      },
+      {
+        "party": "Church Association",
+        "position": [
+          { "text": "Hosting about 900 people in halls and homes.", "basis": "notes", "ref": "church is hosting ~900 in halls and homes" }
+        ],
+        "interests": [],
+        "values": []
+      }
+    ],
+    "island_of_agreement": {
+      "convergent_facts": [
+        { "text": "A large number of Chiasans are staying in Qiso.", "basis": "notes", "ref": "around 6,000" }
+      ],
+      "contested_facts": [
+        { "text": "The exact number (the town uses about 6,000).", "basis": "notes", "ref": "tell him around 6,000" },
+        { "text": "Health risk at the school gym (cholera rumours).", "basis": "notes", "ref": "cholera rumours" }
+      ],
+      "shared_norms": [
+        { "text": "People need food.", "basis": "notes", "ref": "people need food" }
+      ],
+      "divergent_norms": [
+        { "text": "Whether private hosting of Chiasans is legitimate.", "basis": "notes", "ref": "not sure that's even legal under the protocols" }
+      ]
+    },
+    "stakeholders": [
+      { "text": "Police chief: expected to go along, reluctantly.", "basis": "notes", "ref": "the chief will grumble" },
+      { "text": "Farmers: opposed to removals.", "basis": "notes", "ref": "the farmers will be upset" },
+      { "text": "School parents: angry about the gym.", "basis": "notes", "ref": "parents furious" },
+      { "text": "Emergency International: wants personal data to plan food.", "basis": "notes", "ref": "EI wants a list of names, ages and locations" },
+      { "text": "The President: the Border Authority reports directly to them.", "basis": "notes", "ref": "they report straight to the president" }
+    ],
+    "red_lines": [],
+    "alternatives": [],
+    "options": [
+      { "text": "Move the school-gym families first.", "basis": "notes", "ref": "maybe the gym families go first" },
+      { "text": "Bridge costs from the reserve until compensation arrives.", "basis": "notes", "ref": "float anything extra from the reserve" },
+      { "text": "Share existing lists with EI.", "basis": "notes", "ref": "send them what we have" },
+      { "text": "Ask the churches to stop hosting.", "basis": "notes", "ref": "might have to tell them to stop" }
+    ],
+    "open_questions": [
+      { "text": "What interests sit behind the officer's two-week deadline, and who is the officer accountable to?", "basis": "framework", "ref": "" },
+      { "text": "Which of your five goals are red lines, and which could you trade?", "basis": "framework", "ref": "" },
+      { "text": "What will you do if the officer insists on the stadium and you cannot agree?", "basis": "framework", "ref": "" },
+      { "text": "Which facts could you and the officer both accept as a starting point?", "basis": "framework", "ref": "" },
+      { "text": "How do the farmers, churches and Kiman elders change what the officer can achieve without you?", "basis": "framework", "ref": "" }
+    ]
+  }
+}

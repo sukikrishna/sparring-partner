@@ -1,0 +1,52 @@
+{
+ "cases": [
+  {
+   "id": "alpha-camp",
+   "title": "Alpha: food access at the refugee camp",
+   "summary": "After unrest in Omega, refugees have poured into neighbouring Alpha; the largest camp holds about 160,000 people guarded by about 700 militia-linked guards. Food Without Borders (FWB) needs the Camp Commander's agreement to distribute food, while the Commander faces unpaid guards, a suspicious government and pressure to keep the camp under control.",
+   "roles": [
+    {
+     "id": "fwb",
+     "name": "FWB delegate"
+    },
+    {
+     "id": "commander",
+     "name": "Camp Commander"
+    }
+   ],
+   "documents": 21
+  },
+  {
+   "id": "beta-hospital",
+   "title": "Beta: detained surgical staff",
+   "summary": "Health for All (HfA), an international medical NGO, decided with little local consultation to close its surgical unit at a rural district hospital in Beta and move the team to a war zone elsewhere. Local armed tribesmen have confined nine international staff to their residence. A delegation from HfA headquarters must negotiate with the tribal leaders for the staff's safe release.",
+   "roles": [
+    {
+     "id": "hfa",
+     "name": "HfA delegation"
+    },
+    {
+     "id": "tribal-council",
+     "name": "Tribal council"
+    }
+   ],
+   "documents": 29
+  },
+  {
+   "id": "qiso",
+   "title": "Qiso: refugees at the border town",
+   "summary": "Several thousand people have fled from Chiasa into Qiso, a farming town on Sitwan's border. Many come from Kiman, whose families have worked Qiso's almond and pecan harvest for generations. The national Border Authority wants every Chiasan in Qiso gathered in the municipal stadium and transferred to Refugee Detention Facilities within two weeks, and has sent an officer to agree a plan with the Mayor.",
+   "roles": [
+    {
+     "id": "mayor",
+     "name": "Mayor of Qiso"
+    },
+    {
+     "id": "border-officer",
+     "name": "Border Authority officer"
+    }
+   ],
+   "documents": 31
+  }
+ ]
+}

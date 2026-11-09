@@ -1,0 +1,962 @@
+{
+ "id": "qiso",
+ "title": "Qiso: refugees at the border town",
+ "summary": "Several thousand people have fled from Chiasa into Qiso, a farming town on Sitwan's border. Many come from Kiman, whose families have worked Qiso's almond and pecan harvest for generations. The national Border Authority wants every Chiasan in Qiso gathered in the municipal stadium and transferred to Refugee Detention Facilities within two weeks, and has sent an officer to agree a plan with the Mayor.",
+ "roles": [
+  {
+   "id": "mayor",
+   "name": "Mayor of Qiso",
+   "brief": "You are the Mayor of Qiso, a farming town on Sitwan's eastern border with Chiasa. Several thousand people from Chiasa, many of them from the neighbouring town of Kiman, have fled into Qiso. The Border Authority has written that your police must gather every Chiasan in the municipal stadium so they can be registered and bussed to Refugee Detention Facilities (RDFs). An officer of the Border Authority arrives this week to agree a timeline with you. Messages from your residents, farmers, churches, school, police chief and finance department are in your documents.",
+   "counterpart": "Officer of the Border Authority",
+   "starter_notes": "meeting w/ the border authority officer on thursday. they want every chiasan in qiso in the stadium and bussed to the RDFs within 2 weeks.\n\nhonestly the stadium might be ok short term. BA pays 6 SD per person per day so that should mostly cover it, and we can float anything extra from the reserve until the money comes through.\n\npolice can handle gathering people at the stadium, the chief will grumble but they manage the crowds every harvest festival.\n\nthe farmers will be upset but they'll come round once it's done, harvest isn't for another month anyway.\n\nnumbers - tell him around 6,000, that's the figure we've been using.\n\nschool gym is the worst of it. parents furious, cholera rumours, toilets broken. maybe the gym families go first.\n\nEI wants a list of names, ages and locations of everyone so they can plan food. we should just send them what we have, they're a big legit NGO and people need food.\n\nchurch is hosting ~900 in halls and homes. not sure that's even legal under the protocols, might have to tell them to stop.\n\nwhat I actually want: keep qiso calm, keep kiman families together, don't bankrupt the town, save the harvest. and don't get on the wrong side of the BA, they report straight to the president."
+  },
+  {
+   "id": "border-officer",
+   "name": "Border Authority officer",
+   "brief": "You are an officer of Sitwan's Border Authority, sent to Qiso to work with the Mayor to register the Chiasans in the town and transfer them to Refugee Detention Facilities within two weeks. Your role card and your instructions from headquarters are in your documents.",
+   "counterpart": "Mayor of Qiso",
+   "starter_notes": ""
+  }
+ ],
+ "documents": [
+  {
+   "id": "finance-memo",
+   "title": "Fiscal implications of the stadium request",
+   "kind": "Memo",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "Municipality of Qiso – Department of Finance",
+    "To the Mayor",
+    "Re: Fiscal implications of the Chiasan arrivals and the Border Authority’s stadium request",
+    "You had asked me to investigate our finances in light of the recent migration from Chiasa, in particular the request from the Border Authority to move all Chiasan residents to the stadium. From a fiscal perspective, unfortunately, I fear we simply cannot do it: we are already supporting about 500 residents directly through the school gym, the temple courtyard, and the truck parking lot. The others are all managing through the goodwill of specific citizens – or on the street.",
+    "Even in this setting, we are spending more than we should on their food and shelter, requests from the hospital clinics, overtime for the local police and other government workers including those in sanitation. We cannot keep this up, never mind fully house all 6000 (?) people in the stadium where we would have to fully provide for them. Specific figures are provided below.",
+    "Table 1. Current weekly spending (approx. 500 persons in municipal shelters)",
+    "Item | Weekly cost (SD)",
+    "Food (approx. SD 9 per person per day) | 31,500",
+    "Bedding, tarps, and shelter supplies | 6,200",
+    "Portable toilets (24 units) and waste removal | 8,400",
+    "Water trucking | 3,100",
+    "Police overtime | 14,800",
+    "Sanitation staff overtime | 5,600",
+    "Clinic supplies requested by the hospital | 11,900",
+    "Total | 81,500",
+    "Table 2. Estimated weekly cost of housing 6,000 persons in the stadium",
+    "Item | Weekly cost (SD)",
+    "Food | 378,000",
+    "Tents and bedding | 45,000",
+    "Portable toilets (300 units) and waste removal | 72,000",
+    "Water | 26,000",
+    "Police (24-hour perimeter) | 96,000",
+    "Medical post | 38,000",
+    "Total | 655,000",
+    "Border Authority compensation (SD 6 per person per day) | 252,000",
+    "Weekly shortfall | 403,000",
+    "Note that the compensation is paid only after 90 days, and only on submission of a verified register, so we would have to cover the full amount upfront. Our emergency reserve currently stands at about SD 1.2 million, which would cover roughly three weeks of the stadium plan with nothing left for anything else. I have heard, but have not been able to confirm, that Tali has yet to receive any of its compensation from the Border Authority.",
+    "On the “6,000” figure",
+    "I put a question mark next to 6,000 because no one has an exact count. My best rough breakdown, based on police reports and conversations with the Church Association and the Farmers’ Association, is: about 500 in municipal shelters; about 900 in church halls and members’ homes; perhaps 2,500 camping in orchards with the landowners’ permission; and the rest, perhaps 2,000, staying with friends or sleeping in public places. These numbers could easily be off by a thousand in either direction.",
+    "On the harvest",
+    "The almond and pecan harvest accounts for about 58% of the Municipality’s annual revenue, roughly SD 4.8 million in a normal year, through the agricultural export levy and related taxes. If the harvest fails or is significantly reduced, we will face cuts to the school, the clinic subsidies, and road maintenance next year, regardless of what happens with the refugees.",
+    "I am available to go through these figures with you at any time.",
+    "Director of Finance, Municipality of Qiso"
+   ],
+   "source": "Cases/Final/Mayor/Message from Qiso Finance.docx"
+  },
+  {
+   "id": "police-memo",
+   "title": "Police staffing and public order",
+   "kind": "Memo",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "Qiso Municipal Police – Office of the Chief",
+    "To: The Mayor of Qiso",
+    "Re: Staffing and public order",
+    "Mayor,",
+    "I am writing to you as our force is severely stretched. We are used to welcoming approximately 1,000 workers from Kiman each fall into Qiso. However, now we have 6,000 Chiasans in Qiso. It is not harvest season for another month. They have no jobs, nothing to do but make trouble; and as they cause trouble, our stretched force struggles to keep the peace among our local residents. I understand that we have close ties with Kiman, like most people here I grew up in a farming family myself. But the situation now is simply not stable. There have been many small altercations that have raised tensions. I worry that at some point it will all snap.",
+    "Some numbers so you understand where we are. We have 22 sworn officers, two of whom are on medical leave. Everyone is now on twelve-hour shifts, six days a week, and I have cancelled all leave. Calls to the station have gone from about 15 a day to over 60. I want to be honest with you: a large share of these calls, perhaps a third, are residents reporting “suspicious Chiasans” who, when we arrive, are doing nothing illegal: sitting in the square, walking to the orchards, waiting outside the clinic. Every one of those calls still takes an officer off the street for an hour.",
+    "At the same time, there have been real incidents, including the altercation outside the school, which you will have seen in the log. I am also concerned about the other direction. Some residents have started going out in groups to “chase off” Chiasans from the market, and I have had a report of flyers from an outfit called Sitwan Heritage Watch asking people to call a private number instead of us. Vigilante groups are the last thing we need.",
+    "Regarding the Border Authority’s request: we do not have the numbers to round up 6,000 people and then guard them around the clock. If we try to do it by force, I believe there will be resistance, especially from the families sheltering in the orchards, and some of our own residents may side with them. I cannot guarantee the safety of my officers or anyone else in that situation.",
+    "I would request authorization to bring in retired officers on a temporary basis and to ask the Tali district for reinforcements, though I doubt Tali can spare anyone.",
+    "Chief of Police, Qiso"
+   ],
+   "source": "Cases/Final/Mayor/Message from Qiso Police Chief.docx"
+  },
+  {
+   "id": "farmers-letter",
+   "title": "Letter from an almond grower (Farmers' Association)",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "To the Mayor of Qiso,",
+    "I write this on behalf of myself and of my family, which in Qiso is a large one, as you know.",
+    "For over a generation, my family’s livelihood has been tied to the workers who come for the harvest every August-October. I owe these workers for everything my extended family has: the fact that my children, my partner, my uncles and aunts and cousins and nieces and nephews are all fed and do not want is due to the support of the workers who come and support us every year during the harvest. If these workers are in trouble, my family is in trouble. I will do everything I can to protect my family, and that means doing everything I can to protect my workers.",
+    "When the mine closed, my grandfather was one of the first to plant almonds. He used to say that the land gives the nuts but the people from Kiman give the harvest. Between us we now have eleven orchards, a hulling shed, and a share in the packing cooperative. Every one of those depends on about two hundred workers in the season. Without them, the nuts stay on the ground and rot, and the bank still wants its payments.",
+    "I have heard what is being said in town and online, that the Chiasans are thieves and troublemakers. I have worked alongside these people since I was a boy and I have never had so much as a tool go missing. If there are young men from other parts of Chiasa causing trouble, then deal with those young men. Do not punish families who have done nothing but work for us.",
+    "Many of us feel the same way. If you try to take them away from us, we will resist in every way we can. That means lawyers, the newspapers, our representatives in the capital, and, if it comes to it, standing at the orchard gates ourselves. I do not say this to threaten you. I say it so that you know where we stand before you make any decisions.",
+    "I hope you will stand with us.",
+    "With respect,",
+    "An almond grower and member of the Qiso Farmers’ Association"
+   ],
+   "source": "Cases/Final/Mayor/Farmers 3.docx"
+  },
+  {
+   "id": "farmer-private",
+   "title": "Private letter from a Farmers' Association member",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "To the Mayor,",
+    "I am writing to you privately, and I would ask that you not share this letter or my name.",
+    "I hope that our official message from the Qiso Farmers’ Association was sufficient for you to understand the need to ensure that our agricultural workers are protected: they are critical to the harvest, and for many of us, they are like family.",
+    "But I also want to draw your attention to some disturbing rumors shared with me by an agricultural worker who has assisted our family for many years. He says that some of the people from Kiman and surrounding areas have formed local militias to protect their own. Relations between Qiso and Kiman have always been peaceful, but the people of Kiman are afraid of forced deportation, and some are preparing to act if such measures are taken. My contact said that action may include sabotaging our harvests.",
+    "I want to be careful about how I describe this. My contact did not say he was part of any such group, and he was clearly frightened to tell me. He said it was mostly young men who are not from Kiman, who came over the border in the last few weeks from towns further east, and who have been talking to some of the Kiman boys. He said some of them had been in the local defense groups that fought the Aichi before they fled. He did not know how many there were. When I asked him what “sabotage” meant, he said things like setting fire to the hulling sheds or cutting the irrigation lines. I do not know whether any of this is true, or whether it is just angry talk among young men with nothing to do.",
+    "I urge you to please provide reassurance that we will not be deporting anyone. We have had such productive relations with Kiman, we cannot let this blow up. I fear that if things go badly, it will not be just this year’s harvest – the damage and suspicions may affect our farming for many more seasons. Orchards take a decade to grow and only a night to burn.",
+    "I have not told the police, because I am afraid that if this reaches the Border Authority, they will use it as a reason to round everyone up. I am trusting you to use this information wisely.",
+    "A member of the Qiso Farmers’ Association"
+   ],
+   "source": "Cases/Final/Mayor/Farmers 4.docx"
+  },
+  {
+   "id": "church-letter",
+   "title": "Letter from the Qiso Church Association",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "Qiso Church Association",
+    "A fellowship of fourteen congregations serving Qiso and the surrounding valleys",
+    "To the Mayor:",
+    "Grace and peace to you, and to all who serve in the Mayor’s Office during this difficult season.",
+    "You have already heard from our farmers’ association about how central the people of Kiman are to the local economy. As the largest collection of congregations in Qiso, we also ask you to do everything you can for our brothers and sisters from Kiman. Many of our congregations have prayed alongside families from Kiman during harvest time for years, and some of our members have married into Kiman families. When we say “brothers and sisters,” we mean it.",
+    "We have heard a rumor that you are considering containing all the Chiasans in the stadium. The stadium is not a safe or sanitary place for such a large population. It has toilets for a crowd that stays for an afternoon, not for thousands of people living there day and night. There is very little shelter from the weather, and the nights are already getting cold. We fear for the elderly, the sick, and especially the little ones.",
+    "Our congregation has opened our homes and church spaces for the people of Kiman. At present, our fourteen congregations are hosting approximately 900 people: around 350 in church halls and the remainder in the homes of our members. Our volunteers serve two hot meals a day from the kitchens of the three largest churches, and we have set up a clothing exchange in the hall of St. Anselm’s. This is a much better place for them, and certainly much better than the conditions these people would face in the RDFs. We have all read the reports from Tali.",
+    "We know that the Border Authority has said that citizens may not shelter Chiasans. We respectfully say that offering shelter to people in need is not something we are able to stop doing; it is at the heart of our faith. We are, however, happy to share with your office the number of people in our care, and to work with you on any arrangement that keeps families together and keeps them in Qiso.",
+    "We would welcome the opportunity to meet with you. Our ministers are also happy to speak to the Border Authority officer if that would help.",
+    "We are here to support you in the Lord’s work.",
+    "In faith and fellowship,",
+    "The Council of the Qiso Church Association"
+   ],
+   "source": "Cases/Final/Mayor/Messaage from Qiso Church Association.docx"
+  },
+  {
+   "id": "kiman-elders",
+   "title": "Letter from the Elders of Kiman",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "To the Honorable Mayor of Qiso and the People of Qiso,",
+    "We are writing as the Elders of Kiman.",
+    "First, we express our deepest gratitude for welcoming our people into Qiso. The last we have been able to hear, militias representing the Aichi faction were close to taking over what was left of Kiman – and the roads between here and Kiman are effectively closed due to their supposed “security” checkpoints. So many in Chiasa have lost their homes and have nowhere to go but away. At least we had somewhere to go.",
+    "For many years, our families have walked the road to Qiso every harvest. Our fathers walked it, and their fathers before them, back to the days when Qiso’s mines were still open. We have eaten at your tables and you have eaten at ours. When your farmers came to Kiman for our festivals, we gave them the best seats. We do not forget these things. It is because of this long friendship that we are able to write to you so plainly now.",
+    "That said, we want to draw your attention to some concerning incidents. We have heard that some of our youth have been accused of vandalism. We assure you, no such vandalism occurred. Our youth are as grateful as us to have a place to be. Indeed, it is your youth that have been a source of trouble. As you know, we are a deeply traditional culture. It is the job of women to protect and cultivate our values in our children and in our community. It is the job of men to respect and protect our women. When your youth show disrespect to our girls and women, this is a grave insult to our community. We have reported such incidents near the temple courtyard to your police, but nothing was done.",
+    "The residents of Qiso and Kiman have known each other for a long time, and we know that many of you know and respect our values and our community. We are worried about those among you, however, that do not. We worry also because not all the Chiasans in Qiso are from Kiman. Those that have no connection to your town are likely to be more insulted by the behavior of your youth and the false accusations by a few. Our young men have lost so much; in the anger of these other Chiasans, they find purpose. If you fan the flames by going after our youth, we fear for the reactions that may come.",
+    "We would like to offer something in return. The Elders are willing to appoint respected men and women from our community to walk with your police in the market and near the school, so that any trouble can be settled quickly between our peoples. We also have many among us who are teachers, nurses, and builders, and who would gladly work.",
+    "You have done so much for us, and we ask that you do still more, for all our sakes. We depend on you now for our livelihood, but your livelihood – through the harvest, through the continued safety of your orchards – also lies in our hands. We must work together, or all of us will suffer.",
+    "With respect and gratitude,",
+    "The Elders of Kiman"
+   ],
+   "source": "Cases/Final/Mayor/Message from Kiman Elders.docx"
+  },
+  {
+   "id": "school-letter",
+   "title": "Letter from the school principal",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "Qiso Upper and Lower School – Office of the Principal",
+    "To: The Mayor of Qiso",
+    "From the Principal",
+    "Dear Mayor,",
+    "As you have seen, we have received many complaints from parents regarding the 150 persons (including 93 children) who are currently being housed in the gym. In the past two weeks alone, my office has received 41 written complaints and more phone calls than I can count, and the topic dominated our most recent parents’ evening.",
+    "I’m afraid they are right: while initially there was strong support to use the gym to house refugees, we are finding that we do not have the resources to support them. The conditions are highly unsanitary, and our pupils and teachers feel unsafe with migrants loitering around the campus. Many of the youth have formed gangs that bully our children, and once even beat one of them.",
+    "To give you a sense of the practical problems: the gym and the adjoining changing rooms have six toilets and four showers, which are now shared by the 150 residents and by our own pupils during physical education. We have three cleaning staff for the entire school, and they are not trained or equipped for this level of use. Several of the toilets have broken, and the plumber has told us the system was not designed for it. Some parents report that their children are refusing to use the toilets at all.",
+    "On vaccinations, which several parents have raised: our school nurse has checked the children in the gym, and 31 of the 93 children have vaccination cards. The others may or may not be vaccinated; we simply do not know. Under the national school safety regulations, all pupils must be up to date with their vaccinations, so integrating the Chiasan children into classes is not something we could do without first resolving this.",
+    "I also want to be fair to the families in the gym. Most of them are polite and grateful, and many of the mothers have offered to help with cleaning. Some of the older children have asked whether they can attend lessons. Some of our own pupils have been unkind to them, and I have had to speak to several of our students about name-calling and comments made to the Chiasan girls.",
+    "My first priority is to the children of Qiso. They deserve better than this. I would like to work with you to find alternative arrangements for sheltering these 150 persons. I would also be grateful for additional cleaning staff and portable toilets in the meantime, and for guidance on whether the Medical Aid Without Borders mobile clinic could vaccinate the children here at the school.",
+    "With best regards,",
+    "Principal, Qiso Upper and Lower School"
+   ],
+   "source": "Cases/Final/Mayor/Message from School.docx"
+  },
+  {
+   "id": "parents-letter-1",
+   "title": "Parent complaint: integrating Chiasan pupils",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "To the Principal",
+    "Cc’d to Mayor",
+    "Dear Principal,",
+    "I have heard a rumor that the 93 Chiasan children currently housed in the school gym may be integrated into our classrooms. I am writing to say that this is beyond madness. The school does not have the staff to even keep the facilities clean, and now you think you can suddenly increase the school’s size without impacting the current students?",
+    "Let me be specific about my concerns, since I suspect the school will want to dismiss them as prejudice. Our classes are already at 28 to 30 pupils. Adding 93 children, even spread across every year group, would put several classes well above 32. Most of these children do not speak Sitwani well, if at all, and the teachers would have to spend their time on translation and basic instruction rather than teaching the curriculum.",
+    "My children, all of our students have been working hard under the supervision of your excellent teachers to learn according to the high standards you enforce and do well on their Year 10 national exams. The Chiasan children are filthy and unfocused. Their education is poor and they are far behind. If you bring them into the classroom, they will be a huge distraction for the students and a time sink for the teachers. I read online that Chiasan children score on average less than half what Sitwani children score on standardized tests, and that in some regions most of them cannot read at all by age ten.",
+    "And add the rumor that one of our kids was beat up by a Chiasan gang for supposedly showing disrespect to a girl? If that’s their traditions, they can keep them! We don’t want that in my kid’s classroom!",
+    "I am not the only parent who feels this way. A group of us are prepared to keep our children at home if this plan goes ahead, and we will be raising it with the school board and with the Ministry of Education. I would appreciate a clear written answer as to whether this plan is under consideration.",
+    "Regards,",
+    "A concerned parent of a Year 9 pupil"
+   ],
+   "source": "Cases/Final/Mayor/Message from Parents 2.docx"
+  },
+  {
+   "id": "parents-letter-2",
+   "title": "Parent complaint: vaccinations at the school gym",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor"
+   ],
+   "paragraphs": [
+    "To the Principal",
+    "Cc’d the Mayor",
+    "Dear Principal,",
+    "I am writing about a matter of law and of public health, and I would ask that you treat it with the seriousness it deserves.",
+    "The school is in violation of Sitwan school safety requirements. The law states that all children and staff must have up-to-date vaccinations. This is not a guideline; it is a requirement that every parent in Qiso has had to comply with since our children first started school. My own children have had every vaccination on the national schedule, on time, and I have the cards to prove it.",
+    "My family employs people from Kiman as agricultural workers, and I know for a fact that most of the refugees from Chiasa that are housed in the school gym do not have vaccinations. Our workers have told us themselves that their children were never vaccinated, because there is no clinic within a day’s walk of their village. Some of the adults who work for us were vaccinated here in Qiso through the harvest program, but their children and elderly parents were not.",
+    "The gym shares toilets, showers, and corridors with our own children. Whatever the reasons for the situation, and I do have sympathy for these families, it is not acceptable that our children are being exposed to people who may be carrying measles, polio, or worse. I have read that there has already been a case of cholera at the clinic. If that is true, the school should have informed parents immediately.",
+    "I would ask for the following: first, written confirmation of the vaccination status of everyone housed in the gym; second, that unvaccinated persons be moved away from the school or vaccinated without delay; and third, that parents be informed of any cases of infectious disease connected with the school.",
+    "If this matter is not resolved immediately, I will report this to the Ministry of Health.",
+    "Sincerely,",
+    "A parent and local employer"
+   ],
+   "source": "Cases/Final/Mayor/Message from Parents 3.docx"
+  },
+  {
+   "id": "officer-rolecard",
+   "title": "Role card: Officer of the Border Authority",
+   "kind": "Role card",
+   "visible_to": [
+    "border-officer"
+   ],
+   "paragraphs": [
+    "You are an officer of the Border Authority in the country of Sitwan. Your parents and older siblings have told you about Sitwan in the old days before the relatively new national government passed and implemented a series of reforms such that most of the country now has access to basic healthcare, education, and sanitation. You are too young to remember those days, but you have heard enough stories to know how lucky you are to be living in these current times. You also know how fragile your country’s current relative prosperity is: When you were a teen, a wave of immigrants from neighboring Lolai arrived in your home city, stretching infrastructure. In particular, you recall how your mother had to wait to get basic treatment after a fall, due to which she never fully recovered. You saw the fear in your community and city about a return to a time when basic government infrastructure and support did not exist.",
+    "That particular wave of uncontrolled migration triggered the Safe Borders Program which clearly defined the standards for legal immigration and accommodations for future refugees. Much of the law and standards in the program were not initially implemented because the Lolai crisis turned out to be brief: the conflict in Lolai that had triggered the migration resolved quickly, and the people who had flooded your city were eager to return to their homes.",
+    "However, now your country is facing a potentially much worse situation. About 40,000 people have fled from Chiaso, another neighboring country, into Sitwan. Unlike relatively prosperous and ethnically homogenous Lolai, Chiaso has always suffered from a level of unrest and ethnic violence. The Border Authority has every reason to suspect that these 40,000 people are just the first wave in a much larger flood of migration as the conflict in Chiaso intensifies. At least now you have laws and processes in place: processes for the registration of anyone entering the country, centers where these people can be housed and supported in ways that do not destabilize the Sitwan.",
+    "You are being sent to Qiso, a town on the Chiaso border, where word has it there are over 6,000 undocumented refugees who are staying in the town illegally. Your task is to work with the mayor to get these refugees to the appropriate centers within the next two weeks. It’s not only the law, it’s essential for protecting the safety and security of all of Sitwan as well as ensuring that the refugees are provided for.",
+    "Redlines: You may not allow any undocumented non-citizens in Sitwan, no matter how or when they arrived. The whereabouts of these non-citizens must be accounted for at all times. The safety and security of Sitwan is paramount."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Rolecard_ Officer from Border Authority.docx"
+  },
+  {
+   "id": "hq-instructions",
+   "title": "Deployment to Qiso (restricted instructions)",
+   "kind": "Instructions",
+   "visible_to": [
+    "border-officer"
+   ],
+   "paragraphs": [
+    "BORDER AUTHORITY OF SITWAN",
+    "Office of the Deputy Director for Field Operations",
+    "RESTRICTED – FOR OFFICIAL USE ONLY",
+    "Reference: BA/FO/EAST/0417",
+    "To: Field Officer, Eastern Region",
+    "Subject: Deployment to Qiso – Registration and Removal of Unregistered Chiasan Nationals",
+    "Officer,",
+    "I am sending you to Qiso to make arrangements to put in place and oversee the process of managing the nearly 6,000 persons from Chiasa who have fled to Qiso. Please note that this figure is based on reports from the municipality and from local informants. Our own analysts consider it likely to be an undercount. Given the town’s long-standing ties to Kiman and the number of informal crossing points along that section of the border, the true number in and around Qiso may be as high as 8,000 to 10,000. You should plan accordingly.",
+    "Such a large concentration of persons presents a particularly large security risk, which must be taken seriously. As you know, several Chiasan militias have formed in the last weeks, threatening the towns of Tali, Pirapi, and Nar. And those were with much smaller influxes of migrant populations. Our intelligence assessment is that a significant share of the military-age men crossing the border, possibly as many as one in five, may have ties to armed groups in Chiasa, including the Aichi faction now operating near Kiman. We cannot rule out that some have been sent deliberately to establish a presence in Sitwan.",
+    "You should also be aware of the public health dimension. We have received reports of cholera and measles among Chiasan populations, and vaccination rates in Chiasa are among the lowest in the region. Every day that these persons remain unregistered and unvaccinated in a town setting increases the risk to Sitwani citizens.",
+    "Nationally, over 40,000 Chiasans have now entered Sitwan, and the number grows each day. The RDF network is being expanded to meet this demand, and transport has been arranged through the Department of Defense.",
+    "Most importantly: we cannot have undocumented Chiasans with unknown whereabouts. Rumor has it that some Chiasans are sheltering in homes of residents of Qiso. Individual citizens cannot be trusted with keeping track of these Chiasans. You will find a way to remove them in order to take away the threat that they pose.",
+    "You have two weeks from arrival to complete registration and transfer. The Mayor of Qiso has been sent the standard notification letter. We expect the Mayor’s full cooperation, including the use of local police to gather all Chiasans in the municipal stadium. You are authorized to offer compensation at the standard rate set out in the Protocols.",
+    "Please send a situation report within 48 hours of arrival and daily thereafter.",
+    "The President and the Director are watching this deployment closely. Qiso will set the example for other border towns. I have every confidence in you.",
+    "Deputy Director for Field Operations",
+    "Border Authority of Sitwan",
+    "This message contains restricted information. Do not share it with municipal officials, the press, or members of the public."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Message from Central Border Authority.docx"
+  },
+  {
+   "id": "ba-letter",
+   "title": "Official letter from the Border Authority to the Mayor",
+   "kind": "Letter",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "BORDER AUTHORITY OF SITWAN",
+    "Eastern Region Field Office",
+    "Reference: BA/FO/EAST/0418",
+    "To the Mayor of Qiso:",
+    "Greetings on behalf of the Border Authority of Sitwan, a department of the national government reporting directly to the President.",
+    "I will be arriving representing the Border Authority of Sitwan to facilitate the documentation and removal of all Chiasans in Qiso.",
+    "As you will be aware, under the Safe Borders Program all non-citizens present in Sitwan must be registered with the Border Authority, and their whereabouts must be known at all times. It has come to our attention that a large number of Chiasan nationals are currently residing in Qiso without registration. This is a violation of national law, and the Border Authority is required to act.",
+    "As per protocols, you will contain all Chiasans in the stadium – the only place large enough for the number of migrants that you have – and you will use your local police to ensure that all Chiasans are brought there and none can leave. This includes Chiasan nationals currently housed in municipal buildings, in religious buildings, on agricultural land, and in private homes. Chiasan nationals who were present in Qiso as seasonal agricultural workers before the recent unrest are also required to register.",
+    "I realize that this is a heavy burden on your small town, and the Border Authority will compensate you for this work. Under the current schedule, municipalities are compensated at a rate of 6 Sitwani dinars (SD) per detained person per day, payable within 90 days of the submission of a verified register of persons detained. Additional costs may be submitted for consideration but cannot be guaranteed.",
+    "I will arrange for their registration and buses to transfer them to RDFs with sufficient space. All persons will be vaccinated, provided with shelter, food, clothing, and healthcare, and children will be enrolled in schooling in accordance with the Refugee Facility Requirements, a copy of which is attached for your reference.",
+    "Please be prepared to meet with me upon my arrival to agree on a timeline. I would ask that you bring the following to our meeting:",
+    "Your best current estimate of the number of Chiasan nationals in Qiso and their locations;",
+    "A plan for the use of the municipal stadium, including security and sanitation;",
+    "The number of police officers available for this operation; and",
+    "Any lists or registers your office has compiled of Chiasan nationals in the town.",
+    "Qiso is beset by the largest influx of residents. I assure you that the Border Authority of Sitwan is here to support you in this difficult time.",
+    "With respect,",
+    "Officer of the Border Authority",
+    "Eastern Region Field Office",
+    "Border Authority of Sitwan",
+    "Attachments: Refugee Processing and Transport Protocols; Refugee Facility Requirements"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Official Message from Border Authority to the Mayor of Qiso.docx"
+  },
+  {
+   "id": "protocols",
+   "title": "Refugee Processing and Transport Protocols",
+   "kind": "Regulation",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "BORDER AUTHORITY OF SITWAN",
+    "Refugee Processing and Transport Protocols",
+    "Issued under the Safe Borders Program. Version 2.1. This version supersedes all previous guidance.",
+    "1. Purpose",
+    "For the safety and security of Sitwan, all migrants from other countries must be properly processed and transported to Refugee Detention Facilities (RDFs). These protocols set out the responsibilities of the Border Authority, other government departments, and local authorities in the registration, temporary detention, and transport of non-citizens who enter Sitwan without prior authorization.",
+    "2. Definitions",
+    "For the purposes of these protocols, a “non-citizen” is any person present in Sitwan who does not hold Sitwani citizenship. A “registered non-citizen” is a non-citizen whose name, date of birth, nationality, photograph, and current location have been recorded by the Border Authority. “Local authorities” means municipal governments, municipal police, and any other local body acting under their direction. A “large arrival” is any group of fifty or more non-citizens arriving in or near a single town within a period of seven days.",
+    "3. Reporting and Registration",
+    "Persons using a standard port of entry should report themselves to an immigration official, who will route them to the Border Authority for registration and processing. Those arriving from nonstandard ports of entry should immediately report to the local authorities in the nearest town. The local authorities will detain the persons until registration can be performed by the Border Authority. It is a violation of law to enter the country without registration, regardless of the method of entry.",
+    "Seasonal agricultural workers who entered Sitwan under a valid harvest permit are considered registered for the duration of their permit only. Once a permit expires, or where the holder is unable to return to their country of origin, the holder must register again under these protocols.",
+    "4. Large Arrivals",
+    "In some cases, a large number of persons may arrive at one time. Local authorities should detain all such persons in a suitably large place – a school gym, a stadium, etc. Importantly, local authorities must ensure that no such persons are hiding in or around their town and prevent persons from running away. Your cooperation is essential to the safety and security of Sitwan. There have been many situations in the past where persons in these waves of migration overtaxed local facilities and caused damage and violence to local people. The Border Authority will compensate local authorities for this work.",
+    "Local authorities should keep a written register of all persons detained, including names, ages, and gender where known. This register must be handed to the Border Authority on request.",
+    "5. Transport",
+    "The Border Authority also has arrangements with the Department of Defense to provide buses from towns to RDFs. Again, we will work with local authorities to collect persons and take them to RDFs where their needs can be properly managed alongside the needs of Sitwan. Families will be transported together wherever operationally possible.",
+    "6. Compensation",
+    "Local authorities will be compensated at the rate set by the Border Authority, currently 6 Sitwani dinars (SD) per detained person per day. Claims must be accompanied by a verified register and are payable within 90 days.",
+    "7. Sheltering of Non-Citizens by Private Persons",
+    "Sitwani citizens and organizations may not provide long-term shelter to unregistered non-citizens. Citizens who knowingly shelter unregistered non-citizens and fail to report them to the local authorities may be subject to fines. Emergency assistance of a humanitarian nature, such as food or first aid, is not prohibited.",
+    "8. Questions",
+    "Questions regarding these protocols should be directed to the nearest Border Authority regional field office."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of Refugee Processing and Transport Protocols.docx"
+  },
+  {
+   "id": "ngo-list",
+   "title": "NGOs active in Sitwan (Mayor's Office list)",
+   "kind": "Reference",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "Municipality of Qiso – Office of the Mayor",
+    "Non-Governmental Organizations Currently Active in Sitwan in Connection with the Chiasan Refugee Situation",
+    "Compiled by the Mayor’s Office from public sources and correspondence received. The Municipality has not verified the registration status, funding, or activities of all organizations listed. Inclusion on this list does not constitute endorsement.",
+    "Organization | Type | Activities reported | Active in Qiso?",
+    "Emergency International (EI) | International humanitarian | Food, water, supplies for children | Visit planned this week",
+    "Highland Relief Network | National | Shelter, blankets, medication in RDFs | No (RDFs only)",
+    "Medical Aid Without Borders | International medical | Clinics, rehydration, vaccinations | Has offered one mobile clinic",
+    "Sitwan Red Crescent Society | National | First aid, family tracing, blood drives | Yes, two volunteers",
+    "Children First Alliance | International | Child protection, schooling in RDFs | No",
+    "Qiso Church Association | Local, faith-based | Housing in homes and church halls, meals | Yes",
+    "Friends of Kiman | Local, informal | Meals, clothing collection | Yes",
+    "Legal Aid for Migrants Sitwan | National | Legal advice on registration and detention | Phone line only",
+    "Global Water Partnership | International | Water points, latrines in RDFs | No",
+    "Sitwan Teachers’ Volunteer Corps | National | Volunteer teachers for refugee children | Enquiry received",
+    "Women’s Shelter Collective | National | Support for women and girls | No",
+    "Refugee Voices | International advocacy | Interviews, documentation of conditions | Journalist contact made",
+    "Sitwan Heritage Watch | National | “Community safety patrols” and reporting of “illegal migrants” | Unknown; flyers seen in market",
+    "Hope Bridge Foundation | International | Cash grants to families | No",
+    "Qiso Rotary Club | Local | Fundraising for municipal shelters | Yes",
+    "Note regarding Emergency International",
+    "Emergency International (EI) is a well-recognized non-governmental organization specialized in providing humanitarian assistance to refugees. EI has contacted the Mayor’s Office to announce its representatives will visit Qiso this week. It plans to provide material assistance to Chiasan refugees in Qiso, including food, water, as well as toys for children collected during its recent campaign for refugee children. To proceed with the distribution, EI requires the Municipality to provide a list of the names, gender, age, and locations of all the refugees in the county.",
+    "EI has stated that it needs this information to plan quantities and to avoid duplicate distributions. EI has not stated whether it would share the list with any other organization or government department. The Mayor’s Office does not currently hold a complete list; the only registers held are for the approximately 500 persons in the municipal shelters (school gym, temple courtyard, and truck parking lot).",
+    "Note regarding Sitwan Heritage Watch",
+    "Several residents have reported flyers in the market from a group calling itself Sitwan Heritage Watch, asking residents to “report suspicious Chiasans” to a phone number not affiliated with the police. The police have been informed."
+   ],
+   "source": "Cases/Final/Mayor/Shared/List of NGOs in Sitwan.docx"
+  },
+  {
+   "id": "about-chiasa",
+   "title": "About Chiasa: country background brief",
+   "kind": "Background",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "About Chiasa: Country Background Brief",
+    "Prepared for general reference. Figures are drawn from the most recent available regional surveys and may be several years out of date.",
+    "Chiasa is a geographically diverse, multi-ethnic country with people of X, Y, and Z backgrounds. The country is dry in the east, and has highlands in the west. From these highlands come the rivers P and Q. The capital is on the shore where the joined rivers meet the sea, but the most important city lies at the confluence of the two rivers, considered holy by the people of X.",
+    "Geography and Climate",
+    "Chiasa’s eastern plains receive very little rainfall for most of the year, and much of the land there is used for grazing or for drought-tolerant crops such as millet and sorghum. Moving west, the land rises steadily toward the highlands, where the climate is cooler and wetter. The highlands receive the bulk of their rain during a single rainy season, which typically runs from late spring through the end of the summer, tapering off in the early autumn. During this season, roads in the western highlands frequently wash out, and many smaller towns are cut off for days or weeks at a time. The P and Q rivers swell considerably during the rainy season and are important for irrigation in the lowlands. The western highlands border Sitwan, and several small towns, including Kiman, lie within a short distance of the border.",
+    "Population and Peoples",
+    "Chiasa’s last census, which many observers consider incomplete, recorded a population of roughly 38 million. The people of X make up the largest group, at a little under half the population, followed by the people of Y at around a third. The people of Z make up most of the remainder and live primarily in the western highlands. The Z of western Chiasa speak dialects closely related to those of the Z’ people of neighboring Sitwan, and families on both sides of the border have long traded, worked, and intermarried with one another.",
+    "While these two larger cities have much modern infrastructure, overall Chiasa lags behind other countries in the region by almost every metric. People are relatively poor; about 50% of the population lives at mild levels of malnutrition or worse. Access to health services is low, as are vaccination rates. Maternal mortality rates are high. The lack of basic services, food, and shelter for many results in low rates of educational achievement.",
+    "Selected Indicators (approximate)",
+    "Indicator | Chiasa | Regional average",
+    "Life expectancy at birth | 58 years | 67 years",
+    "Adult literacy | 54% | 78%",
+    "Childhood vaccination coverage (basic schedule) | 41% | 76%",
+    "Households with electricity | 38% | 71%",
+    "Households with piped water | 29% | 64%",
+    "Coverage is significantly lower in the western highlands than in the capital and the confluence city. Some programs, such as cross-border seasonal worker health checks, have raised vaccination rates in a handful of border towns.",
+    "History and Politics",
+    "Part of the reason is that the Chiasa region has had many ethnic groups conquer and occupy the area over the centuries. The animosities created by this run deep, especially between the people of Z and the peoples of X and Y. Further divisions arise due to religious divisions. For example, about half of the people of Z converted with the arrival of missionaries, while others kept to their traditional ways. The region has never had a stable government or culture. Indeed, were it not for western powers creating maps, this region would likely not be a country at all.",
+    "Chiasa is formally a parliamentary democracy, and elections are held on a regular schedule. In practice, senior positions in the government, the courts, and the military have been held almost exclusively by members of the X and Y communities. Z political parties have repeatedly complained of being excluded from power, and several Z-led protest movements over the past two decades ended in arrests. The western highlands receive a small share of the national budget relative to their population.",
+    "Economy",
+    "Chiasa’s economy is heavily dependent on agriculture, with cotton and grain grown in the east and tea, fruit, and nuts grown in the west. The highlands also have small mining operations. Many highland families rely on income from seasonal work, including harvest work across the border in Sitwan, which can account for a large share of a household’s yearly earnings."
+   ],
+   "source": "Cases/Final/Mayor/Shared/About Chiasa.docx"
+  },
+  {
+   "id": "intl-news-1",
+   "title": "Conditions in Sitwan's refugee facilities draw concern",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE GLOBAL DISPATCH | World | Refugees",
+    "“We are drowning in mud”: Conditions in Sitwan’s refugee facilities draw international concern",
+    "By our correspondent, 20 September",
+    "Reports of the shockingly poor conditions in Sitwan’s RDFs have shocked the world. Multiple interviews with local NGOs serving the RDFs confirm that many of the residents of these RDFs lack access to basic medications, and the shelters are insufficient for the rainy season. The rains have further exacerbated issues with the sanitation, with sewage overflow mingling with the muddy and flooded access ways within the facility.",
+    "Sitwan, a small highland nation long regarded as a regional success story, has in recent weeks faced the largest movement of people across its eastern border in living memory. Refugee Detention Facilities, known locally as RDFs, were designated under the country’s Safe Borders Program roughly a decade ago, but most had never been used before this summer. Several are converted warehouses or former army depots.",
+    "“The tents were not made for this kind of weather,” said a volunteer with the Highland Relief Network, one of several NGOs permitted to deliver aid inside the facilities. “We are drowning in mud. Families are sleeping on pallets to keep off the wet ground. People with diabetes or high blood pressure ran out of their medicines on the journey, and there is nothing to replace them with.”",
+    "Another aid worker, who asked not to be named because they were not authorized to speak to the press, described long lines for a small number of water points and latrines. “The staff are doing what they can. There are simply too many people and not enough of everything.”",
+    "A spokesperson for Sitwan’s Border Authority said in a written statement that “all RDFs meet or exceed the standards set out in the Safe Borders Program,” and that “temporary challenges caused by unusually heavy rainfall are being addressed.” The spokesperson did not respond to follow-up questions about how many people were currently housed in each facility or about the availability of medications.",
+    "The United Nations refugee agency said it had requested access to the facilities to carry out an independent assessment and was awaiting a response from the Sitwani government.",
+    "Human rights groups have urged neighboring countries and international donors to support Sitwan, which, they note, did not cause the crisis and has comparatively limited resources. “This is a country of 11 million people being asked to absorb a crisis it did not create,” said a regional analyst. “But that does not change the obligation to treat people humanely.”",
+    "There are currently 10 RDFs in Sitwan, to accommodate the 12,000 people who have recently crossed the border from Chiasa. Sitwan fears that this group may be only the first wave as unrest and ethnic violence in Chiasa intensifies."
+   ],
+   "source": "Cases/Final/Mayor/Shared/International News 1.docx"
+  },
+  {
+   "id": "intl-news-2",
+   "title": "Parents left in the dark as children are moved",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE GLOBAL DISPATCH | World | Refugees",
+    "Parents left in the dark as children are moved within Sitwan detention facility",
+    "By our correspondent, 24 September",
+    "Reports have been received of children being separated from their parents at an RDF located north of Tali, Sitwan. The parents were told that the children had to be taken for required health checks and also would be required to attend the RDF-provided schooling during the day. Some of the children did not come home, and parents were left for days not knowing what had happened. In one case, it was decided that a child needed monitoring for a fever but parents were not notified. In another case, an issue with documentation at school resulted in a teen being taken for questioning by police and transferred to another RDF, all without the parents’ knowledge or consent.",
+    "The facility north of Tali is one of the largest of Sitwan’s Refugee Detention Facilities, and according to aid workers it holds several hundred children. Under the facility’s rules, children are required to attend daytime classes run by volunteer teachers from local and international NGOs, while adults remain in the residential area.",
+    "“Every evening there is a crowd at the gate waiting for the children to come back,” said one aid worker. “Most of them do. But when one does not, nobody can tell the parents where the child has gone. The staff at the gate do not have the information, and the office is closed by then.”",
+    "One mother, who spoke through an interpreter, said she had waited three days to learn that her eight-year-old son had been kept overnight in the facility’s medical unit with a fever. “They said he was fine. But I did not know if he was alive. Nobody told me anything.”",
+    "In a separate case described by two aid workers, a 16-year-old boy was taken for questioning after staff at the facility school found what they believed to be an error in his registration documents. He was later transferred to a different RDF. His parents learned of the transfer only after other residents told them.",
+    "In a statement, the Border Authority denied that any children had been “separated” from their families. “Children are temporarily accommodated in health screening areas in accordance with protocol,” the statement said. “All transfers between facilities are conducted for operational reasons and in the best interests of the persons concerned.” The statement did not say how parents are notified.",
+    "Child protection specialists said the reports, if accurate, pointed to basic failures in record-keeping and communication rather than deliberate policy, but that the effect on families was the same. “For a child who has just fled violence, even one night without their parents can be deeply traumatic,” one specialist said.",
+    "There are currently 10 RDFs in Sitwan, to accommodate the 12,000 people who have recently crossed the border from Chiasa. Sitwan fears that this group may be only the first wave as unrest and ethnic violence in Chiasa intensifies."
+   ],
+   "source": "Cases/Final/Mayor/Shared/International News 2.docx"
+  },
+  {
+   "id": "intl-news-3",
+   "title": "Leaky shelters raise disease fears in RDFs",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE GLOBAL DISPATCH | World | Health",
+    "Leaky shelters and standing water raise disease fears in Sitwan’s RDFs",
+    "By our correspondent, 27 September",
+    "There have been reports that the shelters in the detention centers (RDFs) are insufficient. As we are toward the end of the rainy season, many of the shelters are leaky and the access ways are muddy and puddled without adequate drainage. The standing water also results in conditions for mosquitoes and creates threats of waterborne disease.",
+    "Aid workers say that many of the tents and prefabricated shelters at the facilities were placed directly on bare earth, with little or no raised flooring and few drainage channels. After weeks of rain, some sections of the larger facilities have become difficult to walk through, particularly for elderly residents and people with injuries.",
+    "“You have children playing in puddles that are mixed with runoff from the latrines,” said a nurse volunteering with Medical Aid Without Borders. “That is how diarrheal diseases spread. We are giving out oral rehydration salts every day.”",
+    "Public health officials in Sitwan said there had so far been no confirmed outbreaks of cholera or other serious waterborne diseases in any of the RDFs, and that cases of diarrhea were “within the range expected” for a population of this size living in temporary conditions. Officials said they were monitoring closely and that mosquito nets were being distributed. Aid workers said the nets had not yet arrived at all facilities.",
+    "The end of the rainy season, typically in late September or early October, is expected to bring some relief. But aid workers warned that the cooler months that follow bring their own challenges, particularly for families without warm clothing or blankets. Many refugees fled with only what they could carry.",
+    "The Border Authority said in a statement that it was “working in close partnership with NGOs to ensure the health and wellbeing of all persons in RDFs,” and that vaccination of all residents was “proceeding in accordance with Sitwani law.” It did not provide figures on how many residents had been vaccinated.",
+    "Sitwan has long had one of the highest vaccination rates in the region, and some Sitwani officials have expressed concern that diseases now rare in Sitwan could spread from the facilities into nearby towns. Health experts said the risk was real but manageable with prompt vaccination and better sanitation. “The best way to protect Sitwanis is to protect the people in the facilities,” one said.",
+    "There are currently 10 RDFs in Sitwan, to accommodate the 12,000 people who have recently crossed the border from Chiasa. Sitwan fears that this group may be only the first wave as unrest and ethnic violence in Chiasa intensifies."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of International News 3.docx"
+  },
+  {
+   "id": "intl-news-4",
+   "title": "How a train attack in Chiasa set off a refugee crisis",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE GLOBAL DISPATCH | World | Analysis",
+    "How a train attack in Chiasa set off a refugee crisis, and why it may get much worse",
+    "By our regional analyst, 2 October",
+    "NGOs report that about 17,000 refugees have fled from Chiasa to neighboring Sitwan. Given the continuing unrest, one analyst warned, this number could easily rise over 1 million.",
+    "The unrest started when a militant group in Chiasa sabotaged a train track at a time when it was known that many citizens from Chiasa would be using transport to the confluence of the P and Q rivers for the largest holy festival in Chiasa. The militants represent the Z minority who live primarily in the western part of the country bordering Sitwan, who have been clamoring for equal rights in Chiasa’s on-paper democracy, where in practice most high posts go to members of groups Y and X. The attack spurred reprisals, initially in the major cities of Chiasa, setting fire to and destroying buildings in traditionally Z neighborhoods. Fearing for their lives, waves of Z people fled, most of them westward. The towns on the western border could not hold them, resulting in Z-on-Z violence, with local militias forming to protect the towns, but these were soon overwhelmed by military forces from the center sent to control the violence but actually just making things worse.",
+    "Among the armed groups now operating in the western highlands is a hardline Z faction known as the Aichi. The Aichi claim to be protecting Z towns from both the national army and from “outsiders,” including other displaced Z. Residents who have fled the area say the Aichi have set up so-called security checkpoints on the main roads, where travelers are searched, questioned, and in some cases made to pay before they are allowed to pass. Several towns close to the Sitwani border, including Kiman, are reported to be partly or entirely under Aichi control.",
+    "How many people have fled?",
+    "Estimates of the number of people who have crossed into Sitwan vary widely. The figure of about 17,000 is based on counts by NGOs working at border crossings and in Sitwan’s Refugee Detention Facilities, as well as in towns where large numbers of refugees are staying. Sitwan’s Border Authority has publicly given a much higher figure, stating that “over 40,000” Chiasans have entered the country. Several NGOs have questioned that number, saying it appears to include Chiasan seasonal agricultural workers who were already in Sitwan legally for the harvest, and may count some people more than once as they move between towns. The Border Authority has not published how its figure was calculated.",
+    "What comes next?",
+    "The prediction that the number could rise above 1 million reflects a worst-case scenario in which the violence spreads throughout the western highlands, home to several million Z. Most analysts consider this unlikely in the short term but not impossible. A more common estimate among regional observers is that between 50,000 and 150,000 more people could cross into Sitwan over the coming months if the fighting continues.",
+    "Sitwan’s government has said it will “fulfill its humanitarian obligations while protecting the safety and security of the Sitwani people.” Neighboring countries have so far offered limited assistance."
+   ],
+   "source": "Cases/Final/Mayor/Shared/International News 4.docx"
+  },
+  {
+   "id": "national-news-2",
+   "title": "Disturbance at the Capital Square market",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE SITWAN HERALD | Capital",
+    "Chaos at the grand market as gangs rampage through Capital Square",
+    "30 September",
+    "The grand market in Capital Square is one of the highlights of visiting the capital of Sitwan. But not yesterday.",
+    "Multiple gangs of Chiasan men entered the market shortly after it opened. Initially they heckled the stall owners and customers, asking them to give them things for free. This turned into vandalism and destruction of property on a scale not seen in the capital.",
+    "“I couldn’t see anything but Chiasan men throwing and breaking things all around where I was,” said one stall owner. “As a woman this was very scary.”",
+    "“I hid under my cart, they were upturning another cart,” said another. “I’m grateful that my cart survived, though most of my goods were damaged.”",
+    "“There’s the relief of being alive and uninjured,” said yet another shop owner. “And then that quickly fades: I have nothing. How am I going to feed my family, not just tonight, but all the nights going forward? I have a few savings, but not enough.”",
+    "According to a statement released by the capital police late last night, officers were called to the market at approximately 8:40 a.m. and the disturbance was brought under control within about forty minutes. Police estimated that “around thirty” men were involved. Nine were arrested. Police said seven of those arrested were Chiasan nationals and two were Sitwani citizens, and that investigations into the cause of the disturbance were ongoing. Four people, including one police officer, were treated for minor injuries. No one was seriously hurt.",
+    "Several witnesses said the disturbance began after an argument at a food stall escalated, though accounts differed. Some said that market security had tried to remove a group of Chiasan men who had been sleeping in the square overnight.",
+    "The market was closed for the rest of the day for cleaning and repairs, and the city council confirmed that it reopened as usual this morning, though a number of stalls remained shut. Contrary to rumors circulating online, the city center was not closed, and other businesses around the square operated normally.",
+    "The city is working with the vendors to support those who have lost their livelihoods as well as working with the Border Authority to remove these bad elements.",
+    "The Capital Square market dates back more than three centuries and has around 600 licensed stalls selling everything from textiles and spices to electronics. It is one of the capital’s most popular tourist destinations. The Capital Traders’ Guild said it was compiling a list of losses and would ask the city for emergency compensation for affected members."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of National News 2.docx"
+  },
+  {
+   "id": "national-news-3",
+   "title": "Tali restaurant owners say they cannot keep feeding migrants",
+   "kind": "News",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "THE SITWAN HERALD | Regions",
+    "Tali restaurant owners say they cannot keep feeding migrants",
+    "3 October",
+    "There have been multiple reports of Chiasan migrants entering restaurants and shops in Tali and refusing to leave until they are given food.",
+    "“I can’t support this,” said one restaurant owner. “I am sorry for these people, but I am one person with one small establishment run by me and my wife. I can’t solve the world’s problems.”",
+    "“I was sympathetic when I heard about the unrest in Chiasa,” said another. “I have some Z in my ancestry, and it’s terrible what’s happening there. But that does not excuse their behavior here.”",
+    "Tali, a city of about 180,000, lies roughly 60 kilometers from the Chiasan border and is close to one of Sitwan’s largest Refugee Detention Facilities. Business owners say that over the past two weeks, small groups of Chiasans, many of them young men and some of them families with children, have come into the town center asking for food and money. Most leave when asked, owners said, but some have refused, and in a few cases police were called.",
+    "Tali’s Chamber of Commerce said it had received 23 complaints from members in the past fortnight. A spokesperson for the Tali police said there had been “a small number” of arrests for theft and public disorder, but declined to give a figure.",
+    "Tali has been working with the Border Authority to contain these issues, but the Border Authority has been spread thin with this unexpected tide of migrants.",
+    "Local charities have set up two free meal points near the bus station, serving around 400 meals a day, and say demand is rising. “When people are fed, the problems in the restaurants go down,” said a volunteer. “It’s not complicated.”"
+   ],
+   "source": "Cases/Final/Mayor/Shared/National News 3.docx"
+  },
+  {
+   "id": "groupchat-traders",
+   "title": "Market Street Traders group chat",
+   "kind": "Group chat",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "Market Street Traders 🛍️ (group chat)",
+    "A: Anyone else’s card machine down today?",
+    "C: Mine’s fine.",
+    "B: Works for me. Try turning it off and on.",
+    "A: Ok that worked lol",
+    "D: Reminder that the market association meeting is moved to Thursday.",
+    "B: 👍",
+    "A: There’s five young men from Chiasa outside my shop. I’m scared.",
+    "B: What are they doing?",
+    "A: Nothing right now.",
+    "C: You heard what they did to D’s shop?",
+    "A: All her scarves that she has out front, ruined.",
+    "B: And they smashed a crate of oranges at the stall next to hers.",
+    "C: Most of the oranges were fine but it was a mess. And everyone was scared they didn’t come buying around there.",
+    "E: Wait, what happened at D’s?",
+    "C: Chiasan boys trashed her scarf rack yesterday.",
+    "E: Oh no! D are you ok??",
+    "A: No one wants to walk past them into my shop.",
+    "D: Hey A, I’m so sorry you got trouble too. You want some help?",
+    "D: (E, I’m fine, they ran off when I came out. Scarves were on the ground, just needed a shake. The police came and had a look.)",
+    "E: Oh ok, that’s not so bad then",
+    "C: Still. They were on the GROUND.",
+    "B: Yeah I can come over.",
+    "D: Chase them off.",
+    "A: Yeah they stay to the orchards that’s fine, or come to buy, that’s fine.",
+    "B: Fine fine.",
+    "A: Don’t want them here making trouble.",
+    "C: No.",
+    "A: They’re just standing there. Staring.",
+    "F: That’s… standing",
+    "C: F you weren’t here yesterday.",
+    "B: Okay my partner is managing the shop I’m coming.",
+    "A: Thank you.",
+    "D: I’m going to try too just give me a few.",
+    "B: kk",
+    "C: Can’t join you but you all let me know if there’s any trouble.",
+    "E: Be careful everyone",
+    "B: On my way. Got G and H with me too.",
+    "A: They’re still here.",
+    "B: Two minutes.",
+    "C: Anyone know if the pastry stall still has the walnut ones? Asking for later",
+    "E: C 😂 priorities",
+    "C: A person needs to eat",
+    "B: Ok we’re here. Police just showed up too. Someone called them.",
+    "A: Thank god",
+    "F: Was it actually a problem or did 4 grown adults just yell at some teenagers",
+    "B: They left. That’s all that matters.",
+    "D: Thanks everyone. Meeting Thursday, don’t forget!"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Qiso GroupChat 1.docx"
+  },
+  {
+   "id": "groupchat-neighbors",
+   "title": "Hill District neighbours group chat",
+   "kind": "Group chat",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "Qiso Neighbors – Hill District (group chat)",
+    "D: Lost cat, grey with white feet, answers to Biscuit. Please check your sheds!",
+    "E: Will look!",
+    "A: I don’t feel safe going to the market.",
+    "B: My cousin is telling me the problem is everywhere.",
+    "C: The Chiasans are everywhere.",
+    "D: In the capital I heard that they shut down the entire city center.",
+    "C: They want to make our country as bad as theirs.",
+    "A: What did they do in the capital?",
+    "D: Camping in the square, so many of them, you don’t feel safe, right? Imagine trying to set up your stall or open your store with so many of them loitering.",
+    "C: All those young men especially.",
+    "D: Girls got sticky fingers too. That’s why no one wants to open their stall.",
+    "F: Wasn’t it like 30 guys? I read the Herald, they said the market opened again the next day",
+    "D: That’s what they WANT you to think",
+    "A: I hope that doesn’t happen here.",
+    "B: You want someone to go with you to the market.",
+    "C: Yeah, we should go together. No one can steal our bags then.",
+    "B: Local police should be giving us escort, what are we paying them for?",
+    "D: Local police should be keeping those **** out of our market.",
+    "B: Unless they have something to buy.",
+    "C: They’re from Chiasa they got no money to buy.",
+    "B: Yeah, right, they should stay out. Sharing a post from a distant relative. In Tali they are stealing from the bakers and taking clothes off people’s clothes line. You wake up and your laundry is gone. Then you see some Chiasan with your trousers in the streets.",
+    "A: Gosh, we have to stop that.",
+    "E: Wait, didn’t someone on Pecan Lane have their laundry stolen last week too?",
+    "G: That was me. It blew into my neighbor’s yard. I told the police already, it was the wind 😂",
+    "C: Sure it was",
+    "G: It was literally the wind. My neighbor gave it back.",
+    "C: Local police. We can’t have these people roaming free.",
+    "H: Did anyone see there’s 20,000 of them here now? QisoWatch posted it",
+    "E: 20,000??? That’s more than the whole town",
+    "H: That’s what they said. Outnumbering locals.",
+    "D: I heard the mayor’s hiding them in church basements so the Border Authority can’t count them",
+    "F: My church has like 40 people from Kiman in the hall. It’s not exactly a secret. There’s a sign up for meal volunteers.",
+    "A: Biscuit update??",
+    "D: Still missing 😢"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Qiso GroupChat 3.docx"
+  },
+  {
+   "id": "groupchat-parents",
+   "title": "Qiso parents group chat",
+   "kind": "Group chat",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "Qiso Moms & Dads 👶 (group chat)",
+    "E: Anyone have a spare high chair? Ours finally broke",
+    "C: I’ll check the garage",
+    "A: I heard a throng of young men from Chiasa beat up one of the kids after school. Jumped him right as he was leaving to go home.",
+    "B: Gosh! Is he okay?",
+    "A: I heard he’s at the hospital.",
+    "C: Well at least there was a bed for him! My infant had a fever last night and we had to wait for hours at the clinic because they were busy with a bunch of Chiasans.",
+    "E: Oh no, is the baby ok?",
+    "C: Yes, fever came down. But FIVE hours.",
+    "F: Someone said there’s cholera at the clinic. Is that true??",
+    "C: I didn’t see any cholera. Just a lot of people.",
+    "F: My sister-in-law shared a post saying parents were demanding answers about cholera",
+    "G: The hospital put a notice up. No cholera. Two kids were tested for measles and it was negative.",
+    "F: Oh thank goodness",
+    "A: That’s what they’d say though",
+    "B: What happened with the gang?",
+    "A: I don’t know.",
+    "D: I saw a group of Chiasan youth near my orchard. I wonder if they were the ones.",
+    "A: Could be.",
+    "C: Even if they weren’t them, they can’t be up to any good, loitering on your land. Did you call the police?",
+    "D: Police? Hah. Worse than the hospital to get any access these days.",
+    "H: D which orchard? Ridge Road? Aren’t those just the kids of the workers camping on R’s place?",
+    "D: Maybe. They all look the same from the road.",
+    "H: 🙄",
+    "A: My cousin works for the force. I’ll tell him.",
+    "E: Also has anyone seen those posts about red scarves? Apparently that’s how you tell if they’re militia",
+    "B: Yes!! I saw that. Saw two of them wearing red scarves at the market yesterday",
+    "G: D sells red scarves at the market. Half the town wears them in autumn",
+    "B: Not like THAT",
+    "E: Like what?",
+    "B: You know. Like militia.",
+    "C: High chair is yours E, I found it. Pick up anytime",
+    "E: You’re a star ❤️"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Qiso GroupChat 4.docx"
+  },
+  {
+   "id": "social-trending",
+   "title": "Trending in Sitwan (48-hour feed)",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "Trending in Sitwan",
+    "Top shared posts and headlines in the past 48 hours",
+    "Chiasans cause problems sleeping in street in Tali (TrueSitwan Daily, 41K shares)",
+    "Chiasans occupy park in Nar (SitwanFirst.net, 28K shares)",
+    "Chiasans shut down market in Capital Square (PatriotPulse, 63K shares)",
+    "ENTIRE CAPITAL CITY CENTER CLOSED as Chiasan mobs take over (PatriotPulse, 52K shares)",
+    "Capital Square market reopens after yesterday’s disturbance (The Sitwan Herald, 3.1K shares)",
+    "Border Authority: “Over 40,000 Chiasans and counting” (SitwanFirst.net, 37K shares)",
+    "NGOs say refugee figures exaggerated; real number closer to 17,000 (The Global Dispatch, 2.4K shares)",
+    "Tali SHUTS ALL SCHOOLS, imposes curfew (TrueSitwan Daily, 19K shares)",
+    "Tali deputy mayor: “There is no curfew” (The Sitwan Herald, 900 shares)",
+    "EXCLUSIVE: 20,000 Chiasans now living in Qiso, outnumbering locals (QisoWatch, 12K shares)",
+    "Cholera at Qiso clinic? Parents demand answers (QisoWatch, 8.7K shares)",
+    "Health officials: no confirmed cholera cases in any RDF (Ministry of Health, 1.1K shares)",
+    "Red scarves: the secret sign of Chiasan militias? (The Real Story Network, 22K shares)",
+    "Five things you didn’t know about almonds (FoodFacts, 6K shares)",
+    "Qiso mayor’s office “hiding” refugees in church basements, sources say (SitwanFirst.net, 15K shares)",
+    "Chiasan gang hospitalizes Qiso schoolboy (QisoWatch, 9.4K shares)",
+    "Pecan prices expected to rise if eastern harvest falls short (Sitwan Business Weekly, 700 shares)",
+    "Chiasa threatens to arrest Sitwani tourists in retaliation (PatriotPulse, 31K shares)",
+    "Chiasan foreign ministry: “No such policy exists” (Regional Wire, 450 shares)",
+    "Nar park “occupation” was a community picnic, organizers say (Nar Community Radio, 300 shares)",
+    "Kiman elders thank Qiso families for hospitality (Qiso Community Bulletin, 1.2K shares)",
+    "Quiz: Which Sitwani city are you? (FunTime, 11K shares)",
+    "Do Chiasans even know what soap is? (MemeLord_Sitwan, 44K shares)",
+    "…"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Social Media Feed.docx"
+  },
+  {
+   "id": "social-schools",
+   "title": "Thread: Chiasan pupils and test scores",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "@MemeLord_Sitwan · 5h",
+    "Chiasans are not very smart and have low test scores. Fact. Their idea of advanced maths is counting the goats twice.",
+    "💬 287 🔁 1.1K ❤️ 4.8K",
+    "@ExamSeason_Dad · 5h",
+    "My son is doing Year 10 nationals in spring and they want to put 93 kids who can’t read in his class. Great. Love that for him.",
+    "@Gran_Pecan · 5h",
+    "Read somewhere that Chiasan kids score less than HALF what our kids score. Some of them can’t read at ten. TEN.",
+    "@KiraTheHistorian · 4h",
+    "@Gran_Pecan Literacy in Chiasa is about 54% because there are barely any schools in the highlands. That’s not the same as “not smart.” Sitwan’s literacy was nowhere near 99% before the reforms either.",
+    "@MemeLord_Sitwan · 4h",
+    "@KiraTheHistorian ok professor 🤓",
+    "@NotAPoliceOfficer_lol · 4h",
+    "Chiasan spelling bee: first word is “Chiasa.” Nobody gets it right. Not even us 😂",
+    "@ExamSeason_Dad · 4h",
+    "Half of Sitwan spells it “Chiaso” so we can’t really talk lol",
+    "@TeacherInTali · 3h",
+    "As someone who actually teaches refugee kids in an RDF: they’re behind because they’ve missed school, not because they’re stupid. One of my 11-year-olds learned the Sitwani alphabet in a week.",
+    "@SitwanFirst_Patriot · 3h",
+    "@TeacherInTali sure, and my dog learned to sit in a week. Doesn’t mean he goes in Year 7.",
+    "@Valley_Mum_77 · 2h",
+    "Ranking of things that will lower our school’s test scores: 1. Chiasans 2. the new timetable 3. that one maths teacher who only plays videos",
+    "@MemeLord_Sitwan · 1h",
+    "Breaking: Chiasan student asked to show their working. Shows their passport. It’s fake. 😂😂"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Social Media 2.docx"
+  },
+  {
+   "id": "social-cholera",
+   "title": "Thread: cholera rumour at the Qiso clinic",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "@QisoWatch · 6h",
+    "Chiasans are a threat to public health as they bring diseases and have low vaccination rates. Parents in Qiso are asking: is there CHOLERA at our clinic? The hospital won’t give a straight answer. Share before it gets taken down. 🦠",
+    "💬 534 🔁 2.7K ❤️ 5.1K",
+    "@Valley_Mum_77 · 6h",
+    "My cousin’s neighbor works at the clinic and says it’s “really bad in there.” Draw your own conclusions.",
+    "@Gran_Pecan · 5h",
+    "Measles, polio, cholera, you name it. We got rid of all that thirty years ago and now it’s walking back over the border.",
+    "@NotAPoliceOfficer_lol · 5h",
+    "Chiasan welcome pack: one blanket, one bottle of water, and one of everything we already vaccinated against 😷",
+    "@NurseOnNights · 5h",
+    "I work at Qiso clinic. There is NO cholera. We tested two kids for measles last week. Both negative. It’s “really bad in there” because the waiting room is packed and we’re exhausted, not because of a plague.",
+    "@QisoWatch · 4h",
+    "@NurseOnNights convenient that you can’t show us any proof",
+    "@NurseOnNights · 4h",
+    "@QisoWatch there’s literally a notice on the clinic door",
+    "@ExamSeason_Dad · 4h",
+    "The school gym shares toilets with our kids. If even ONE of them has something, every kid in Qiso has it by Friday.",
+    "@KiraTheHistorian · 3h",
+    "Lots of the Kiman workers were vaccinated here through the harvest programme. The kids weren’t. The answer is to vaccinate them, not panic.",
+    "@SitwanFirst_Patriot · 3h",
+    "Love how the answer is always “spend more of OUR money on THEM”",
+    "@MemeLord_Sitwan · 2h",
+    "New Sitwani greeting: no handshake, just a polite nod from 6 metres away and a squirt of hand gel",
+    "@Gran_Pecan · 1h",
+    "My doctor’s appointment got cancelled for the second time this month. Coincidence? I think not. #ProtectOurClinics"
+   ],
+   "source": "Cases/Final/Mayor/Shared/Social Media 3.docx"
+  },
+  {
+   "id": "social-red-scarves",
+   "title": "Post: '7 signs of a Chiasa militia'",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "The Real Story Network · Sponsored",
+    "How to tell if someone is part of a Chiasa militia: 7 signs you need to know 🚩",
+    "The red scarf. Insiders say militia members wear red scarves to recognize each other. Seen a lot of red scarves in your town lately? Hmm.",
+    "They travel in groups. Lone Chiasans are rare. Five or more young men standing together outside a shop? Classic formation.",
+    "They’re always “waiting for a relative.” Ask a militia member what they’re doing and they’ll always have an excuse. Suspicious.",
+    "Calloused hands. Could be from weapons training. (Could also be from farming, but that’s what they want you to think.)",
+    "They don’t make eye contact. Or they make TOO MUCH eye contact. Either way, red flag.",
+    "They know the local footpaths. How does someone who “just arrived” know every shortcut through the orchards?",
+    "They say they’re from Kiman. Everyone says they’re from Kiman. Nobody checks.",
+    "Share this with your family. Stay alert. Report suspicious activity to Sitwan Heritage Watch.",
+    "💬 1.2K 🔁 8.4K ❤️ 11K",
+    "@NotAPoliceOfficer_lol",
+    "So basically every farmer in the eastern valleys is militia. Got it.",
+    "@QisoMarketScarves",
+    "I sell red scarves on Market Street. I’ve sold about 200 this month. Mostly to Sitwani grandmothers. Please do not arrest my grandmothers.",
+    "@Gran_Pecan",
+    "@QisoMarketScarves I bought one!! Am I militia now 😂",
+    "@SitwanFirst_Patriot",
+    "Laugh all you want. Number 6 is real. My uncle saw them walking the old mine trail at night.",
+    "@KiraTheHistorian",
+    "Families from Kiman have walked those footpaths for a hundred years to come to the harvest. Of course they know them.",
+    "@MemeLord_Sitwan",
+    "They look at you. 9. They don’t look at you. 10. They exist."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of Social Media 4.docx"
+  },
+  {
+   "id": "social-respect",
+   "title": "Thread: 'Stay away from our women'",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "@VoiceOfKiman · 4h",
+    "Chiasa to Sitwan: Stay away from our women. Our daughters and sisters are not your entertainment. We have come to your country as guests, not as prey. Respect our families or answer to us.",
+    "💬 892 🔁 1.4K ❤️ 2.3K",
+    "@SitwanFirst_Patriot · 4h",
+    "“Answer to us” 👀 Is that a threat? On SITWANI soil? Screenshotting this for the Border Authority.",
+    "@MemeLord_Sitwan · 4h",
+    "Don’t worry pal, nobody’s trying to steal your women. Our boys can barely talk to OUR girls.",
+    "@NotAPoliceOfficer_lol · 4h",
+    "Sitwani teenager: exists near a girl / Chiasan uncle: and I took that personally",
+    "@Valley_Mum_77 · 3h",
+    "Maybe teach your sons to keep their hands to themselves before lecturing ours. A boy got beaten up at our school for LOOKING.",
+    "@KimanDaughter · 3h",
+    "It was not looking. My cousin was followed home from the temple courtyard by four boys making comments. We reported it to the police. Nothing happened.",
+    "@Gran_Pecan · 3h",
+    "@KimanDaughter I’m sorry that happened to your cousin. Boys can be awful. Ours included.",
+    "@SitwanFirst_Patriot · 2h",
+    "@KimanDaughter Then go home where your uncles can protect you.",
+    "@KimanDaughter · 2h",
+    "@SitwanFirst_Patriot My home was burned. That is why I am here.",
+    "@ExamSeason_Dad · 2h",
+    "Two wrongs don’t make a right. Some of our boys need a talking to. Their boys don’t get to beat anyone up though.",
+    "@MemeLord_Sitwan · 1h",
+    "Chiasan family values: 47 cousins, 1 phone, 0 chill"
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of Social Media 5.docx"
+  },
+  {
+   "id": "social-rdf-prisons",
+   "title": "Thread: 'RDFs are prisons'",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "@ChiasaZVoice · 7h",
+    "Chiasa to Sitwan: We will not allow you to imprison our people. Your “Refugee Detention Facilities” are prisons with a nicer name. Fences, guards, headcounts, children taken from their mothers. We fled one cage. We will not walk into another.",
+    "💬 1.1K 🔁 3.2K ❤️ 4.0K",
+    "@SitwanFirst_Patriot · 7h",
+    "“Will not allow” lol. Who’s going to stop us? You don’t even have a working train line.",
+    "@NotAPoliceOfficer_lol · 7h",
+    "Free food, free shelter, free school… the worst prison ever. 1 star, would not recommend 🙄",
+    "@KiraTheHistorian · 6h",
+    "The Global Dispatch has reported kids taken for “health checks” and parents not told where they were for days. That’s not a nice hotel.",
+    "@Gran_Pecan · 6h",
+    "Every country has rules. You don’t walk into someone’s house and refuse to sign the guestbook.",
+    "@ChiasaZVoice · 6h",
+    "@Gran_Pecan When your house is on fire you do not stop to fill in a form.",
+    "@MemeLord_Sitwan · 5h",
+    "RDF Yelp review: “Mud was free. Would have preferred a towel.”",
+    "@BorderAuthorityFan · 4h",
+    "The Border Authority says all RDFs meet or exceed standards. Should we believe them or a random account with a flag in its name?",
+    "@KiraTheHistorian · 4h",
+    "@BorderAuthorityFan The RDFs hold 15,000 by their own document. They say 40,000 people have arrived. You do the maths.",
+    "@BorderAuthorityFan · 3h",
+    "@KiraTheHistorian They’re building more. Patience.",
+    "@ChiasaZVoice · 2h",
+    "We have patience. We have had nothing but patience for 50 years.",
+    "@Valley_Mum_77 · 1h",
+    "Honestly I just want my kid’s gym back. Whatever gets everyone somewhere warm and dry I’m for it."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of Social Media 6.docx"
+  },
+  {
+   "id": "social-terraces",
+   "title": "Thread: 'Our grandparents built your terraces'",
+   "kind": "Social media",
+   "visible_to": [
+    "mayor",
+    "border-officer"
+   ],
+   "paragraphs": [
+    "@ChiasaZVoice · 9h",
+    "You will respect the people of Chiasa. We are not beggars, not criminals, not “bad elements.” We are doctors, teachers, farmers, and mothers. Our grandparents built half the terraces in your eastern valleys. Remember that when you call us dirty.",
+    "💬 643 🔁 980 ❤️ 1.7K",
+    "@MemeLord_Sitwan · 9h",
+    "Respect is earned. Smashing up Capital Square market: not how you earn it 🙃",
+    "@QisoBaker · 8h",
+    "The Capital Square thing was 30 guys. There are 6,000 people from Kiman in Qiso and most of them are just trying to buy bread and find work.",
+    "@SitwanFirst_Patriot · 8h",
+    "@QisoBaker 20,000. Read QisoWatch.",
+    "@QisoBaker · 8h",
+    "@SitwanFirst_Patriot QisoWatch also said the Nar picnic was an “occupation”",
+    "@NotAPoliceOfficer_lol · 7h",
+    "“Our grandparents built your terraces” ok but did they build them up to code",
+    "@Gran_Pecan · 7h",
+    "I’ll respect anyone who respects me. Simple as. But I’m not giving up my clinic appointment to do it.",
+    "@KiraTheHistorian · 6h",
+    "Fun fact: Z’ and Z share a root language. Half of Sitwan has a Chiasan great-grandparent somewhere.",
+    "@SitwanFirst_Patriot · 6h",
+    "@KiraTheHistorian speak for yourself",
+    "@KiraTheHistorian · 5h",
+    "@SitwanFirst_Patriot With a handle like yours, I’d check the family tree before posting",
+    "@MemeLord_Sitwan · 4h",
+    "Ancestry test results: 12% Chiasan, 88% angry about it",
+    "@ChiasaZVoice · 3h",
+    "Laugh. When the harvest rots, see who you call."
+   ],
+   "source": "Cases/Final/Border Authority Officer/Shared Information/Copy of Social Media 7.docx"
+  }
+ ]
+}

@@ -1,0 +1,592 @@
+{
+ "id": "alpha-camp",
+ "title": "Alpha: food access at the refugee camp",
+ "summary": "After unrest in Omega, refugees have poured into neighbouring Alpha; the largest camp holds about 160,000 people guarded by about 700 militia-linked guards. Food Without Borders (FWB) needs the Camp Commander's agreement to distribute food, while the Commander faces unpaid guards, a suspicious government and pressure to keep the camp under control.",
+ "roles": [
+  {
+   "id": "fwb",
+   "name": "FWB delegate",
+   "brief": "You are the newly arrived Food Without Borders (FWB) delegate for Northern Alpha. You must secure the Camp Commander's agreement to distribute food in Alpha's largest refugee camp. Your Country Director has set FWB's neutrality as a red line: no direct transfer of food or resources to anyone linked to security structures. Messages from your director, local contacts and officials are in your documents.",
+   "counterpart": "Camp Commander",
+   "starter_notes": ""
+  },
+  {
+   "id": "commander",
+   "name": "Camp Commander",
+   "brief": "You command Alpha's largest refugee camp: about 160,000 refugees from Omega and about 700 guards drawn from local militias, many of them unpaid. A new FWB delegate wants access to distribute food. Your role card and the messages you have received are in your documents.",
+   "counterpart": "FWB delegate",
+   "starter_notes": ""
+  }
+ ],
+ "documents": [
+  {
+   "id": "fwb-director",
+   "title": "Message from the FWB Country Director",
+   "kind": "Message",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "Hi there,",
+    "Welcome to Alpha, and to your post as FWB Delegate for Northern Alpha, we’ve been expecting you.",
+    "I’ll be direct. The situation in the main camp is deteriorating quickly. Food stocks are under pressure, and we are already receiving follow-ups from our donors on when distributions will begin. You will need to take over engagement with the Camp Commander to secure access for food distribution.",
+    "Our donors are requiring a full-scale nutritional assessment prior to large-scale distribution, but there is also clear pressure to move quickly given the situation on the ground. We will need to manage this carefully.",
+    "From the exchanges so far, it is clear that the authorities are approaching this with a degree of caution. External actors, particularly international organizations, are not always perceived as neutral on the ground, and trust appears limited. This is something to keep in mind as you engage. We are also concerned that involving guards in distribution would increase the risk of abuse, diversion, and exploitation of refugees. The Commander is maintaining his position on the involvement of local guards and has raised expectations around compensation in food.",
+    "I want to be clear on one point — any form of agreement with the local security actors cannot involve the direct transfer of food or resources to individuals or groups linked to security structures. This is non-negotiable and central to maintaining our operational integrity. Keep in mind that FWB’s neutrality is a red line. Any arrangement that could be perceived as directly supporting militia-affiliated actors or compromising our independence will be very difficult to defend.",
+    "Please also I’ll expect an update from you after your first meeting.",
+    "Best,",
+    "Elena Markovic",
+    "Country Director, FWB Alpha"
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/Message from FWB Country Director.docx"
+  },
+  {
+   "id": "defense-minister",
+   "title": "Message from the Minister of Defense",
+   "kind": "Message",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "We remind FWB that Alpha does not legally recognize the migrants from Omega as refugees. While there is no longer an active conflict on the Omega border, the terrorist tactics employed by Omega during that time demonstrate the warfare the people of Omega are willing to engage in. There is a real concern that there are terrorists using the migrants as cover. The presence of these migrants in Alpha already poses grave security risks. Any attempts by FWB to circumvent Alpha’s policies will result in immediate deportation."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/Message from Minister of Defense.docx"
+  },
+  {
+   "id": "mayor-to-fwb",
+   "title": "Message from the Mayor",
+   "kind": "Message",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "We were glad to hear that FWB is sending a new representative as we have not had a productive relationship with prior counterpart.",
+    "The truth is that the same drought and famine that created ripe conditions for the destabilization in Omega is also true in Alpha. We hope that you will support Alpha with your food deliveries, especially as our people are the ones that are supporting the refugees.",
+    "It does not make sense for FWB to support one group of hungry people over another; indeed, if you are seen as supporting the citizens of Omega over the citizens of Alpha, I assure you, there will be trouble. You must support local jobs and local people.",
+    "Thus, I hope you will be pragmatic in your approach and find a practical solution."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/Mayor Message.docx"
+  },
+  {
+   "id": "contact-note-2",
+   "title": "Note from a local contact (guards' militia roots)",
+   "kind": "Note",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "Privately, you should know that while some of the camp guards are recent, local recruits, most of them have their roots in the militias that are the cause of many of our own troubles here. Given how they have occasionally treated their own brothers and sisters, and how they speak of the refugees, we have reason to be concerned for the welfare of the refugees.",
+    "There is little that we can do to dislodge these deeply entrenched militia elements, but perhaps you with your international bargaining power can make a difference."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/2 Note from local contact.docx"
+  },
+  {
+   "id": "contact-note-3",
+   "title": "Note from a camp guard",
+   "kind": "Note",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "I am one of the guards in the camp. If you do not include the guards in your food assistance, I promise you, the guards will not cooperate with any of your food distribution efforts."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/3 Note from local contact.docx"
+  },
+  {
+   "id": "contact-note-6",
+   "title": "Forwarded guard chat (unverified)",
+   "kind": "Note",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "Encrypted note – local contact (off the record)",
+    "Forwarded by FWB Field Officer. Source has asked not to be named. None of this is verified — treat as background only.",
+    "I’m forwarding a screenshot of a WhatsApp message chain that someone I know was on in case it is helpful. I hope that it will help you understand the urgency of supporting us in Alpha as well as those in Omega.",
+    "F[--]: I haven’t been paid in six weeks.",
+    "G[--]: Just like all of us.",
+    "F[--]: Why are we pampering these scum for free? If nothing arrives next week, I’m leaving.",
+    "G[--]: Where? Not like there are other jobs.",
+    "F[--]: Heard the city needed police.",
+    "G[--]: Yeah the government will pay you in toy money. CC knows what we need, food. When those FWB prisses finally deliver the goods, we’ll get a cut.",
+    "F[--]: CC don’t even keep the electricity on. I’m afraid the lights are going out and I’m going to get jumped.",
+    "G[--]: We should be at the border.",
+    "F[--]: Keeping these vermin out.",
+    "G[--]: Yeah. Give them a taste of what we went through.",
+    "F[--]: I see one of them eating better than me in the camp, I’m going to beat them.",
+    "G[--]: You find someone hoarding, I help you confiscate.",
+    "F[--]: You got it.",
+    "— contact, name withheld"
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/6 Note from local contact.docx"
+  },
+  {
+   "id": "contact-note-8",
+   "title": "Message on behalf of the senior militia leader",
+   "kind": "Note",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "This message is sent on behalf of the senior militia leader:",
+    "We hear you are the new representative for FWB. Our guards have been serving this region and their families have deep roots here. They are far more deserving of aid than the “refugees” from Alpha, which are surely harboring terrorists. You will be aware that in the last conflict fighters from Omega planted bombs in hospitals while claiming to be nurses and in factories claiming to be delivery. To prevent your naivety from causing a serious security incident, we will be monitoring your activities closely. We hope that you will not continue the discrimination against Alpha like your previous counterpart."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/8 Note from local contact.docx"
+  },
+  {
+   "id": "security-log",
+   "title": "Leaked camp security log",
+   "kind": "Log",
+   "visible_to": [
+    "fwb"
+   ],
+   "paragraphs": [
+    "[Provided by a church activist who claims it was leaked to them by a camp authority",
+    "001 1 May 11:16 | Man wearing a faded green scarf from Compound 2, Block 2 discovered with a packet of matches without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "002 2 May 00:55 | Man wearing a dark shawl from Compound 1, Block 4 discovered in a minor altercation with an occupant of Compound 1, Block 2; a bruised shoulder reported; disciplinary action taken: both parties warned; incident recorded.",
+    "003 2 May 21:04 | Man with a small canvas purse from Compound 1, Block 6 discovered in Compound 4, Block 5 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "004 4 May 06:49 | Young man wearing a green tunic from Compound 4, Block 2 discovered with a spare blanket without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "005 5 May 22:53 | Young man in a cream tunic from Compound 4, Block 6 discovered in a minor altercation with an occupant of Compound 4, Block 5; a small cut to the lip reported; disciplinary action taken: both parties warned; incident recorded.",
+    "006 7 May 16:27 | Young man with a polished wooden cane from Compound 2, Block 1 discovered in Compound 4, Block 4 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "007 9 May 01:09 | Man wearing a dark shawl from Compound 4, Block 6 discovered with a spare blanket without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "008 9 May 04:09 | Woman wearing a checked scarf from Compound 5, Block 6 discovered in a minor altercation with an occupant of Compound 4, Block 5; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "009 9 May 09:02 | Man carrying a cloth bag over one shoulder from Compound 1, Block 4 discovered in Compound 3, Block 2 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "010 9 May 17:16 | Adult wearing a checked scarf from Compound 2, Block 1 discovered with a spare blanket without authorization; disciplinary action taken: written caution entered in block record.",
+    "011 9 May 23:01 | Young woman carrying a patched canvas bag from Compound 2, Block 3 discovered in a minor altercation with an occupant of Compound 4, Block 4; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "012 10 May 01:31 | Adult with a brown leather purse from Compound 4, Block 6 discovered in Compound 1, Block 3 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "013 11 May 00:11 | Woman carrying a patched canvas bag from Compound 1, Block 3 discovered with a bag of rice without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "014 11 May 04:53 | Young woman wearing a tan shawl from Compound 1, Block 3 discovered in a minor altercation with an occupant of Compound 1, Block 5; a scraped hand reported; disciplinary action taken: both parties warned; incident recorded.",
+    "015 11 May 08:20 | Man wearing a yellow scarf from Compound 3, Block 2 discovered in Compound 3, Block 6 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "016 11 May 11:38 | Adult wearing a green tunic from Compound 5, Block 5 discovered with a tin of cooking oil without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "017 12 May 16:53 | Man with a silver nose piercing from Compound 2, Block 3 discovered in a minor altercation with an occupant of Compound 2, Block 3; a scraped hand reported; disciplinary action taken: both parties warned; incident recorded.",
+    "018 12 May 20:35 | Man in a dark shawl from Compound 2, Block 4 found carrying a knife beneath his clothing near Compound 3, Block 1; knife seized and man held for security review.",
+    "019 12 May 21:54 | Young woman with a woven purse from Compound 4, Block 4 discovered with a small portion of food without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "020 13 May 22:11 | Young man with a woven purse from Compound 5, Block 1 discovered in a minor altercation with an occupant of Compound 3, Block 3; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "021 14 May 15:32 | Young man with three ear piercings from Compound 2, Block 4 discovered in Compound 1, Block 1 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "022 16 May 05:41 | Adult wearing a loose gray tunic from Compound 2, Block 3 discovered with a packet of matches without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "023 16 May 08:19 | Young man with a brown leather purse from Compound 2, Block 1 discovered in a minor altercation with an occupant of Compound 5, Block 2; a bruised forearm reported; disciplinary action taken: both parties warned; incident recorded.",
+    "024 16 May 22:26 | Adult carrying a patched canvas bag from Compound 3, Block 5 discovered in Compound 2, Block 3 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "025 17 May 05:35 | Woman wearing a yellow scarf from Compound 5, Block 4 discovered with a sealed food parcel without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "026 17 May 13:38 | Adult with a woven purse from Compound 5, Block 5 discovered in a minor altercation with an occupant of Compound 5, Block 6; a minor scratch reported; disciplinary action taken: parties separated; written caution issued.",
+    "027 17 May 18:36 | Adult wearing a loose gray tunic from Compound 1, Block 2 discovered in Compound 5, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "028 17 May 19:17 | Adult carrying a bamboo cane from Compound 5, Block 2 discovered with a coil of string without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "029 17 May 20:08 | Young woman wearing a faded green scarf from Compound 4, Block 6 discovered in a minor altercation with an occupant of Compound 1, Block 2; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "030 17 May 21:33 | Adult wearing a faded green scarf from Compound 4, Block 1 discovered in Compound 4, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "031 18 May 15:16 | Young man with a red cloth bag from Compound 1, Block 5 discovered with a bar of soap without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "032 18 May 18:47 | Adult with a red cloth bag from Compound 2, Block 2 discovered in a minor altercation with an occupant of Compound 3, Block 4; a bruised forearm reported; disciplinary action taken: parties separated; written caution issued.",
+    "033 18 May 19:38 | Young man with a polished wooden cane from Compound 4, Block 2 discovered in Compound 1, Block 5 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "034 19 May 09:43 | Woman carrying a cloth bag over one shoulder from Compound 1, Block 2 discovered with a packet of matches without authorization; disciplinary action taken: written caution entered in block record.",
+    "035 20 May 22:53 | Man wearing a purple shawl from Compound 5, Block 3 discovered in a minor altercation with an occupant of Compound 3, Block 5; a bruised shoulder reported; disciplinary action taken: parties separated; written caution issued.",
+    "036 20 May 23:46 | Young woman carrying a wooden cane from Compound 4, Block 1 discovered in Compound 4, Block 5 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "037 21 May 06:45 | Young man carrying a wooden cane from Compound 3, Block 4 discovered with a packet of cigarettes without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "038 23 May 14:12 | Young woman carrying a wooden cane from Compound 2, Block 1 discovered in a minor altercation with an occupant of Compound 4, Block 4; a bruised shoulder reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "039 24 May 06:53 | Man with a silver nose piercing from Compound 3, Block 6 discovered in Compound 3, Block 3 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "040 25 May 08:08 | Woman wearing a yellow scarf from Compound 4, Block 5 discovered with a coil of string without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "041 25 May 12:24 | Woman in a cream tunic from Compound 1, Block 6 discovered in a minor altercation with an occupant of Compound 3, Block 5; a small cut to the cheek reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "042 25 May 21:40 | Young woman with three ear piercings from Compound 1, Block 2 discovered in Compound 2, Block 1 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "043 26 May 17:17 | Young woman with two ear piercings from Compound 4, Block 1 discovered with a small portion of food without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "044 27 May 06:21 | Man wearing a tan shawl from Compound 1, Block 6 discovered in a minor altercation with an occupant of Compound 4, Block 1; a small cut to the lip reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "045 27 May 12:09 | Young man with a red cloth bag from Compound 3, Block 6 discovered in Compound 3, Block 4 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "046 29 May 23:06 | Adult carrying a bamboo cane from Compound 4, Block 2 discovered with a coil of string without authorization; disciplinary action taken: written caution entered in block record.",
+    "047 30 May 08:20 | Young woman with a red cloth bag from Compound 2, Block 4 discovered in a minor altercation with an occupant of Compound 2, Block 2; a bruised forearm reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "048 30 May 12:06 | Man wearing a maroon scarf from Compound 5, Block 3 discovered in Compound 5, Block 1 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "049 30 May 23:25 | Man in a cream tunic from Compound 1, Block 1 discovered with a bag of rice without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "050 31 May 20:54 | Man in a cream tunic from Compound 2, Block 3 discovered in a minor altercation with an occupant of Compound 5, Block 3; a minor scratch reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "051 1 June 01:55 | Young woman with a small canvas purse from Compound 2, Block 5 discovered in Compound 5, Block 2 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "052 1 June 10:18 | Young man wearing a maroon scarf from Compound 4, Block 2 discovered with a handful of cannabis without authorization; disciplinary action taken: written caution entered in block record.",
+    "053 1 June 15:32 | Adult wearing a checked scarf from Compound 1, Block 5 discovered in a minor altercation with an occupant of Compound 1, Block 5; a scraped hand reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "054 2 June 08:14 | Young woman with two ear piercings from Compound 2, Block 6 discovered in Compound 4, Block 4 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "055 2 June 10:41 | Man wearing a faded green scarf from Compound 2, Block 4 discovered with a coil of string without authorization; disciplinary action taken: written caution entered in block record.",
+    "056 2 June 11:53 | Woman carrying a wooden cane from Compound 3, Block 2 discovered in a minor altercation with an occupant of Compound 5, Block 5; a bruised shoulder reported; disciplinary action taken: parties separated; written caution issued.",
+    "057 2 June 21:42 | Man wearing a tan shawl from Compound 1, Block 1 discovered in Compound 2, Block 4 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "058 2 June 23:50 | Woman wearing a tan shawl from Compound 3, Block 5 discovered with two loose cigarettes without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "059 3 June 01:45 | Young woman wearing a dark shawl from Compound 4, Block 3 discovered in a minor altercation with an occupant of Compound 1, Block 4; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "060 5 June 03:45 | Young woman in a cream tunic from Compound 5, Block 1 discovered in Compound 1, Block 1 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "061 5 June 04:26 | Adult wearing a green tunic from Compound 3, Block 5 discovered with a handful of cannabis without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "062 5 June 05:45 | Young woman wearing a green tunic from Compound 2, Block 1 discovered in a minor altercation with an occupant of Compound 1, Block 4; a scraped hand reported; disciplinary action taken: parties separated; written caution issued.",
+    "063 5 June 14:26 | Young man in a pale blue tunic from Compound 2, Block 4 discovered in Compound 1, Block 3 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "064 6 June 04:37 | Woman with a canvas purse from Compound 4, Block 2 found concealing firearm components in her bedding; components seized and woman referred for security investigation.",
+    "065 6 June 09:01 | Young woman carrying a cloth bag over one shoulder from Compound 2, Block 5 discovered in a minor altercation with an occupant of Compound 5, Block 3; a bruised forearm reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "066 6 June 20:20 | Man with a silver nose piercing from Compound 5, Block 6 discovered in Compound 5, Block 3 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "067 7 June 03:58 | Young man carrying a cloth bag over one shoulder from Compound 5, Block 3 discovered with a bar of soap without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "068 8 June 11:40 | Man with a silver nose piercing from Compound 4, Block 2 discovered in a minor altercation with an occupant of Compound 1, Block 3; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "069 8 June 22:59 | Woman wearing a tan shawl from Compound 4, Block 2 discovered in Compound 2, Block 2 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "070 10 June 01:01 | Young man in a cream tunic from Compound 3, Block 4 discovered with a coil of string without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "071 10 June 10:52 | Man with two ear piercings from Compound 5, Block 6 discovered in a minor altercation with an occupant of Compound 1, Block 3; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "072 11 June 05:45 | Young man with a small canvas purse from Compound 2, Block 2 discovered in Compound 4, Block 1 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "073 11 June 13:38 | Young woman wearing a loose gray tunic from Compound 3, Block 2 discovered with a sealed food parcel without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "074 11 June 17:46 | Young woman in a cream tunic from Compound 4, Block 4 discovered in a minor altercation with an occupant of Compound 3, Block 6; a bruised forearm reported; disciplinary action taken: both parties warned; incident recorded.",
+    "075 11 June 21:26 | Woman wearing a yellow scarf from Compound 1, Block 2 discovered in Compound 4, Block 4 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "076 12 June 03:39 | Adult wearing a black shawl from Compound 3, Block 6 discovered with a tin of cooking oil without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "077 12 June 08:55 | Woman wearing a yellow scarf from Compound 1, Block 4 discovered in a minor altercation with an occupant of Compound 5, Block 3; a small cut to the cheek reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "078 12 June 16:37 | Young man with a small canvas purse from Compound 5, Block 5 discovered in Compound 2, Block 5 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "079 13 June 12:13 | Young woman wearing a black shawl from Compound 1, Block 4 discovered with a bag of rice without authorization; disciplinary action taken: written caution entered in block record.",
+    "080 13 June 14:33 | Woman carrying a wooden cane from Compound 3, Block 6 discovered in a minor altercation with an occupant of Compound 4, Block 5; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "081 14 June 16:41 | Young woman wearing a yellow scarf from Compound 2, Block 5 discovered in Compound 4, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "082 15 June 07:43 | Young man wearing a maroon scarf from Compound 3, Block 2 discovered with a bar of soap without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "083 15 June 20:36 | Adult wearing a faded green scarf from Compound 1, Block 3 discovered in a minor altercation with an occupant of Compound 2, Block 3; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "084 18 June 02:10 | Woman with a red cloth bag from Compound 3, Block 4 discovered in Compound 2, Block 3 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "085 20 June 04:25 | Man wearing a blue tunic from Compound 5, Block 4 discovered with a tin of cooking oil without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "086 21 June 10:35 | Adult wearing a dark shawl from Compound 4, Block 3 discovered in a minor altercation with an occupant of Compound 3, Block 1; a small cut to the lip reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "087 21 June 19:38 | Woman with a red cloth bag from Compound 1, Block 3 discovered in Compound 3, Block 4 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "088 21 June 23:32 | Young woman with a brown leather purse from Compound 5, Block 2 discovered with a tin of cooking oil without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "089 23 June 13:14 | Adult wearing a checked scarf from Compound 1, Block 1 discovered in a minor altercation with an occupant of Compound 4, Block 1; a bruised shoulder reported; disciplinary action taken: both parties warned; incident recorded.",
+    "090 23 June 14:01 | Man with a silver nose piercing from Compound 2, Block 3 discovered in Compound 4, Block 5 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "091 23 June 15:02 | Man with a small canvas purse from Compound 3, Block 4 discovered with a bag of rice without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "092 23 June 19:12 | Man wearing a black shawl from Compound 2, Block 1 discovered in a minor altercation with an occupant of Compound 1, Block 5; a small cut to the cheek reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "093 26 June 09:37 | Young man with a brown leather purse from Compound 2, Block 6 discovered in Compound 2, Block 1 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "094 26 June 19:27 | Young man with three ear piercings from Compound 4, Block 4 discovered with a handful of cannabis without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "095 27 June 10:39 | Man wearing a black shawl from Compound 1, Block 6 discovered in a minor altercation with an occupant of Compound 2, Block 1; a bruised shoulder reported; disciplinary action taken: parties separated; written caution issued.",
+    "096 27 June 22:05 | Man with a silver nose piercing from Compound 1, Block 5 discovered in Compound 3, Block 6 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "097 28 June 16:23 | Woman in a pale blue tunic from Compound 5, Block 1 discovered with a handful of cannabis without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "098 29 June 10:17 | Man carrying a cloth bag over one shoulder from Compound 3, Block 4 discovered in a minor altercation with an occupant of Compound 4, Block 6; a bruised forearm reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "099 29 June 23:06 | Young man wearing a blue tunic from Compound 3, Block 1 discovered in Compound 4, Block 1 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "100 29 June 23:58 | Young man wearing a loose gray tunic from Compound 1, Block 4 discovered with a bag of rice without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "101 1 July 18:43 | Man in a gray tunic from Compound 1, Block 5 found passing notes proposing a coordinated refusal of camp orders; notes seized and man held for questioning.",
+    "102 1 July 20:58 | Young woman wearing a dark shawl from Compound 2, Block 5 discovered in Compound 5, Block 4 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "103 2 July 09:45 | Adult wearing a maroon scarf from Compound 5, Block 6 discovered with a tin of cooking oil without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "104 2 July 12:21 | Man with a red cloth bag from Compound 4, Block 1 discovered in a minor altercation with an occupant of Compound 3, Block 6; a minor scratch reported; disciplinary action taken: parties separated; written caution issued.",
+    "105 4 July 14:10 | Man wearing a blue tunic from Compound 2, Block 3 discovered in Compound 4, Block 6 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "106 4 July 18:17 | Adult wearing a checked scarf from Compound 2, Block 3 discovered with a spare blanket without authorization; disciplinary action taken: written caution entered in block record.",
+    "107 6 July 02:08 | Adult wearing a yellow scarf from Compound 2, Block 4 discovered in a minor altercation with an occupant of Compound 5, Block 1; a small cut to the lip reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "108 6 July 06:24 | Adult with three ear piercings from Compound 2, Block 4 discovered in Compound 1, Block 2 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "109 6 July 15:10 | Man with a brown leather purse from Compound 1, Block 1 discovered with an extra ration packet without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "110 6 July 21:10 | Adult wearing a yellow scarf from Compound 4, Block 4 discovered in a minor altercation with an occupant of Compound 1, Block 5; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "111 7 July 10:43 | Adult wearing a green tunic from Compound 2, Block 3 discovered in Compound 2, Block 2 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "112 8 July 07:07 | Young woman with a brown leather purse from Compound 2, Block 3 discovered with a handful of cannabis without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "113 8 July 08:56 | Young man wearing a faded green scarf from Compound 5, Block 6 discovered in a minor altercation with an occupant of Compound 2, Block 3; a bruised forearm reported; disciplinary action taken: both parties warned; incident recorded.",
+    "114 8 July 11:00 | Woman carrying a cloth bag over one shoulder from Compound 1, Block 5 discovered in Compound 4, Block 2 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "115 8 July 22:56 | Young man carrying a cloth bag over one shoulder from Compound 5, Block 6 discovered with a handful of cannabis without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "116 9 July 05:15 | Man carrying a wooden cane from Compound 3, Block 3 discovered in a minor altercation with an occupant of Compound 4, Block 5; a bruised forearm reported; disciplinary action taken: parties separated; written caution issued.",
+    "117 10 July 16:41 | Man with two ear piercings from Compound 2, Block 2 discovered in Compound 2, Block 5 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "118 10 July 20:39 | Adult with three ear piercings from Compound 1, Block 5 discovered with a packet of cigarettes without authorization; disciplinary action taken: written caution entered in block record.",
+    "119 11 July 00:29 | Young woman wearing a faded green scarf from Compound 2, Block 5 discovered in a minor altercation with an occupant of Compound 3, Block 1; a bruised shoulder reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "120 11 July 08:13 | Woman carrying a patched canvas bag from Compound 1, Block 1 discovered in Compound 1, Block 5 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "121 11 July 13:43 | Young man carrying a wooden cane from Compound 3, Block 1 discovered with a tin of cooking oil without authorization; disciplinary action taken: written caution entered in block record.",
+    "122 12 July 07:11 | Woman wearing a dark shawl from Compound 4, Block 3 discovered in a minor altercation with an occupant of Compound 5, Block 6; a bruised shoulder reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "123 12 July 07:30 | Young man in a pale blue tunic from Compound 5, Block 3 discovered in Compound 2, Block 6 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "124 12 July 17:04 | Woman carrying a wooden cane from Compound 4, Block 1 discovered with a sealed food parcel without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "125 14 July 06:11 | Young man in a cream tunic from Compound 3, Block 3 discovered in a minor altercation with an occupant of Compound 1, Block 3; a scraped hand reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "126 14 July 10:45 | Woman with a silver nose piercing from Compound 3, Block 6 discovered in Compound 3, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "127 15 July 06:51 | Young woman wearing a purple shawl from Compound 2, Block 1 discovered with a sealed food parcel without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "128 18 July 09:12 | Young man wearing a maroon scarf from Compound 5, Block 4 discovered in a minor altercation with an occupant of Compound 3, Block 1; a scraped hand reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "129 21 July 01:44 | Young woman carrying a patched canvas bag from Compound 2, Block 6 discovered in Compound 5, Block 5 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "130 22 July 01:22 | Woman wearing a purple shawl from Compound 5, Block 3 discovered with a bag of rice without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "131 22 July 18:06 | Young man wearing a checked scarf from Compound 4, Block 1 discovered in a minor altercation with an occupant of Compound 5, Block 4; a bruised shoulder reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "132 22 July 20:13 | Young man with a silver nose piercing from Compound 5, Block 1 discovered in Compound 2, Block 5 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "133 22 July 20:21 | Young woman wearing a blue tunic from Compound 2, Block 1 discovered with a packet of matches without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "134 24 July 08:40 | Young woman wearing a purple shawl from Compound 5, Block 2 discovered in a minor altercation with an occupant of Compound 4, Block 1; a scraped hand reported; disciplinary action taken: parties separated; written caution issued.",
+    "135 24 July 20:47 | Adult wearing a dark shawl from Compound 5, Block 1 discovered in Compound 5, Block 2 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "136 24 July 23:51 | Young woman carrying a patched canvas bag from Compound 1, Block 3 discovered with a small portion of food without authorization; disciplinary action taken: written caution entered in block record.",
+    "137 25 July 18:43 | Man carrying a wooden cane from Compound 1, Block 4 discovered in a minor altercation with an occupant of Compound 5, Block 4; a minor scratch reported; disciplinary action taken: both parties warned; incident recorded.",
+    "138 27 July 01:56 | Adult wearing a black shawl from Compound 2, Block 3 discovered in Compound 4, Block 3 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "139 27 July 06:00 | Adult with three ear piercings from Compound 3, Block 3 discovered with a tin of cooking oil without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "140 27 July 19:21 | Man wearing a purple shawl from Compound 4, Block 5 discovered in a minor altercation with an occupant of Compound 4, Block 2; a bruised forearm reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "141 28 July 17:03 | Man wearing a blue tunic from Compound 3, Block 5 discovered in Compound 1, Block 2 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "142 28 July 18:39 | Adult wearing a black shawl from Compound 3, Block 6 discovered with a packet of cigarettes without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "143 28 July 19:56 | Young man wearing a yellow scarf from Compound 5, Block 2 discovered in a minor altercation with an occupant of Compound 3, Block 5; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "144 29 July 16:34 | Young woman with a small canvas purse from Compound 3, Block 3 discovered in Compound 1, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "145 30 July 00:30 | Woman wearing a blue tunic from Compound 5, Block 1 discovered with a spare blanket without authorization; disciplinary action taken: written caution entered in block record.",
+    "146 30 July 01:08 | Man wearing a purple shawl from Compound 4, Block 2 discovered in a minor altercation with an occupant of Compound 4, Block 6; a minor scratch reported; disciplinary action taken: both parties warned; incident recorded.",
+    "147 30 July 08:07 | Adult wearing a blue scarf from Compound 3, Block 3 found carrying a sharpened metal weapon at Compound 5, Block 2; weapon seized and adult referred for security review.",
+    "148 30 July 12:55 | Man wearing a tan shawl from Compound 2, Block 6 discovered with a packet of matches without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "149 30 July 16:24 | Woman wearing a yellow scarf from Compound 5, Block 3 discovered in a minor altercation with an occupant of Compound 1, Block 2; a bruised shoulder reported; disciplinary action taken: parties separated; written caution issued.",
+    "150 30 July 16:42 | Young woman wearing a black shawl from Compound 3, Block 6 discovered in Compound 3, Block 1 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "151 1 August 17:57 | Man wearing a purple shawl from Compound 3, Block 2 discovered with a bag of rice without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "152 3 August 19:36 | Young woman with a red cloth bag from Compound 1, Block 2 discovered in a minor altercation with an occupant of Compound 5, Block 6; a small cut to the cheek reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "153 5 August 04:09 | Young man wearing a purple shawl from Compound 5, Block 1 discovered in Compound 1, Block 5 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "154 5 August 16:59 | Woman wearing a faded green scarf from Compound 2, Block 3 discovered with a bar of soap without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "155 6 August 04:33 | Young man wearing a loose gray tunic from Compound 2, Block 6 discovered in a minor altercation with an occupant of Compound 2, Block 4; a bruised forearm reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "156 6 August 09:53 | Young woman in a cream tunic from Compound 2, Block 6 discovered in Compound 4, Block 4 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "157 6 August 12:24 | Young man wearing a loose gray tunic from Compound 2, Block 3 discovered with a packet of matches without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "158 7 August 12:19 | Man wearing a yellow scarf from Compound 3, Block 1 discovered in a minor altercation with an occupant of Compound 2, Block 3; a minor scratch reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "159 7 August 23:24 | Adult carrying a patched canvas bag from Compound 2, Block 1 discovered in Compound 2, Block 4 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "160 9 August 06:39 | Woman carrying a bamboo cane from Compound 5, Block 5 discovered with an extra ration packet without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "161 9 August 12:51 | Young woman with a red cloth bag from Compound 4, Block 4 discovered in a minor altercation with an occupant of Compound 4, Block 1; a minor scratch reported; disciplinary action taken: parties separated; written caution issued.",
+    "162 9 August 14:21 | Young man with two ear piercings from Compound 2, Block 3 discovered in Compound 2, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "163 10 August 12:39 | Young woman wearing a tan shawl from Compound 5, Block 4 discovered with a handful of cannabis without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "164 11 August 11:48 | Young man with a red cloth bag from Compound 4, Block 5 discovered in a minor altercation with an occupant of Compound 1, Block 5; a bruised forearm reported; disciplinary action taken: both parties warned; incident recorded.",
+    "165 11 August 20:38 | Young man wearing a purple shawl from Compound 1, Block 3 discovered in Compound 2, Block 3 without permission; disciplinary action taken: escorted back to assigned compound; incident recorded.",
+    "166 12 August 03:36 | Young woman with three ear piercings from Compound 5, Block 5 discovered with a bar of soap without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "167 12 August 08:59 | Adult with a woven purse from Compound 1, Block 6 discovered in a minor altercation with an occupant of Compound 4, Block 3; a bruised forearm reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "168 12 August 20:35 | Adult in a pale blue tunic from Compound 5, Block 2 discovered in Compound 4, Block 1 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "169 13 August 08:23 | Man carrying a bamboo cane from Compound 4, Block 3 discovered with a bar of soap without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "170 14 August 10:36 | Woman wearing a checked scarf from Compound 5, Block 4 discovered in a minor altercation with an occupant of Compound 4, Block 1; a small cut to the lip reported; disciplinary action taken: parties separated; written caution issued.",
+    "171 14 August 15:51 | Adult with a brown leather purse from Compound 2, Block 2 discovered in Compound 4, Block 1 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "172 14 August 18:13 | Man carrying a cloth bag over one shoulder from Compound 3, Block 5 discovered with a small portion of food without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "173 16 August 15:10 | Adult carrying a bamboo cane from Compound 2, Block 4 discovered in a minor altercation with an occupant of Compound 3, Block 6; a minor scratch reported; disciplinary action taken: parties separated; written caution issued.",
+    "174 17 August 17:00 | Adult wearing a maroon scarf from Compound 3, Block 1 discovered in Compound 3, Block 3 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "175 18 August 07:58 | Young man wearing a maroon scarf from Compound 1, Block 5 discovered with an extra ration packet without authorization; disciplinary action taken: written caution entered in block record.",
+    "176 18 August 16:32 | Young man with two ear piercings from Compound 3, Block 1 discovered in a minor altercation with an occupant of Compound 2, Block 1; a small cut to the cheek reported; disciplinary action taken: both parties warned; incident recorded.",
+    "177 19 August 09:54 | Woman wearing a dark shawl from Compound 5, Block 4 discovered in Compound 1, Block 4 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "178 20 August 05:38 | Adult with a small canvas purse from Compound 4, Block 4 discovered with a tin of cooking oil without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "179 20 August 22:07 | Adult wearing a faded green scarf from Compound 1, Block 6 discovered in a minor altercation with an occupant of Compound 1, Block 2; a minor scratch reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "180 20 August 23:55 | Man with three ear piercings from Compound 1, Block 5 discovered in Compound 3, Block 1 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "181 22 August 19:18 | Young man wearing a tan shawl from Compound 1, Block 6 discovered with a sealed food parcel without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "182 22 August 21:44 | Adult wearing a blue tunic from Compound 1, Block 2 discovered in a minor altercation with an occupant of Compound 3, Block 5; a small cut to the lip reported; disciplinary action taken: verbal warning issued; block supervisor notified.",
+    "183 22 August 23:11 | Young man carrying a cloth bag over one shoulder from Compound 1, Block 6 discovered in Compound 5, Block 1 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "184 23 August 06:12 | Man with a red cloth bag from Compound 2, Block 1 discovered with an extra ration packet without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "185 23 August 06:24 | Woman wearing a green tunic from Compound 1, Block 2 discovered in a minor altercation with an occupant of Compound 5, Block 3; a small cut to the cheek reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "186 23 August 17:51 | Young man with two ear piercings from Compound 5, Block 1 found urging others to organize a disruptive confrontation during distribution; incident referred for security investigation.",
+    "187 24 August 03:23 | Young woman wearing a loose gray tunic from Compound 5, Block 4 discovered with two loose cigarettes without authorization; disciplinary action taken: item held pending review; verbal warning issued.",
+    "188 24 August 09:50 | Woman wearing a faded green scarf from Compound 5, Block 2 discovered in a minor altercation with an occupant of Compound 1, Block 3; a bruised forearm reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "189 25 August 06:41 | Man carrying a cloth bag over one shoulder from Compound 3, Block 4 discovered in Compound 5, Block 4 without permission; disciplinary action taken: returned to assigned block; written caution issued.",
+    "190 25 August 08:11 | Man wearing a faded green scarf from Compound 5, Block 6 discovered with a packet of matches without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "191 25 August 22:06 | Young woman wearing a maroon scarf from Compound 2, Block 1 discovered in a minor altercation with an occupant of Compound 5, Block 6; a bruised forearm reported; disciplinary action taken: parties separated; written caution issued.",
+    "192 26 August 02:03 | Adult wearing a green tunic from Compound 5, Block 2 discovered in Compound 3, Block 3 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "193 26 August 07:17 | Adult wearing a black shawl from Compound 2, Block 5 discovered with a packet of matches without authorization; disciplinary action taken: item confiscated; incident recorded.",
+    "194 27 August 21:38 | Man with three ear piercings from Compound 4, Block 4 discovered in a minor altercation with an occupant of Compound 4, Block 4; a small cut to the lip reported; disciplinary action taken: parties returned to their blocks; incident recorded.",
+    "195 28 August 17:31 | Young woman wearing a purple shawl from Compound 4, Block 5 discovered in Compound 3, Block 4 without permission; disciplinary action taken: movement restriction for the remainder of the day recorded.",
+    "196 29 August 11:44 | Adult with two ear piercings from Compound 2, Block 5 discovered with a bag of rice without authorization; disciplinary action taken: written caution entered in block record.",
+    "197 29 August 13:55 | Woman wearing a loose gray tunic from Compound 1, Block 1 discovered in a minor altercation with an occupant of Compound 4, Block 2; a minor scratch reported; disciplinary action taken: both parties warned; incident recorded.",
+    "198 29 August 20:48 | Man with a brown leather purse from Compound 3, Block 2 discovered in Compound 4, Block 4 without permission; disciplinary action taken: verbal warning issued and movement recorded.",
+    "199 29 August 23:31 | Young woman with a small canvas purse from Compound 5, Block 5 discovered with a sealed food parcel without authorization; disciplinary action taken: item returned to stores; verbal warning issued.",
+    "200 31 August 05:25 | Adult with a small canvas purse from Compound 1, Block 4 discovered in a minor altercation with an occupant of Compound 1, Block 5; a bruised forearm reported; disciplinary action taken: verbal warning issued; block supervisor notified."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/FWB/Security Log.docx"
+  },
+  {
+   "id": "commander-rolecard",
+   "title": "Role card: Camp Commander",
+   "kind": "Role card",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "Camp Commander’ Perspective",
+    "Prior to becoming the commander for this refugee camp, your militia service included protecting Alpha's fraught border with Omega. In that guerilla war, you have seen firsthand how terrorists from Omega will use local schools and community centers as their hubs, often with full support of their community.",
+    "When Omega's military forces attempted an unsuccessful coup, Omega exploded into violent unrest. As refugees from Omega pour across the border, you can't help but remember the brutal tactics Omega deployed in the border war. You can't help but notice that it's not like Alpha doesn't have its own problems: your extended family, your friends, your neighbors, your militia family from whom you draw your guards -- too many of them are also struggling to have enough food on the table.",
+    "As you take command of the largest refugee camp, you find yourself surrounded by risks and pressures that do-gooder organizations like FWB never seem to understand, seem to almost willfully ignore. Corruption in the Alpha government means that you are barely getting by to pay your guards; you have been managing to keep them by giving them some of the food stocks intended for the refugees. Some guards have become increasingly vocal about late or inadequate compensation, and you are aware that discipline could deteriorate if they believe you can no longer provide for them. If they see the refugees eating better than they are, they may well rebel, and it may be your head. Or someone in your family's head. Moreover, like you, the reality is that your guards have little love for Omega and are convinced these refugees brought this crisis upon themselves. If they occasionally cross the line of some foreigner’s definition of humanitarian behavior, you can’t really blame them, especially when you’re convinced there are likely terrorists hiding in the refugee camp preparing to do worse.",
+    "You are also concerned about the behavior of the refugees. Right now, the refugees largely fear you and your guards, and that is keeping them in line. They know you are the boss, that the only way for them to get food, shelter, permits to leave the camp, etc. is by showing appropriate behavior toward you and your guards. If FWB brings in their independent support, that in itself may undermine your authority. Indeed, you have already had problems controlling the narrative when it comes to MASHA, who have focused on food availability in the camp with no mention of the security challenges you face. If FWB hires local independent laborers for the food distribution, you cannot trust those people not to stir unrest and even potentially support hidden terrorists by sharing items or information.",
+    "And the costs of unrest are real: the reality is that there are 160,000 refugees for only about 700 guards. If the refugees decide to overwhelm the guards, you know they can. The government of Alpha is counting on you to make sure that these refugees don't swamp the capital. Even excluding the risk of terrorist action by Omega, citizens of Alpha are already struggling to find jobs and make ends meet. Food prices are sky rocketing as the conflict in Omega affects supply chains into Alpha. Refugees pouring into the capital could destabilize Alpha. And as bad as things are in Alpha, one can see how much worse they are in Omega. You cannot risk your country falling into the same ruin. Not only would the food from FWB help pay for the guards, but it would help keep the refugee population in the camp instead of threatening your country. You also know that some refugees already trade portions of their rations for essentials, and that those rations are then resold locally — further proof, in your view, that food has become the camp’s real currency. However, at the same time, officials have made clear that major unrest in the camp—or visible abuse that draws international attention—would be politically costly for Alpha and for those responsible for camp security.",
+    "There’s a part of you that considers accepting FWB’s terms and then simply confiscating all the food – using violence if necessary – once it arrives. Your guards would support you, and you have the force required. However, not only would that be an international incident large enough to potentially bring in foreign troops, but neither FWB nor any other aid agency will provide you with food ever again. Whereas if you can come to an agreeable deal, then hopefully you can count on a continued stream of food aid to keep your guards fed and the refugees placated. Given the corruption in Alpha and the resulting severe difficulties in paying your guards in non-worthless currency, an agreement that includes ongoing food aid could be highly attractive.",
+    "Similarly, there’s a part of you that wants to stay strong and not cave to FWB’s demands. You won’t be respected by the guards if you appear weak, and you can accept some refugees starving for the cost of stability. Moreover, if the refugees do resort to violence, your guards are better armed and would make it highly costly -- not to mention the refugees would likely lose any goodwill among people in the capital if they killed the guards that are their relatives. As the situation gets worse, you'll also have more leverage with your government as well as with organizations like FWB to provide payment for your guards.",
+    "A final part of you just wants to be done with this mess. If you didn’t have to spend time negotiating with FWB, you could be focusing your efforts on putting pressure on the Ministry of Health for more rations for your own people, as it is your understanding that Alpha also has been receiving foreign aid. That aid has been largely distributed to families in Alpha via the NGO JJP. They claim they don’t have a lot, but maybe they aren’t telling you everything. Separately, you really need to pressure the Ministry of Defense for more funds and resources for basic things: managing the sewage, obtaining fuel for the electricity generators, transportation of materials to support the (largely refugee) camp infrastructure, such as tin for walls and roofs, all the things that no one else pays attention to because all the world cares about is shiny photographs of foreign organizations giving aid to foreigners in your country. In practice, these responsibilities often fall on your office whether or not the government provides the means to cover them.",
+    "These are the thoughts on your mind when a new negotiator reaches out from FWB…"
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/Rolecard.docx"
+  },
+  {
+   "id": "fwb-minutes",
+   "title": "Minutes: FWB field officer with Camp Commander and militia leaders",
+   "kind": "Minutes",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "Minutes of Meeting (MoM)",
+    "Location: Camp Alpha – National Hero Roundabout",
+    "Participants: Camp Commander, FWB Field Officer, 2 personal guards, militia leadership representative",
+    "Summary of Discussion:",
+    "FWB Field Officer reiterated the same thing they always say, that they will not provide food to the guards because supposedly it violates neutrality to only support the refugees and not support both the refugees and the people operating the camp. FWB does not seem to be aware that host communities and guards’ families are also facing hardship, especially as the scale of displacement has placed significant strain on local systems. FWB also refused to see broader issues in how aid is currently being used and perceived, in particular, that food assistance is already being traded within the camp, with some refugees exchanging rations for other goods.",
+    "FWB Field Officer insisted that FWB representatives and potentially locally-hired assistants chosen by FWB are the ones that must manage any food disbursement. We reiterated that any food distribution in the camp must be carried out through the existing guard structures, rather than with direct involvement of external staff. Guards must be responsible for organizing and implementing the distribution, while any FWB presence would need to be coordinated and escorted at all times due to security concerns and the risk of unrest. FWB did not seem to understand the reality of the conditions within the camp and why unrestricted movement by external actors cannot be acceptable under current conditions.",
+    "In addition, they seem unwilling to consider food as payment in general. They do not seem to truly understand that food rations are the only viable option under the current limited functionality of local markets and the reduced purchasing power of cash. They were taken aback when local militia leadership reinforced this point, stressing that ensuring food access for guards and their families is critical to maintaining stability and cooperation on the ground.",
+    "FWB asked for additional nutritional assessments, supposedly for a donor requirement. This may be true, but they do not seem to understand the security risks of such an endeavor. FWB failed to recognize our own efforts in collecting registration data on the population, and also the fact that delays stemming from doing this assessment in a security-safe way could increase tensions.",
+    "At the end of the meeting, we noted that we already have a productive working relationship with MASHA and implied that if FWB reaches an impasse, it is their fault.",
+    "Key Takeaway:",
+    "FWB seems firm on their supposed neutrality needs and are asking for a highly resource demanding nutritional assessment. They do not seem to understand the current economic conditions, nor how quickly the currently stable camp could erupt into chaos and violence."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/MoM FWB Field Officer with Camp Commander & Militia Leaders.docx"
+  },
+  {
+   "id": "militia-voice-1",
+   "title": "Voice message 1: senior militia leader",
+   "kind": "Transcript",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "[Voice message transcript – Senior Militia Leader to Camp Commander]",
+    "SML: We are hearing that this food organization is coming in. Apparently they think they can just arrive here and start running things.",
+    "CC: That is what we understand.",
+    "SML: Then make sure they understand something before they get comfortable. Our men will be involved in this distribution, and they will be compensated properly. I do not want to hear any nonsense about their procedures or how they usually do things.",
+    "CC: I understand. You want that settled beforehand.",
+    "SML: Obviously. There is no salary coming through, and meanwhile everyone in this camp expects things to keep functioning as if nothing is wrong. They complain, they demand, they expect. Fine. Then our men are not going to stand around doing the work for free while some outside organization pats itself on the back.",
+    "CC: I can communicate that to them.",
+    "SML: Communicate it clearly. They are not coming into an empty field. There are people already responsible for keeping order here, whether the people in this camp appreciate it or not.",
+    "CC: Understood.",
+    "SML: Good. I do not want them arriving with food and then pretending they are shocked when we insist on being involved. Deal with it before they come in. We are counting on you to make sure our position is respected."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/1 Voice message transcript – Senior Militia Leader.docx"
+  },
+  {
+   "id": "militia-voice-3",
+   "title": "Voice message 3: senior militia leader",
+   "kind": "Transcript",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "[Voice message transcript – Senior Militia Leader to Camp Commander]",
+    "SML: Make sure food without borders understands that they are not bringing food in here and shutting our people out of the distribution.",
+    "CC: I agree, our people have to be involved. They make up excuses like our people can’t fill out the forms, that they need to document, makes me wonder if they actually want to provide the food or not.",
+    "SML: I am tired of outsiders arriving and acting as though everyone already here is either an inconvenience. It’s the vermin we’re keeping contained in the camp that are the inconvenience.",
+    "CC: Better they had stayed in Omega.",
+    "SML: Facing the consequences of their own making. Was A[--]’s birthday yesterday.",
+    "CC: I sent a message to his widow. Still can’t believe what those filth did trying to take our land. And now they expect to be taken care of?",
+    "Meanwhile FWB acts as if they are saints. That we’re the bad guys here and any reasonable person would be grateful that these garbage are getting full bellies when our guards’ children are just as hungry.",
+    "SML: Yeah these outsider SoBs. Bet they think they are civilizing us with all their protocols and procedures.",
+    "CC: Maybe we just let them experience the consequences of their stupidity. They want in, without feeding our guards? I’ll let them know in the guards’ hearing that I can’t be responsible. The guards will get the message.",
+    "SML: If it comes to it. But if you can figure out how to squeeze them more than once, well all our families will be grateful."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/3 Voice message transcript – Senior Militia Leader.docx"
+  },
+  {
+   "id": "militia-voice-4",
+   "title": "Voice message 4: senior militia leader",
+   "kind": "Transcript",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "SML: You need to tell them this is not some glossy photo and reels exercise where everyone lines up politely and thanks them afterward in front of their fancy cameras.",
+    "CC: They don’t understand that the situation is tense.",
+    "SML: Then make them understand. These vermin are already on edge, already complaining, already expecting more than anyone can give them. Put food in front of them, and you will have a riot before these outsiders have finished extending their selfie sticks.",
+    "CC: And perfect cover for some of that trash to try to compromise the outer perimeter.",
+    "SML: Food without borders doesn’t have enough sense to understand where they are. They come in with their methods and think everyone will simply cooperate because they say so.",
+    "CC: I’ve told them that we know how to handle the distribution safely. They say we’re going to cheat and skim food off the top. They say we’re not going to give out the food equally.",
+    "SML: We are going to skim off the top, because that’s what our guards and their families need. We are going to give out the food unequally, because it’s bad enough wasting food on vermin but we’re not feeding terrorists. That’s not cheating, that’s security.",
+    "CC: Just like preventing a riot is security. We have our methods. One block at a time. Any trouble while that block is getting food, no one gets food until the next day.",
+    "SML: That’s right. No improvising, no wandering around asking people what they want, no pretending this is some ordinary place. Things are already tense enough. They don’t know what kind of two-faced vermin they’re dealing with.",
+    "CC: I will make sure they understand that.",
+    "SML: Good. Because we are not cleaning up a mess created by outsiders who refused to listen."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/4 Voice message transcript – Senior Militia Leader.docx"
+  },
+  {
+   "id": "mayor-to-commander",
+   "title": "Message from the Mayor",
+   "kind": "Message",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "I have heard from SML that your security measures are lax.",
+    "Let me be clear: we cannot afford these scum from Omega mobbing the capital.",
+    "You will keep the refugees contained."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/2 Messae from Mayor.docx"
+  },
+  {
+   "id": "guard-message-1",
+   "title": "Guard message 1",
+   "kind": "Message",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "Woman with red bangles in compound E will trade 1 pound rice for sim card."
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/Guard message 1.docx"
+  },
+  {
+   "id": "guard-message-4",
+   "title": "Guard message 4",
+   "kind": "Message",
+   "visible_to": [
+    "commander"
+   ],
+   "paragraphs": [
+    "Patched the generator for now, but we’re going to need new parts. Permission to order?"
+   ],
+   "source": "Cases/Simulation 2/For Students - Camp Commander and Shared/Camp Commander/Guard message 4.docx"
+  },
+  {
+   "id": "ao-encyclopedia",
+   "title": "Encyclopedia page: the AO delta",
+   "kind": "Background",
+   "visible_to": [
+    "fwb",
+    "commander"
+   ],
+   "paragraphs": [
+    "AO region",
+    "The AO region is a low-lying delta shared by Alpha and Omega. Its rivers divide into shifting channels before reaching the sea, creating a landscape of wetlands, wooded islands, floodplains, and fertile farmland. Southern Omega borders Alpha within the delta, where settlements on opposite banks often have longstanding family and trading ties. The region’s abundant water and productive soil have supported dense populations, but changes in the rivers have also made land ownership and the international border persistent sources of dispute.",
+    "Peoples and settlement",
+    "Several related ethnic communities inhabit the AO region. Their languages share common features, and many communities observe similar festivals and family customs. However, local identities are often tied to a particular ancestral settlement or account of migration. Groups that outsiders describe as branches of one people may regard themselves as separate communities with different claims to land and authority.",
+    "Over the past thousand years, the delta has received successive migrations from inland areas and the coast. Some newcomers arrived as farmers or traders; others came with invading forces that established control over river crossings and agricultural land. These movements produced mixed settlements as well as communities that maintained distinct customs layered on top of a shared culture.",
+    "Religious practice is similarly varied. Older traditions centered on ancestors and seasonal river ceremonies remain important in some places. Other communities follow faiths introduced by earlier migrants. Missionaries who arrived more recently established schools and congregations, adding another layer to the region’s religious life. Members of closely related ethnic groups may therefore follow different religions, while people within one village may combine newer observances with older family rites.",
+    "Land and social divisions",
+    "Ethnic tensions in AO long predate the modern border. In many districts, particular subgroups came to be associated with landholding, while others worked as tenant farmers, seasonal laborers, or workers on other people’s fields. These roles were never absolute: families gained and lost land, and local arrangements differed across the delta. Nevertheless, inherited differences in access to farmland shaped political influence and relations between communities.",
+    "The expansion of industrial farming and plantations sharpened these divisions. Large holdings brought new roads, processing facilities, and paid work, but also concentrated control over the most fertile land. Disputes arose over tenancy, wages, irrigation, and whether land used seasonally by several communities could be assigned to a single owner. Leaders sometimes framed these economic conflicts in ethnic terms, deepening mistrust between neighboring groups.",
+    "In southern Omega, the people commonly called Omega-2 maintain traditions closer in some respects to those of Alpha’s dominant group than to those of Omega-1, the dominant group elsewhere in Omega. Shared customs and cross-border kinship have encouraged exchange, particularly in settlements near the boundary. Strong tribal distinctions remain, however. Omega-2 communities do not necessarily identify with Alpha’s dominant group, and their political interests have not always aligned.",
+    "Border and government",
+    "The border between Alpha and Omega passes through some of the delta’s most productive land. Sections near fertile channels have been disputed for decades. A field may depend on water drawn from one country while its owners, workers, or nearest market are in the other. Seasonal changes in channels further complicate claims based on the river’s course.",
+    "Both governments have treated control of the disputed area as an economic and political priority. International powers have also sought influence in the region through support for favored leaders, agricultural investment, and security relationships. Such involvement helped entrench autocratic governments in both Alpha and Omega over the last half century. Official accounts in each country tend to emphasize threats from across the border, while giving less attention to the local land disputes and unequal labor arrangements that sustain unrest.",
+    "The delta has experienced many small-scale conflicts over the decades, including clashes connected to fields, water access, and contested authority. A prolonged period of floods and droughts around the turn of the century placed further strain on communities already divided over land. Flooding damaged homes and crops in low areas; dry periods increased competition for reliable water and cultivable soil. The resulting border conflict resulted in at least three hundred deaths, which, while small compared to the deaths due to localized famine from the droughts and floods – thought to number in the tens of thousands – left a mark on communities on both sides of the border.",
+    "Today, the AO region remains defined by both connection and division. Its peoples share a landscape and a long history of exchange, but borders, unequal access to land, and competing accounts of belonging continue to shape life across the delta."
+   ],
+   "source": "Cases/Simulation 2/Shared/Encyclopedia Page on the AO Delta.docx"
+  },
+  {
+   "id": "news-aid-groups",
+   "title": "International aid groups support Omega refugees in Alpha",
+   "kind": "News",
+   "visible_to": [
+    "fwb",
+    "commander"
+   ],
+   "paragraphs": [
+    "A small group of international and local organizations is providing assistance to refugees from Omega in camps near Alpha’s capital, as new arrivals continue to add to an already large displaced population.",
+    "The UN Humanitarian Coordinator in Alpha has expressed grave concern for the estimated 300,000 refugees who fled recent violence in neighboring Omega. Their needs span food, shelter, clean water, sanitation, and medical care, according to accounts from local church activists.",
+    "Health for All runs mobile clinics serving the camp population, but healthcare remains limited. Give Several and MASHA are also among the organizations providing selected services and assistance. The available information does not specify the full scope of each organization’s work or how many people their programs reach.",
+    "MASHA, a local NGO, has maintained a more consistent presence in the primary camp than many outside organizations. However, many question its close ties with camp authorities, many of whom are part of militias that have been responsible for a number of human rights abuses in the region.",
+    "The need is substantial. The largest camp houses more than 160,000 people, and the flow of new arrivals has not stopped. The reported shortages of basic services remain severe."
+   ],
+   "source": "Cases/Simulation 2/Shared/International news_ International Aid Groups Support Omega Refugees in Alpha.docx"
+  },
+  {
+   "id": "news-refugee-crisis",
+   "title": "Refugee crisis in Alpha following unrest in Omega",
+   "kind": "News",
+   "visible_to": [
+    "fwb",
+    "commander"
+   ],
+   "paragraphs": [
+    "At least 250,000 people who fled violence in Omega have taken refuge in neighboring Alpha, settling in several camps near the capital. New arrivals continue to come, placing further pressure on sites already struggling to meet basic needs.",
+    "The displacement followed a failed coup in Omega six months ago led by the charismatic General B[--], who was then imprisoned and then executed. Political, tribal, and ethnic tensions subsequently erupted into mass violence that destabilized the country. The figures cited by the UN Humanitarian Coordinator in Alpha show the scale of the movement across the border, though the exact number of refugees remains uncertain.",
+    "Local church activists report that most newcomers are women and children. They are fleeing starvation and violence, often arriving with severe malnutrition. The church activists state that there is inadequate shelter and a lack of clean water for those arriving, making the condition of the refugees only marginally better than the conditions that they left behind.",
+    "The largest camp, about 35 kilometers north of Alpha’s capital near the National Hero Roundabout, houses more than 160,000 people. Contacts among the refugees say residents are confined to the camps under guard supervision and must obtain official permission to leave. Local church activists also allege that some guards extort and use violence against the most vulnerable people. They point out that the camp authorities largely consist of former militia members accused of human rights abuses in earlier conflicts along the Omega border.",
+    "The refugees’ circumstances are shaped by both the violence they escaped and the conditions in which they now live. With arrivals continuing and essential services stretched, the camps remain a place of uncertain safety for a population displaced by Omega’s unrest."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/Copy of International News_ Refugee Crisis in Alpha following Unrest in Omega.docx"
+  },
+  {
+   "id": "news-camp-conditions",
+   "title": "Poor conditions in the largest refugee camp in Alpha",
+   "kind": "News",
+   "visible_to": [
+    "fwb",
+    "commander"
+   ],
+   "paragraphs": [
+    "At Alpha’s largest camp for refugees from Omega, more than 160,000 people live with inadequate shelter, poor sanitation, limited healthcare, and recurring electricity shortages.",
+    "The camp lies approximately 35 kilometers north of the capital, near the National Hero Roundabout. It is the largest of several sites receiving people who fled violence in Omega, and new arrivals continue to enter the wider camp system.",
+    "Local church activists say many newcomers are women and children suffering from severe malnutrition. They also report inadequate access to clean water and extremely poor sanitation and hygiene conditions. Healthcare is limited to mobile clinics run by Health for All. Other organizations, including Give Several and the local NGO MASHA, provide selected forms of assistance, but support remains limited relative to the needs described.",
+    "Electricity shortages add to the strain. Frequent blackouts sit alongside other pressing needs: shelter for new arrivals, water, sanitation, and medical attention.",
+    "Further, contacts among refugees say residents are guarded and need official permission to leave. Local church activists allege that some guards extort or use violence against vulnerable people. The authorities overseeing the camp have close ties to militias involved in hostilities against Omega’s government. The UN Humanitarian Coordinator in Alpha has expressed grave concern for the Omega refugee population, estimated well over 200,000 across this camp and other sites along the border."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/Copy of International News_ Poor Conditions in Largest Refugee Camp in Alpha.docx"
+  },
+  {
+   "id": "media-monitoring",
+   "title": "Media monitoring: local news excerpt",
+   "kind": "News",
+   "visible_to": [
+    "fwb",
+    "commander"
+   ],
+   "paragraphs": [
+    "MEDIA MONITORING – LOCAL NEWS EXCERPT",
+    "Source: Alpha National Broadcasting Network (ANBN)",
+    "In a statement released late yesterday, a spokesperson from the Ministry of Interior warned that the continued presence of large numbers of refugees near the capital poses “serious security and economic risks.”",
+    "The spokesperson alleged that armed elements may be infiltrating refugee populations, raising concerns about potential links to instability originating from neighboring Omega. While no specific evidence was provided, officials emphasized the need for “heightened vigilance” and stricter control measures within and around refugee camps.",
+    "The Ministry further stated that the government is actively considering measures to reduce the refugee population, including organized deportation and relocation initiatives, citing the “unsustainable burden” on national resources.",
+    "Officials also linked the refugee presence to the deterioration of local economic conditions, including rising food prices, pressure on services, and declining employment opportunities for host communities.",
+    "Several local authorities have echoed these concerns, with some calling for immediate action to restore economic stability and public order."
+   ],
+   "source": "Cases/Simulation 2/For Students - FWB and Shared/Copy of MEDIA MONITORING – LOCAL NEWS EXCERPT.docx"
+  }
+ ]
+}
