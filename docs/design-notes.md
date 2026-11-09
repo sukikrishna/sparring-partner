@@ -1,5 +1,20 @@
 # Design notes
 
+## Scope
+
+The current focus is the interface between a person and the case material:
+helping a negotiator parse and understand the documents, test their own
+reasoning against them, and find where claims are unsupported, contested or
+inconsistent, whether in their own notes or between sources (for example,
+conflicting figures, rumour versus official statements, one party's account
+versus another's).
+
+Rehearsal against a simulated counterpart (role play / replay) is deliberately
+out of scope for now. It is planned for a later phase, once the document-
+understanding interface is validated with users. The role-scoped corpora and
+information barrier built for this version are designed so that a counterpart
+agent can later be restricted to the other role's documents.
+
 ## Principles
 
 1. **Separate human and AI space.** The negotiator's own strategy lives in a
@@ -87,5 +102,9 @@ interaction log for studies, tests and CI.
 - **Updating structure from chats.** When a chat changes the negotiator's mind,
   should the structured view update automatically, or only when they edit
   their own notes?
-- **Rehearsal.** A simulated counterpart, constrained to the other role's
-  documents, would let negotiators test a revised strategy.
+
+## Later phase: rehearsal
+
+Not part of the current work. A simulated counterpart, restricted to the other
+role's documents, would let negotiators replay and test a revised strategy.
+It will build on the per-role corpora and barrier already in place.

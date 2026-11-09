@@ -6,6 +6,13 @@ opens the case documents that bear on them, and collects what you learn in a
 separate, clearly labelled AI space. It asks questions instead of writing your
 strategy for you.
 
+**Current scope.** This version focuses on the interface between a person and
+the case material: reading and understanding the documents, testing one's own
+reasoning against them, and finding where claims are unsupported, contested or
+inconsistent, both within one's notes and across sources. Rehearsing the
+negotiation against a simulated counterpart (role play / replay) is planned for
+a later version and is not part of this release.
+
 ![Sparring Partner: AI-Synthesis board, Human-Only notes with highlighted gaps, and a source document with its chat](docs/images/overview.png)
 
 ## How it works

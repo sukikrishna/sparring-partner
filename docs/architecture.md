@@ -23,8 +23,10 @@ Sparring Partner is a small Python service plus a dependency-free browser app.
 
 ## The information barrier
 
-Cases are role-play simulations: each party holds documents the other must not
-see. The barrier is enforced in one place, `Case.visible_documents(role_id)`,
+The cases come from negotiation simulations in which each party holds
+documents the other must not see. The current app is used by one person
+preparing one side (no simulated counterpart yet), but each role still sees only
+its own material. The barrier is enforced in one place, `Case.visible_documents(role_id)`,
 and everything downstream goes through it:
 
 - `GET /api/cases/{id}?role=` returns only visible documents;
