@@ -7,7 +7,7 @@ import {
   changed, exportSession, log, registerRenderer, resetSession, restore, save, state,
 } from './store.js';
 import { initSynthesis, renderStale, renderSynthesis } from './synthesis.js';
-import { $, download, el } from './util.js';
+import { $, $$, download, el } from './util.js';
 
 const DEFAULT = { caseId: 'qiso', roleId: 'mayor' };
 
@@ -20,11 +20,81 @@ function selectGap(id) {
   syncMarks();
   log('gap_selected', { gapId: id, n: gap.n });
   changed('left', 'right');
+  reveal('src');
 }
 
 registerRenderer('left', renderSynthesis);
 registerRenderer('right', renderSources);
 registerRenderer('leftStale', renderStale);
+registerRenderer('steps', renderSteps);
+
+// ------------------------------------------------------------- step guide
+
+/** Write → Find gaps → Investigate → Revise, derived from session state. */
+function renderSteps() {
+  const done = {
+    write: readNotes().trim().length > 0,
+    gaps: state.gapsChecked,
+    investigate: state.insights.length > 0
+      || Object.values(state.threads).some((t) => t.some((m) => m.role === 'user')),
+    revise: state.gaps.some((g) => g.status === 'resolved'),
+  };
+  let current = false;
+  for (const li of $$('#steps li')) {
+    const key = li.dataset.step;
+    li.removeAttribute('aria-current');
+    if (done[key]) li.dataset.state = 'done';
+    else if (!current) { li.dataset.state = 'current'; li.setAttribute('aria-current', 'step'); current = true; }
+    else delete li.dataset.state;
+    const label = li.dataset.label || (li.dataset.label = li.textContent.trim());
+    li.setAttribute('aria-label', `${label}: ${done[key] ? 'done' : li.dataset.state === 'current' ? 'current step' : 'not started'}`);
+  }
+}
+
+// ------------------------------------------------------- collapsible panels
+
+const LAYOUT_KEY = 'sparring-partner:layout';
+
+const STACKED = window.matchMedia('(max-width: 1180px)');
+
+function applyLayout(layout) {
+  for (const side of ['ai', 'src']) {
+    const collapsed = Boolean(layout[side]);
+    $('#app').classList.toggle(`${side}-collapsed`, collapsed);
+    $(`#col-${side}`).classList.toggle('collapsed', collapsed);
+    for (const btn of $$(`[data-collapse="${side}"]`)) btn.setAttribute('aria-expanded', String(!collapsed));
+  }
+}
+
+function readLayout() {
+  try { return JSON.parse(localStorage.getItem(LAYOUT_KEY)) || {}; } catch { return {}; }
+}
+
+let layout = {};
+
+function setCollapsed(side, collapsed, { focus = false } = {}) {
+  if (Boolean(layout[side]) === collapsed) return;
+  layout = { ...layout, [side]: collapsed };
+  applyLayout(layout);
+  log('layout', { panel: side, collapsed });
+  try { localStorage.setItem(LAYOUT_KEY, JSON.stringify(layout)); } catch { /* ignore */ }
+  // Keep keyboard focus on the visible counterpart of the control that was used.
+  if (focus) $(collapsed ? `#col-${side} .rail` : `#col-${side} .collapse-btn`)?.focus();
+}
+
+/** Make sure a side panel is visible (expanded, and on screen when panels are stacked). */
+function reveal(side) {
+  setCollapsed(side, false);
+  if (STACKED.matches) $(`#col-${side}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wireLayout() {
+  layout = readLayout();
+  applyLayout(layout);
+  for (const btn of $$('[data-collapse]')) {
+    btn.addEventListener('click', () => setCollapsed(btn.dataset.collapse, !layout[btn.dataset.collapse], { focus: true }));
+  }
+}
 
 // ------------------------------------------------------------------ routing
 
@@ -106,6 +176,7 @@ async function loadSession({ caseId, roleId, mode }, { saveCurrent = true } = {}
   renderTopbar();
   renderSynthesis();
   renderSources();
+  renderSteps();
   if (restored) setStatus('Session restored', 'ok');
   document.body.classList.remove('loading');
 }
@@ -158,6 +229,7 @@ async function boot() {
   initSources({ selectGap });
   initSynthesis({ selectGap });
   wireTopbar();
+  wireLayout();
 
   await detectBackend();
   try {

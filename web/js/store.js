@@ -112,6 +112,7 @@ export function registerRenderer(name, fn) { renderers[name] = fn; }
 export function changed(...parts) {
   const list = parts.length ? parts : ['left', 'right'];
   for (const p of list) renderers[p] && renderers[p]();
+  renderers.steps && renderers.steps();
   save();
 }
 

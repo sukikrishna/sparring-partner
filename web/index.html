@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sparring Partner</title>
 <meta name="description" content="Prepare for a negotiation: write your own strategy, examine the passages that need another look against the case documents, and collect evidence-grounded insights.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235139b8'/%3E%3Cpath d='M9 22l7-12 7 12' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b45c9'/%3E%3Cpath d='M9 22l7-12 7 12' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body class="loading">
 
 <header class="topbar">
-  <span class="brand">Sparring Partner</span>
+  <div class="brand"><span class="logo" aria-hidden="true"></span>Sparring Partner</div>
   <label class="case-pick">
     <span class="sr-only">Case and role</span>
     <select id="case-select"></select>
@@ -22,18 +22,24 @@
   </div>
   <span class="mode-note" id="mode-note"></span>
   <span class="spacer"></span>
-  <button type="button" id="help">How it works</button>
-  <button type="button" id="export" title="Download notes, insights, chats and the interaction log as JSON">Export session</button>
-  <button type="button" id="reset">Reset</button>
+  <div class="top-actions">
+    <button type="button" class="top-btn" id="help">How it works</button>
+    <button type="button" class="top-btn" id="export" title="Download notes, insights, chats and the interaction log as JSON">Export</button>
+    <button type="button" class="top-btn" id="reset">Reset</button>
+  </div>
 </header>
 
 <main class="app" id="app">
 
   <!-- LEFT: AI synthesis -->
-  <section class="col col-ai" aria-labelledby="ai-title">
+  <section class="col col-ai" id="col-ai" aria-labelledby="ai-title">
+    <button type="button" class="rail" data-collapse="ai" aria-controls="col-ai" aria-label="Show AI-Synthesis"><span>✦ AI-Synthesis</span></button>
     <div class="col-head">
-      <div class="col-title" id="ai-title"><span aria-hidden="true">✦</span> AI-Synthesis</div>
-      <div class="col-sub">AI-found or AI-organised. Kept apart from your own writing; every item shows its source.</div>
+      <div class="col-title-row">
+        <div class="col-title" id="ai-title"><span class="col-icon" aria-hidden="true">✦</span> AI-Synthesis</div>
+        <button type="button" class="collapse-btn" data-collapse="ai" aria-controls="col-ai" title="Collapse panel" aria-label="Collapse AI-Synthesis">‹</button>
+      </div>
+      <div class="col-sub">Found or organised by AI. Kept apart from your writing; every item shows its source.</div>
       <div class="tabs" id="ai-tabs" role="tablist"></div>
     </div>
     <div class="col-body" id="ai-body"></div>
@@ -42,15 +48,23 @@
   <!-- CENTER: Human only -->
   <section class="col col-human" aria-labelledby="human-title">
     <div class="col-head human-head">
-      <div>
-        <div class="col-title" id="human-title"><span aria-hidden="true">✎</span> Human-Only</div>
-        <div class="col-sub">Your thinking, in your words. Only you write here.</div>
+      <div class="col-title-row">
+        <div>
+          <div class="col-title" id="human-title"><span class="col-icon" aria-hidden="true">✎</span> Human-Only</div>
+          <div class="col-sub">Your thinking, in your words. The AI never writes here.</div>
+        </div>
+        <div class="submit-bar">
+          <button type="button" class="btn-secondary" id="find-gaps" title="Flag passages that rest on questionable assumptions">Find gaps</button>
+          <button type="button" class="btn-primary" id="submit" disabled title="Re-check edited passages (Ctrl/⌘ + Enter)">Submit changes</button>
+        </div>
       </div>
-      <div class="submit-bar">
-        <span class="status" id="status" role="status" aria-live="polite"></span>
-        <button type="button" class="btn-secondary" id="find-gaps" title="Flag passages that rest on questionable assumptions">Find gaps</button>
-        <button type="button" class="btn-primary" id="submit" disabled title="Re-check edited passages (Ctrl/⌘ + Enter)">Submit changes</button>
-      </div>
+      <ol class="steps" id="steps" aria-label="Progress">
+        <li data-step="write">Write</li>
+        <li data-step="gaps">Find gaps</li>
+        <li data-step="investigate">Investigate</li>
+        <li data-step="revise">Revise</li>
+      </ol>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
     </div>
     <div class="brief" id="role-brief">
       <button type="button" class="brief-toggle" id="brief-toggle" aria-expanded="false" aria-controls="role-brief-body">
@@ -69,9 +83,13 @@
   </section>
 
   <!-- RIGHT: Source documents -->
-  <section class="col col-src" aria-labelledby="src-title">
+  <section class="col col-src" id="col-src" aria-labelledby="src-title">
+    <button type="button" class="rail" data-collapse="src" aria-controls="col-src" aria-label="Show Source Documents"><span>❏ Source Documents</span></button>
     <div class="col-head">
-      <div class="col-title" id="src-title"><span aria-hidden="true">❏</span> Source Documents</div>
+      <div class="col-title-row">
+        <div class="col-title" id="src-title"><span class="col-icon" aria-hidden="true">❏</span> Source Documents</div>
+        <button type="button" class="collapse-btn" data-collapse="src" aria-controls="col-src" title="Collapse panel" aria-label="Collapse Source Documents">›</button>
+      </div>
       <div class="tabs" id="src-tabs" role="tablist"></div>
     </div>
     <div class="col-body src-body" id="src-body"></div>
@@ -82,12 +100,12 @@
 <dialog id="help-dialog" class="help">
   <form method="dialog">
     <h2>How Sparring Partner works</h2>
-    <p>Sparring Partner helps you prepare for a negotiation without writing your strategy for you.</p>
+    <p>Sparring Partner helps you understand a negotiation case and test your own reasoning against it. It does not write your strategy for you.</p>
     <ol>
-      <li><b>Human-Only (middle).</b> Write your thinking in your own words, as rough as you like. The AI never edits this space.</li>
+      <li><b>Write</b> in the Human-Only column (middle), in your own words, as rough as you like. The AI never edits this space.</li>
       <li><b>Find gaps.</b> Passages that rest on an assumption the case documents call into question get highlighted. Each comes with a question, not a verdict.</li>
-      <li><b>Source Documents (right).</b> Click a highlight to open the documents that bear on it, with a separate chat for each. You can also browse the whole library or ask a question across all documents.</li>
-      <li><b>AI-Synthesis (left).</b> Key findings collect on a board, labelled with where they came from. Add your own notes there too. The structured view restates your notes in negotiation terms (interests, island of agreement, red lines, alternatives) and shows what is still open.</li>
+      <li><b>Investigate</b> in Source Documents (right). Click a highlight to open the documents behind it, each with its own chat. You can also browse the whole library or ask across all documents.</li>
+      <li><b>Collect</b> in AI-Synthesis (left). Findings gather on a board, each labelled with its source; add your own notes there too. The structured view restates your notes in negotiation terms and shows what is still open.</li>
       <li><b>Revise.</b> Edit a highlighted passage and press “Submit changes”. If it no longer rests on the assumption, the gap closes; your findings stay.</li>
     </ol>
     <p class="muted"><b>Scripted demo</b> uses prepared answers for one scenario (Qiso, as the Mayor) and passage search elsewhere. <b>Live</b> uses a language model through the Python server and works on any case and any notes.</p>
