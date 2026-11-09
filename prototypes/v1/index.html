@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sparring Partner</title>
+<style>
+  :root {
+    --bg: #ece9e2;
+    --paper: #fffdf8;
+    --ink: #1f2328;
+    --muted: #666b70;
+    --line: #d9d5cb;
+
+    --hl: #ffe08a;
+    --hl-strong: #e8a900;
+    --hl-ink: #5c4300;
+
+    --ai-bg: #f1eefb;
+    --ai-card: #fbfaff;
+    --ai-line: #d4cdef;
+    --ai-accent: #5139b8;
+    --ai-ink: #2a2150;
+
+    --src-bg: #edf1f3;
+    --src-line: #cbd5da;
+    --src-accent: #24627f;
+
+    --ok: #2b7a4b;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--ai-accent); outline-offset: 2px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 8px 16px; background: #26292e; color: #f2f0ea;
+  }
+  .brand { font-weight: 700; letter-spacing: .02em; }
+  .case { color: #bdbab1; font-size: 13px; }
+  .tag-proto {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+    border: 1px solid #5b5f66; border-radius: 99px; padding: 1px 8px; color: #bdbab1;
+  }
+  .topbar .spacer { flex: 1; }
+  .topbar button {
+    background: transparent; border: 1px solid #5b5f66; color: #f2f0ea;
+    border-radius: 6px; padding: 3px 10px; font-size: 12px;
+  }
+  .topbar button:hover { background: #363a41; }
+
+  /* ---------- three columns ---------- */
+  .app {
+    flex: 1; min-height: 0;
+    display: grid; gap: 10px; padding: 10px;
+    grid-template-columns: minmax(280px, 1fr) minmax(380px, 1.45fr) minmax(330px, 1.15fr);
+  }
+  .col {
+    min-height: 0; display: flex; flex-direction: column;
+    border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .col-head {
+    padding: 10px 14px; border-bottom: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .col-title { font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .col-sub { color: var(--muted); font-size: 12px; }
+
+  /* ---------- AI synthesis (left) ---------- */
+  .col-ai { background: var(--ai-bg); border-color: var(--ai-line); }
+  .col-ai .col-head { border-color: var(--ai-line); }
+  .col-ai .col-title { color: var(--ai-accent); }
+  .mode {
+    margin-top: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    font-size: 12px; color: var(--ai-ink);
+  }
+  .seg { display: inline-flex; border: 1px solid var(--ai-line); border-radius: 7px; overflow: hidden; background: #fff; }
+  .seg button { border: 0; background: transparent; padding: 3px 10px; font-size: 12px; color: var(--ai-ink); }
+  .seg button + button { border-left: 1px solid var(--ai-line); }
+  .seg button[aria-pressed="true"] { background: var(--ai-accent); color: #fff; }
+
+  .ai-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .tab { background: var(--ai-card); border: 1px solid var(--ai-line); border-radius: 8px; }
+  .tab.active { border-color: var(--ai-accent); box-shadow: 0 0 0 1px var(--ai-accent); }
+  .tab-head {
+    width: 100%; text-align: left; background: transparent; border: 0; padding: 10px 12px;
+    display: grid; grid-template-columns: 26px 1fr auto; gap: 4px 10px; align-items: start;
+  }
+  .num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--hl); color: var(--hl-ink);
+    font-weight: 700; font-size: 12px; display: grid; place-items: center; border: 1px solid var(--hl-strong);
+  }
+  .tab-title { font-weight: 650; color: var(--ai-ink); }
+  .tab-quote {
+    grid-column: 2 / 3; font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 12.5px; color: #4b4668;
+    border-left: 3px solid var(--hl-strong); padding-left: 8px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .tab.open .tab-quote { display: none; }
+  .badge {
+    font-size: 11px; border-radius: 99px; padding: 1px 8px; white-space: nowrap;
+    background: #fff; border: 1px solid var(--ai-line); color: var(--ai-ink);
+  }
+  .badge.resolved { background: #e5f3ea; border-color: #b4d9c1; color: var(--ok); }
+  .tab-body { padding: 0 12px 12px 48px; display: none; }
+  .tab.open .tab-body { display: block; }
+  .full-quote {
+    font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 13px; color: #4b4668;
+    border-left: 3px solid var(--hl-strong); padding-left: 8px; margin: 0 0 10px;
+  }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--ai-accent); font-weight: 700; margin: 8px 0 3px; }
+  .q-open { margin: 0; color: var(--ai-ink); }
+  .findings { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .finding {
+    background: #fff; border: 1px solid var(--ai-line); border-radius: 7px; padding: 7px 9px; color: var(--ai-ink);
+  }
+  .finding small { display: block; color: var(--muted); margin-top: 2px; font-size: 11.5px; }
+  .finding.flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { 0% { background: #e0d8ff; } 100% { background: #fff; } }
+  .empty { color: var(--muted); font-size: 12.5px; margin: 0; }
+  .ai-mark { color: var(--ai-accent); }
+
+  /* ---------- Human only (center) ---------- */
+  .col-human { background: var(--paper); }
+  .col-human .col-head { background: #fff; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .col-human .col-title { color: #2d2a24; }
+  .editor-wrap { flex: 1; overflow-y: auto; padding: 22px 30px 40px; }
+  .editor {
+    outline: none; max-width: 640px; margin: 0 auto;
+    font-family: Georgia, "Times New Roman", serif; font-size: 16px; line-height: 1.7;
+  }
+  .editor h1 { font-size: 22px; line-height: 1.25; margin: 0 0 2px; }
+  .editor .meta { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; color: var(--muted); margin: 0 0 18px; }
+  .editor p { margin: 0 0 14px; }
+  mark {
+    background: var(--hl); color: inherit; border-radius: 3px; padding: 1px 2px; cursor: pointer;
+    box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    border-bottom: 2px solid var(--hl-strong);
+  }
+  mark::after {
+    content: attr(data-n); user-select: none; -webkit-user-select: none;
+    font: 700 10px/1 -apple-system, sans-serif; vertical-align: super; margin-left: 2px; color: var(--hl-ink);
+  }
+  mark:hover { background: #ffd35a; }
+  mark.selected { background: #ffd35a; outline: 2px solid var(--hl-strong); }
+  .submit-bar { display: flex; align-items: center; gap: 10px; }
+  .status { font-size: 12px; color: var(--muted); }
+  .btn-primary {
+    background: #2d2a24; color: #fff; border: 0; border-radius: 7px; padding: 5px 14px; font-weight: 600; font-size: 13px;
+  }
+  .btn-primary:disabled { background: #bdb9ae; cursor: not-allowed; }
+
+  /* ---------- Source documents (right) ---------- */
+  .col-src { background: var(--src-bg); border-color: var(--src-line); }
+  .col-src .col-head { border-color: var(--src-line); }
+  .col-src .col-title { color: var(--src-accent); }
+  .gapbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; font-size: 12px; color: var(--muted); }
+  .gapchip {
+    width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--hl-strong); background: var(--hl); color: var(--hl-ink);
+    font-weight: 700; font-size: 12px; padding: 0;
+  }
+  .gapchip.sel { outline: 2px solid var(--src-accent); outline-offset: 1px; }
+  .gapchip.done { background: #e5f3ea; border-color: #b4d9c1; color: var(--ok); }
+  .src-body { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 10px; gap: 10px; }
+  .intro { color: var(--muted); padding: 6px 4px; }
+  .intro h3 { margin: 0 0 6px; color: #2d2a24; font-size: 15px; }
+  .gaplist { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .gaplist button {
+    width: 100%; text-align: left; background: #fff; border: 1px solid var(--src-line); border-radius: 8px; padding: 8px 10px;
+    display: flex; gap: 10px; align-items: center; color: var(--ink);
+  }
+  .gaplist button:hover { border-color: var(--src-accent); }
+  .gaplist button[disabled] { opacity: .6; cursor: default; }
+
+  .docbox {
+    flex: 1 1 52%; min-height: 0; display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--src-line); border-radius: 8px;
+  }
+  .doc-head { padding: 8px 12px; border-bottom: 1px solid var(--src-line); }
+  .doc-type { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--src-accent); font-weight: 700; }
+  .doc-title { font-weight: 700; font-size: 15px; }
+  .doc-meta { font-size: 12px; color: var(--muted); }
+  .doc-scroll { flex: 1; overflow-y: auto; padding: 10px 12px 16px; font-family: Georgia, "Times New Roman", serif; font-size: 14px; line-height: 1.6; }
+  .doc-p { display: grid; grid-template-columns: 28px 1fr; gap: 4px; margin: 0 0 10px; padding: 2px 4px; border-radius: 4px; }
+  .doc-p .pn { font: 11px/1.9 -apple-system, sans-serif; color: #98a2a8; }
+  .doc-p.flash { animation: srcflash 2.2s ease-out; }
+  @keyframes srcflash { 0%, 40% { background: #cfe6f1; } 100% { background: transparent; } }
+
+  .chatbox {
+    flex: 1 1 46%; min-height: 200px; display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--src-line); border-radius: 8px;
+  }
+  .chat-head { padding: 6px 12px; border-bottom: 1px solid var(--src-line); font-size: 12px; color: var(--muted); }
+  .chat-head b { color: var(--src-accent); }
+  .msgs { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .msg { max-width: 92%; border-radius: 10px; padding: 7px 10px; }
+  .msg.user { align-self: flex-end; background: var(--src-accent); color: #fff; }
+  .msg.ai { align-self: flex-start; background: var(--ai-bg); border: 1px solid var(--ai-line); color: var(--ai-ink); }
+  .msg .who { font-size: 11px; font-weight: 700; color: var(--ai-accent); margin-bottom: 2px; }
+  .cites { margin-top: 5px; display: flex; gap: 5px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+  .cite { border: 1px solid var(--ai-line); background: #fff; border-radius: 99px; padding: 0 8px; font-size: 12px; color: var(--ai-accent); }
+  .cite:hover { background: var(--ai-accent); color: #fff; }
+  .kf {
+    margin-top: 7px; background: #fff; border: 1px solid var(--ai-line); border-left: 3px solid var(--ai-accent);
+    border-radius: 6px; padding: 6px 8px; font-size: 13px;
+  }
+  .kf .label { margin: 0 0 2px; }
+  .kf .kf-act { margin-top: 4px; font-size: 12px; color: var(--ok); font-weight: 600; }
+  .pin-btn { margin-top: 4px; background: var(--ai-accent); color: #fff; border: 0; border-radius: 6px; padding: 2px 10px; font-size: 12px; }
+  .typing { color: var(--muted); font-style: italic; }
+  .chips { padding: 0 10px 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .chips button { background: var(--src-bg); border: 1px solid var(--src-line); border-radius: 99px; padding: 2px 10px; font-size: 12px; color: var(--src-accent); }
+  .chips button:hover { background: #dbe6eb; }
+  .composer { display: flex; gap: 6px; padding: 8px 10px 10px; border-top: 1px solid var(--src-line); }
+  .composer input { flex: 1; border: 1px solid var(--src-line); border-radius: 7px; padding: 6px 9px; font: inherit; min-width: 0; }
+  .composer button { background: var(--src-accent); color: #fff; border: 0; border-radius: 7px; padding: 6px 14px; font-weight: 600; }
+  .hint { font-size: 11.5px; color: var(--muted); padding: 0 12px 6px; }
+
+  @media (max-width: 1000px) {
+    body { height: auto; }
+    .app { grid-template-columns: 1fr; }
+    .col { min-height: 70vh; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="brand">Sparring Partner</span>
+  <span class="case">Case: Kestrel motor-assembly renewal (fictional)</span>
+  <span class="tag-proto">Prototype · scripted chat</span>
+  <span class="spacer"></span>
+  <button id="reset" type="button">Reset demo</button>
+</header>
+
+<main class="app">
+
+  <!-- LEFT: AI synthesis -->
+  <section class="col col-ai" aria-label="AI-Synthesis">
+    <div class="col-head">
+      <div class="col-title"><span aria-hidden="true">✦</span> AI-Synthesis</div>
+      <div class="col-sub">Generated by AI. Kept separate from your own writing.</div>
+      <div class="mode">
+        <span id="mode-label">Key findings:</span>
+        <div class="seg" role="group" aria-labelledby="mode-label">
+          <button type="button" id="mode-auto" aria-pressed="true">Add automatically</button>
+          <button type="button" id="mode-manual" aria-pressed="false">Pin manually</button>
+        </div>
+      </div>
+    </div>
+    <div class="ai-list" id="ai-list"></div>
+  </section>
+
+  <!-- CENTER: Human only -->
+  <section class="col col-human" aria-label="Human-Only strategy">
+    <div class="col-head">
+      <div>
+        <div class="col-title"><span aria-hidden="true">✎</span> Human-Only</div>
+        <div class="col-sub">Your strategy. Only you write here. Click a highlight to open its source.</div>
+      </div>
+      <div class="submit-bar">
+        <span class="status" id="status" role="status" aria-live="polite"></span>
+        <button type="button" class="btn-primary" id="submit" disabled>Submit changes</button>
+      </div>
+    </div>
+    <div class="editor-wrap">
+      <div class="editor" id="editor" contenteditable="true" spellcheck="true" aria-label="Your negotiation strategy, editable"></div>
+    </div>
+  </section>
+
+  <!-- RIGHT: Source documents -->
+  <section class="col col-src" aria-label="Source documents">
+    <div class="col-head">
+      <div class="col-title"><span aria-hidden="true">❏</span> Source Documents</div>
+      <div class="gapbar" id="gapbar"></div>
+    </div>
+    <div class="src-body" id="src-body"></div>
+  </section>
+
+</main>
+
+<script>
+/* =====================================================================
+   DATA (all names, companies and figures are invented)
+   ===================================================================== */
+
+const STRATEGY_HTML = `
+<h1>Kestrel motor-assembly renewal: negotiation strategy</h1>
+<p class="meta">Draft 3 · prepared for the 12 Nov prep session</p>
+
+<p><strong>Objective.</strong> Our contract with Kestrel Components runs out on 31 January. We buy about 118,000 motor assemblies a year at €41.20 each. I want a two-year renewal at €37.50 or below, which would save roughly €437,000 a year. I'm willing to be flexible on payment terms and delivery schedule to get there.</p>
+
+<p><strong>Reading Kestrel.</strong> <mark data-flaw="a" data-n="1">Kestrel is a margin-driven business. Every call since March has circled back to their steel and copper input costs, so I'm confident that unit price is the only thing that really matters to them.</mark> That makes the deal a straight trade: I get a lower price, and they get something that protects their margin elsewhere, such as faster payment.</p>
+
+<p><strong>Opening move.</strong> I'll call Martin Brandt, their head of sales, first, since he has been the most responsive. <mark data-flaw="b" data-n="2">I'll open by offering a two-year, 130,000-units-a-year volume commitment to show good faith and get the conversation moving, and then raise price once they're in a receptive mood.</mark> My finance colleague Priya has confirmed that we can forecast that volume with reasonable confidence.</p>
+
+<p><strong>Walk-away position.</strong> <mark data-flaw="c" data-n="3">If Kestrel refuses to get below €39, I'll walk away and move the whole contract to Varga Drives, who have told us they can supply our full volume from the second quarter.</mark> That gives me a credible alternative, and I plan to make sure Martin knows it exists early in the first call.</p>
+
+<p><strong>Timeline.</strong> First call the week of 17 Nov, written proposal by 1 Dec, and target signature by 15 Dec, which leaves six weeks before expiry. I'll bring Priya in for any discussion of volumes, and legal for the draft.</p>
+`;
+
+const FLAW_DEFS = [
+  {
+    id: 'a', n: 1, docId: 'doc-a',
+    original: "Kestrel is a margin-driven business. Every call since March has circled back to their steel and copper input costs, so I'm confident that unit price is the only thing that really matters to them.",
+  },
+  {
+    id: 'b', n: 2, docId: 'doc-b',
+    original: "I'll open by offering a two-year, 130,000-units-a-year volume commitment to show good faith and get the conversation moving, and then raise price once they're in a receptive mood.",
+  },
+  {
+    id: 'c', n: 3, docId: 'doc-c',
+    original: "If Kestrel refuses to get below €39, I'll walk away and move the whole contract to Varga Drives, who have told us they can supply our full volume from the second quarter.",
+  },
+];
+
+const DOCS = {
+  'doc-a': {
+    type: 'Internal meeting notes',
+    title: 'Kestrel account call, 9 October',
+    meta: 'Tomas Reyes (Supply Chain) · with Martin Brandt, Head of Sales, and Ines Moreau, COO, both at Kestrel',
+    paras: [
+      "Purpose: informal pre-renewal catch-up. Kestrel asked for the call. No numbers were to be exchanged and none were.",
+      "Brandt opened with input costs: steel is up, copper is volatile, and \"margins are tight across the sector.\" He asked us to \"be realistic\" about price at renewal.",
+      "Asked about the new line, Moreau said Line 3 came online in August and is running at 54% utilisation. \"The board wants us at 80% by year-end. That is the number I'm judged on.\"",
+      "Later, when I floated the possibility of a lower price, Brandt said: \"Price we can talk about. What I can't take to my board is another year of not knowing our volumes. Give me a number I can plan production around and I can be a lot more flexible.\"",
+      "On copper, Moreau mentioned in passing that Kestrel has hedged most of its requirement through Q3 next year, so near-term cost pressure is \"manageable.\"",
+      "Side note from my own files: when the current contract was signed in 2024, Kestrel offered a 2% rebate on all units above 125,000 a year. We declined because our forecast volume was around 100,000 at the time.",
+      "Payment terms came up once. When 60 days was mentioned, Brandt said \"that's fine, that's not where our issues are.\" Neither of them raised cash flow.",
+      "Follow-ups: Kestrel will send a Line 3 capacity sheet. We agreed to speak again after mid-November. My impression is that they are more flexible than they sound on price, provided volumes are secured.",
+    ],
+  },
+  'doc-b': {
+    type: 'Post-mortem memo',
+    title: 'Brennan Gears renewal (2025): what we learned',
+    meta: 'Hana Okafor, Procurement Excellence · internal · 6 pages, excerpt',
+    paras: [
+      "Summary: we targeted a 6% saving on the Brennan Gears renewal and achieved 1.1%, on a three-year term. This review draws out what we would do differently.",
+      "Background: Brennan supplies gearboxes worth about €9M a year. After a late-delivery dispute in the spring, the team wanted to rebuild goodwill before talking price.",
+      "What we did: on the first call, our lead offered a three-year volume commitment at 110% of current volumes, \"to show we're a serious long-term partner.\" Brennan responded warmly.",
+      "What happened: when price came up on the second call, Brennan said the volume commitment was \"already reflected\" in their proposal and held at +3%. The commitment had become the baseline rather than a concession we could trade.",
+      "Lesson 1, anchor first. State the price expectation and the reasoning behind it before making any concession. Whoever names the first number frames the range.",
+      "Lesson 2, make concessions conditional. Tie each concession to something we receive: \"if X, then Y.\" Unconditional gestures of goodwill are rarely repaid in kind.",
+      "Lesson 3, check authority. Our first contact, a regional sales manager, was measured on quarterly revenue and could not agree multi-year terms. The real decision sat with the operations director, whom we met in week six. That cost us about three weeks.",
+      "Outcome: after three further rounds we reached a 1.1% reduction on a shortened term. Finance estimates we left roughly €400,000 on the table over the contract life.",
+    ],
+  },
+  'doc-c': {
+    type: 'Supplier qualification report',
+    title: 'Varga Drives as second source for motor assembly MA-300',
+    meta: 'Quality & Supplier Development · October · excerpt',
+    paras: [
+      "Scope: assessment of Varga Drives as a second source for MA-300, the motor assembly currently bought from Kestrel Components.",
+      "Summary: Varga meets our quality-system requirements (ISO 9001 and IATF 16949), with two minor documentation findings. Capacity is the limiting factor.",
+      "Line 1 is qualified and running. The capacity Varga can allocate to us from Line 1 is up to 45,000 units a year.",
+      "Line 2 is needed for any volume above 45,000. Equipment commissioning is complete, but customer certification is not expected before Q4 next year. A Varga sales email dated 14 October says they can supply \"full volumes from Q2, subject to Line 2 certification.\" The quality team notes that this condition puts the real date well outside Q2.",
+      "Validation: our IP-rated bearing specification requires a nine-month validation cycle including accelerated life testing. That cycle must start before any volume can be transferred.",
+      "Commercials (indicative, non-binding): €40.90 a unit above 100,000 units a year, and €43.50 a unit below 50,000.",
+      "Recommendation: start validation now and plan for a 30–40% volume split to Varga as a hedge, rather than a full transfer. Revisit full transfer once Line 2 is certified.",
+      "Minor findings: incomplete traceability records for two sub-suppliers, and one overdue calibration certificate. Both have corrective actions agreed.",
+    ],
+  },
+};
+
+/* Scripted chat. keys = keywords used to match free-text questions. */
+const QA = {
+  a: [
+    {
+      id: 'a1', q: "What does Kestrel actually want most?",
+      keys: ['want', 'most', 'priority', 'need', 'care', 'volume', 'matter'],
+      text: "Volume certainty. Ines Moreau said Line 3 is at 54% utilisation against a board target of 80% by year-end. Martin Brandt said what he \"can't take to my board\" is another year of not knowing volumes.",
+      cites: [3, 4],
+      kf: "Kestrel's binding constraint is utilisation of the new Line 3 (54% vs. an 80% target), not input-cost margin.",
+    },
+    {
+      id: 'a2', q: "They keep talking about input costs. Doesn't that mean margin?",
+      keys: ['input', 'cost', 'margin', 'copper', 'steel', 'price', 'rebate', 'precedent'],
+      text: "Partly, but the notes suggest it is more of a negotiating frame than the underlying pressure. Copper is hedged through Q3 next year. Kestrel also has precedent for trading price against volume: the 2% rebate above 125,000 units offered in 2024.",
+      cites: [5, 6],
+      kf: "Kestrel has traded price for volume before (2% rebate above 125,000 units in 2024), so that trade has precedent.",
+    },
+    {
+      id: 'a3', q: "Is faster payment worth anything to them?",
+      keys: ['payment', 'pay', 'faster', 'terms', 'cash', '30', '60', 'days'],
+      text: "Probably very little. Brandt called the current 60-day terms \"fine\" and neither Kestrel contact raised cash flow. Offering faster payment as the main sweetener looks like a weak chip.",
+      cites: [7],
+      kf: "Faster payment is a weak chip: no sign of cash-flow pressure at Kestrel.",
+    },
+  ],
+  b: [
+    {
+      id: 'b1', q: "What happened last time we led with volume?",
+      keys: ['last', 'time', 'happened', 'brennan', 'led', 'lead', 'open', 'volume', 'first', 'goodwill'],
+      text: "In the 2025 Brennan renewal, the team offered a three-year volume commitment on the first call. Brennan treated it as the new baseline and held price at +3%. The final saving was 1.1% against a 6% target.",
+      cites: [3, 4],
+      kf: "Leading with volume gave away the main bargaining chip before price was discussed (Brennan 2025: 1.1% saving vs. 6% target).",
+    },
+    {
+      id: 'b2', q: "How should I sequence it instead?",
+      keys: ['sequence', 'instead', 'order', 'better', 'should', 'anchor', 'conditional', 'how'],
+      text: "The memo recommends anchoring on price first and then offering volume conditionally, for example: \"If we can reach €37.50, we could commit to 130,000 units for two years.\" Packaging concessions as if–then trades ties each one to something you get back.",
+      cites: [5, 6],
+      kf: "Recommended sequence: anchor on price first, then offer volume as a conditional (if–then) trade.",
+    },
+    {
+      id: 'b3', q: "Does it matter who I talk to first?",
+      keys: ['who', 'talk', 'contact', 'brandt', 'authority', 'jonas', 'decision', 'sales'],
+      text: "It did at Brennan. The first contact was a sales manager measured on quarterly revenue, with no authority over multi-year terms, and the real decision-maker was met in week six. Your plan also starts with a head of sales, so it is worth checking what Brandt can actually sign off.",
+      cites: [7],
+      kf: "Check whether Brandt can authorise multi-year terms before making him the first contact.",
+    },
+  ],
+  c: [
+    {
+      id: 'c1', q: "Can Varga supply our full volume from Q2?",
+      keys: ['varga', 'supply', 'full', 'q2', 'capacity', 'volume', 'second', 'quarter', 'switch'],
+      text: "No. Varga's sales email says full volume \"from Q2, subject to Line 2 certification\", but the quality report doesn't expect Line 2 certified before Q4 next year. Until then they are qualified for 45,000 units a year, about 38% of your 118,000.",
+      cites: [3, 4],
+      kf: "Varga can supply only about 45,000 units/yr (38% of need) until Line 2 is certified in Q4 next year; the Q2 claim doesn't hold.",
+    },
+    {
+      id: 'c2', q: "What would switching cost us?",
+      keys: ['cost', 'price', 'switch', 'expensive', 'validation', 'months', 'time', 'long', 'euro', '€'],
+      text: "Indicative pricing is €40.90 a unit at full volume and €43.50 below 50,000 units. Both are above your €39 walk-away line. On top of that, validating our bearing spec takes nine months before any volume moves.",
+      cites: [5, 6],
+      kf: "Varga's indicative price (€40.90 at full volume) is above the €39 walk-away line, so even a successful switch would miss the target.",
+    },
+    {
+      id: 'c3', q: "What could serve as a fallback instead?",
+      keys: ['fallback', 'instead', 'alternative', 'hedge', 'dual', 'split', 'batna', 'option', 'plan'],
+      text: "The report recommends starting validation now and planning a 30–40% split to Varga as a hedge, rather than a full transfer. A partial source is credible sooner and gives Kestrel a reason to protect the volume they would keep.",
+      cites: [7],
+      kf: "A partial dual-source (30–40% to Varga) is a more credible fallback than a full switch.",
+    },
+  ],
+};
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+
+let state;
+function freshState() {
+  return {
+    mode: 'auto',               // 'auto' | 'manual'
+    selected: null,             // flaw id
+    dirty: false,
+    expanded: new Set(),
+    flaws: FLAW_DEFS.map(f => ({ ...f, resolved: false, findings: [], chat: [] })),
+    flashId: null,
+  };
+}
+const $ = s => document.querySelector(s);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const flawById = id => state.flaws.find(f => f.id === id);
+const openCount = () => state.flaws.filter(f => !f.resolved).length;
+
+/* =====================================================================
+   HUMAN-ONLY EDITOR
+   ===================================================================== */
+
+const editor = $('#editor');
+
+function norm(s) { return s.replace(/\s+/g, ' ').trim().toLowerCase(); }
+function words(s) { return new Set(norm(s).replace(/[^\p{L}\p{N}€\s]/gu, '').split(' ').filter(Boolean)); }
+function similarity(a, b) {
+  const A = words(a), B = words(b);
+  if (!A.size || !B.size) return 0;
+  let inter = 0; A.forEach(w => { if (B.has(w)) inter++; });
+  return inter / (A.size + B.size - inter);
+}
+function unwrap(mark) {
+  const parent = mark.parentNode;
+  while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+  parent.removeChild(mark);
+  parent.normalize();
+}
+function rewrap(flaw) {
+  const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const node = walker.currentNode, i = node.data.indexOf(flaw.original);
+    if (i < 0) continue;
+    const r = document.createRange();
+    r.setStart(node, i); r.setEnd(node, i + flaw.original.length);
+    const m = document.createElement('mark');
+    m.dataset.flaw = flaw.id; m.dataset.n = flaw.n;
+    r.surroundContents(m);
+    return;
+  }
+}
+
+/* Submit: re-check each flagged passage. A passage counts as fixed once its wording has changed substantially. */
+function recheck(live) {
+  const fixed = [];
+  state.flaws.forEach(f => {
+    if (f.resolved) return;
+    const mark = editor.querySelector(`mark[data-flaw="${f.id}"]`);
+    let changed;
+    if (mark) {
+      changed = similarity(mark.textContent, f.original) < 0.6;
+    } else if (norm(editor.textContent).includes(norm(f.original))) {
+      rewrap(f); changed = false;
+    } else {
+      changed = true;
+    }
+    if (changed) {
+      f.resolved = true;
+      if (mark) unwrap(mark);
+      fixed.push(f);
+    }
+  });
+  const selectionLost = state.selected && flawById(state.selected).resolved;
+  if (selectionLost) state.selected = null;
+  state.dirty = false;
+  const status = $('#status');
+  if (fixed.length) {
+    status.textContent = `${fixed.length} gap${fixed.length > 1 ? 's' : ''} resolved · ${openCount()} still open`;
+  } else if (!live) {
+    status.textContent = `No flagged passage changed enough · ${openCount()} still open`;
+  } else {
+    state.dirty = true;   // nothing resolved yet; keep the edit pending
+  }
+  $('#submit').disabled = !state.dirty;
+  syncSelectedMark();
+  if (fixed.length || !live) {
+    renderSynthesis();
+    renderGapbar();
+    renderSource({ keepDoc: !selectionLost });
+  }
+}
+
+function syncSelectedMark() {
+  editor.querySelectorAll('mark').forEach(m => m.classList.toggle('selected', m.dataset.flaw === state.selected));
+}
+
+let liveTimer;
+editor.addEventListener('input', () => {
+  state.dirty = true;
+  $('#submit').disabled = false;
+  $('#status').textContent = 'Unsubmitted changes';
+  clearTimeout(liveTimer);
+  liveTimer = setTimeout(() => recheck(true), 700);   // highlight clears once you stop typing
+});
+editor.addEventListener('paste', e => {
+  e.preventDefault();
+  const t = (e.clipboardData || window.clipboardData).getData('text/plain');
+  document.execCommand('insertText', false, t);
+});
+editor.addEventListener('click', e => {
+  const m = e.target.closest('mark[data-flaw]');
+  if (m) selectFlaw(m.dataset.flaw);
+});
+$('#submit').addEventListener('click', () => { clearTimeout(liveTimer); recheck(false); });
+
+/* =====================================================================
+   SELECTION
+   ===================================================================== */
+
+function selectFlaw(id) {
+  const f = flawById(id);
+  if (!f || f.resolved) return;
+  const changed = state.selected !== id;
+  state.selected = id;
+  state.expanded = new Set([id]);        // the synthesis tab follows the flaw being worked on
+  syncSelectedMark();
+  renderSynthesis();
+  renderGapbar();
+  if (changed) renderSource(); else renderSource({ keepDoc: true });
+}
+
+/* =====================================================================
+   LEFT: AI-SYNTHESIS
+   ===================================================================== */
+
+function renderSynthesis() {
+  const list = $('#ai-list');
+  const scroll = list.scrollTop;
+  list.textContent = '';
+  state.flaws.forEach(f => {
+    const open = state.expanded.has(f.id);
+    const tab = el('div', 'tab' + (open ? ' open' : '') + (state.selected === f.id ? ' active' : ''));
+
+    const head = el('button', 'tab-head');
+    head.type = 'button';
+    head.setAttribute('aria-expanded', open);
+    head.append(el('span', 'num', f.n));
+    head.append(el('span', 'tab-title', `Gap ${f.n}`));
+    const badge = el('span', 'badge' + (f.resolved ? ' resolved' : ''),
+      f.resolved ? 'Resolved by your edit' : (f.findings.length ? `${f.findings.length} finding${f.findings.length > 1 ? 's' : ''}` : 'Open'));
+    head.append(badge);
+    head.append(el('span', 'tab-quote', f.original));
+    head.addEventListener('click', () => {
+      if (state.expanded.has(f.id)) state.expanded.delete(f.id); else state.expanded.add(f.id);
+      renderSynthesis();
+    });
+    tab.append(head);
+
+    const body = el('div', 'tab-body');
+    body.append(el('p', 'full-quote', `“${f.original}”`));
+    body.append(el('div', 'label', '✦ Key findings'));
+    if (!f.findings.length) {
+      body.append(el('p', 'empty', f.resolved
+        ? 'You resolved this gap before any findings were collected.'
+        : 'Nothing yet. Open this passage’s source document and ask the chat about it.'));
+    } else {
+      const ul = el('ul', 'findings');
+      f.findings.forEach(k => {
+        const li = el('li', 'finding' + (state.flashId === k.id ? ' flash' : ''));
+        li.append(document.createTextNode(k.text));
+        li.append(el('small', '', k.how === 'pin' ? 'Pinned from chat' : 'Added from chat'));
+        ul.append(li);
+      });
+      body.append(ul);
+    }
+    tab.append(body);
+    list.append(tab);
+  });
+  list.scrollTop = scroll;
+  state.flashId = null;
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  $('#mode-auto').setAttribute('aria-pressed', mode === 'auto');
+  $('#mode-manual').setAttribute('aria-pressed', mode === 'manual');
+  renderChat();   // pin buttons depend on mode
+}
+$('#mode-auto').addEventListener('click', () => setMode('auto'));
+$('#mode-manual').addEventListener('click', () => setMode('manual'));
+
+/* =====================================================================
+   RIGHT: SOURCE DOCUMENTS + CHAT
+   ===================================================================== */
+
+function renderGapbar() {
+  const bar = $('#gapbar');
+  bar.textContent = '';
+  bar.append(el('span', '', `Open gaps: ${openCount()} of ${state.flaws.length}`));
+  state.flaws.forEach(f => {
+    const b = el('button', 'gapchip' + (f.resolved ? ' done' : '') + (state.selected === f.id ? ' sel' : ''), f.resolved ? '✓' : f.n);
+    b.type = 'button';
+    b.setAttribute('aria-label', `Gap ${f.n}${f.resolved ? ' (resolved)' : ''}`);
+    b.disabled = f.resolved;
+    b.addEventListener('click', () => selectFlaw(f.id));
+    bar.append(b);
+  });
+}
+
+function renderSource(opts = {}) {
+  const body = $('#src-body');
+  if (opts.keepDoc && body.querySelector('.docbox')) { renderChat(); return; }
+  body.textContent = '';
+
+  if (!state.selected) {
+    const intro = el('div', 'intro');
+    intro.append(el('h3', '', openCount() ? 'Pick a gap to work on' : 'All gaps resolved'));
+    intro.append(el('p', '', openCount()
+      ? 'Click a highlighted passage in your strategy, or choose a gap below. Its source document opens here, with a chat for questions about it.'
+      : 'Every flagged passage has been rewritten. Findings you collected stay in the AI-Synthesis column.'));
+    const ul = el('ul', 'gaplist');
+    state.flaws.forEach(f => {
+      const li = el('li');
+      const b = el('button');
+      b.type = 'button'; b.disabled = f.resolved;
+      b.append(el('span', 'num', f.resolved ? '✓' : f.n));
+      b.append(el('span', '', `Gap ${f.n}` + (f.resolved ? ' (resolved)' : '')));
+      b.addEventListener('click', () => selectFlaw(f.id));
+      li.append(b); ul.append(li);
+    });
+    intro.append(ul);
+    body.append(intro);
+    return;
+  }
+
+  const f = flawById(state.selected), d = DOCS[f.docId];
+
+  const box = el('div', 'docbox');
+  const head = el('div', 'doc-head');
+  head.append(el('div', 'doc-type', d.type));
+  head.append(el('div', 'doc-title', d.title));
+  head.append(el('div', 'doc-meta', d.meta));
+  box.append(head);
+  const scroll = el('div', 'doc-scroll');
+  scroll.tabIndex = 0;
+  scroll.setAttribute('aria-label', 'Source document text');
+  d.paras.forEach((t, i) => {
+    const p = el('div', 'doc-p');
+    p.id = `para-${i + 1}`;
+    p.append(el('span', 'pn', `¶${i + 1}`));
+    p.append(el('span', '', t));
+    scroll.append(p);
+  });
+  box.append(scroll);
+  body.append(box);
+
+  const chat = el('div', 'chatbox');
+  chat.append(Object.assign(el('div', 'chat-head'), { innerHTML: '<b>Rabbit-hole chat</b> · this document only' }));
+  const msgs = el('div', 'msgs'); msgs.id = 'msgs'; msgs.setAttribute('aria-live', 'polite');
+  chat.append(msgs);
+  const chips = el('div', 'chips'); chips.id = 'chips';
+  chat.append(chips);
+  const form = el('form', 'composer');
+  const input = el('input'); input.type = 'text'; input.id = 'chat-input';
+  input.placeholder = 'Ask about this document (answers are scripted)…'; input.setAttribute('aria-label', 'Ask a question about this document');
+  const send = el('button', '', 'Ask'); send.type = 'submit';
+  form.append(input, send);
+  form.addEventListener('submit', e => { e.preventDefault(); const v = input.value.trim(); if (v) { input.value = ''; ask(v); } });
+  chat.append(form);
+  body.append(chat);
+
+  renderChat();
+}
+
+function renderChat() {
+  const msgsEl = $('#msgs');
+  if (!msgsEl || !state.selected) return;
+  const f = flawById(state.selected);
+  msgsEl.textContent = '';
+
+  f.chat.forEach(c => {
+    if (c.role === 'user') { msgsEl.append(el('div', 'msg user', c.text)); return; }
+    const m = el('div', 'msg ai');
+    m.append(el('div', 'who', '✦ AI'));
+    if (c.typing) { m.append(el('span', 'typing', 'Reading the document…')); msgsEl.append(m); return; }
+    m.append(document.createTextNode(c.text));
+    if (c.cites && c.cites.length) {
+      const cs = el('div', 'cites', 'Source: ');
+      c.cites.forEach(n => {
+        const b = el('button', 'cite', `¶${n}`); b.type = 'button';
+        b.addEventListener('click', () => {
+          const p = document.getElementById(`para-${n}`);
+          if (!p) return;
+          p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          p.classList.remove('flash'); void p.offsetWidth; p.classList.add('flash');
+        });
+        cs.append(b);
+      });
+      m.append(cs);
+    }
+    if (c.qa) {
+      const pinned = f.findings.some(k => k.id === c.qa.id);
+      const kf = el('div', 'kf');
+      kf.append(el('div', 'label', 'Key finding'));
+      kf.append(document.createTextNode(c.qa.kf));
+      if (pinned) {
+        kf.append(el('div', 'kf-act', '✓ In AI-Synthesis'));
+      } else {
+        const b = el('button', 'pin-btn', 'Pin to synthesis'); b.type = 'button';
+        b.addEventListener('click', () => addFinding(f, c.qa, 'pin'));
+        kf.append(b);
+      }
+      m.append(kf);
+    }
+    msgsEl.append(m);
+  });
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  // suggested questions not yet asked
+  const chips = $('#chips');
+  chips.textContent = '';
+  const asked = new Set(f.chat.filter(c => c.qa).map(c => c.qa.id));
+  QA[f.id].filter(q => !asked.has(q.id)).forEach(q => {
+    const b = el('button', '', q.q); b.type = 'button';
+    b.addEventListener('click', () => ask(q.q));
+    chips.append(b);
+  });
+}
+
+function matchQA(flawId, text) {
+  const exact = QA[flawId].find(q => q.q === text);
+  if (exact) return exact;
+  const t = text.toLowerCase();
+  let best = null, bestScore = 0;
+  QA[flawId].forEach(q => {
+    const s = q.keys.reduce((n, k) => n + (t.includes(k) ? 1 : 0), 0);
+    if (s > bestScore) { best = q; bestScore = s; }
+  });
+  return best;
+}
+
+function addFinding(f, qa, how) {
+  if (f.findings.some(k => k.id === qa.id)) return;
+  f.findings.push({ id: qa.id, text: qa.kf, how });
+  state.flashId = qa.id;
+  state.expanded.add(f.id);
+  renderSynthesis();
+  renderGapbar();
+  renderChat();
+}
+
+function ask(text) {
+  const f = flawById(state.selected);
+  if (!f) return;
+  f.chat.push({ role: 'user', text });
+  const pending = { role: 'ai', typing: true };
+  f.chat.push(pending);
+  renderChat();
+  setTimeout(() => {
+    const qa = matchQA(f.id, text);
+    pending.typing = false;
+    if (qa) {
+      pending.text = qa.text; pending.cites = qa.cites; pending.qa = qa;
+    } else {
+      pending.text = "I can't answer that from this document in the prototype. Try one of the suggested questions below.";
+    }
+    if (qa && state.mode === 'auto') addFinding(f, qa, 'auto'); else renderChat();
+  }, 650);
+}
+
+/* =====================================================================
+   BOOT
+   ===================================================================== */
+
+function renderAll() { renderSynthesis(); renderGapbar(); renderSource(); }
+
+function boot() {
+  state = freshState();
+  editor.innerHTML = STRATEGY_HTML;
+  $('#status').textContent = '';
+  $('#submit').disabled = true;
+  setMode('auto');
+  renderAll();
+}
+$('#reset').addEventListener('click', boot);
+boot();
+</script>
+</body>
+</html>
