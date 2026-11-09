@@ -1,0 +1,25 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# Secrets
+.env
+
+# Raw case material (docx/pdf/zip). Build the corpus with `sparring-partner ingest`.
+cases_raw/
+*.zip
+
+# Session logs written by the server in study mode
+sessions/
+
+# OS / editor noise
+.DS_Store
+*:Zone.Identifier
+.idea/
+.vscode/
