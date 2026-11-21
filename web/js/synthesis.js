@@ -9,13 +9,13 @@
 // the phrase in the notes, the insight it came from, or is marked as a
 // question the framework raises.
 
-import * as engine from './engine.js?v=0.3.0';
-import { readNotes, revealPhrase, setStatus } from './editor.js?v=0.3.0';
-import { openOrigin } from './sources.js?v=0.3.0';
+import * as engine from './engine.js?v=0.3.2';
+import { readNotes, revealPhrase, setStatus } from './editor.js?v=0.3.2';
+import { openOrigin } from './sources.js?v=0.3.2';
 import {
   addInsight, changed, doc, gapById, log, moveInsight, removeInsight, state,
-} from './store.js?v=0.3.0';
-import { $, button, el, flash, hash, plural } from './util.js?v=0.3.0';
+} from './store.js?v=0.3.2';
+import { $, button, el, flash, hash, plural } from './util.js?v=0.3.2';
 
 let selectGap = () => {};
 export function initSynthesis(opts) { selectGap = opts.selectGap; }

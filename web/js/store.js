@@ -1,7 +1,7 @@
 // Application state, persistence (per case/role/mode in localStorage) and the
 // interaction event log used for exports and user studies.
 
-import { uid } from './util.js?v=0.3.0';
+import { uid } from './util.js?v=0.3.2';
 
 const VERSION = 2;
 

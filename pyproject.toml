@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sparring-partner"
-version = "0.3.0"
+version = "0.3.2"
 description = "A human-AI negotiation preparation tool that keeps human strategy and AI synthesis separate and grounds every AI insight in case documents."
 readme = "README.md"
 license = { text = "MIT" }

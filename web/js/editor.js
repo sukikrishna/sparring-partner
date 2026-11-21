@@ -1,9 +1,9 @@
 // Your strategy notes (centre column): a plain contenteditable for free-flow notes. The AI never
 // writes here; it only adds highlights that point at passages worth checking.
 
-import * as engine from './engine.js?v=0.3.0';
-import { changed, gapById, log, openGaps, state } from './store.js?v=0.3.0';
-import { $, $$, debounce, el, escapeHTML, normalize, plural, uid } from './util.js?v=0.3.0';
+import * as engine from './engine.js?v=0.3.2';
+import { changed, gapById, log, openGaps, state } from './store.js?v=0.3.2';
+import { $, $$, debounce, el, escapeHTML, normalize, plural, uid } from './util.js?v=0.3.2';
 
 const editor = () => $('#editor');
 let onSelectGap = () => {};

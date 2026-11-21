@@ -1,13 +1,13 @@
 // Entry point: picks the case, role and mode, loads data, wires the columns.
 
-import { demoScripts, detectBackend, hasBackend, hasModel, listCases, loadCase, loadDemoScript, modelName } from './api.js?v=0.3.0';
-import { initEditor, loadNotes, readNotes, refreshPlaceholder, setStatus, syncMarks } from './editor.js?v=0.3.0';
-import { initSources, openInLibrary, renderSources } from './sources.js?v=0.3.0';
+import { demoScripts, detectBackend, hasBackend, hasModel, listCases, loadCase, loadDemoScript, modelName } from './api.js?v=0.3.2';
+import { initEditor, loadNotes, readNotes, refreshPlaceholder, setStatus, syncMarks } from './editor.js?v=0.3.2';
+import { initSources, openInLibrary, renderSources } from './sources.js?v=0.3.2';
 import {
   changed, exportSession, log, registerRenderer, resetSession, restore, save, state,
-} from './store.js?v=0.3.0';
-import { initSynthesis, renderStale, renderSynthesis } from './synthesis.js?v=0.3.0';
-import { $, $$, download, el } from './util.js?v=0.3.0';
+} from './store.js?v=0.3.2';
+import { initSynthesis, renderStale, renderSynthesis } from './synthesis.js?v=0.3.2';
+import { $, $$, download, el } from './util.js?v=0.3.2';
 
 function selectGap(id) {
   const gap = state.gaps.find((g) => g.id === id);
@@ -119,25 +119,35 @@ function renderTopbar() {
 
 // ------------------------------------------------------------------ loading
 
-async function loadSession({ caseId, roleId, mode }, { saveCurrent = true } = {}) {
-  document.body.classList.add('loading');
-  if (saveCurrent) save();
-  state.caseId = caseId;
-  state.roleId = roleId;
-  state.mode = mode === 'live' && hasModel() ? 'live' : 'demo';
-  resetSession();
+// Each load gets a number; a load that finishes after a newer one started (or
+// after the user went back to the start screen) is dropped.
+let loadSeq = 0;
+const cancelLoads = () => { loadSeq++; document.body.classList.remove('loading'); };
 
-  let data;
+async function loadSession({ caseId, roleId, mode }, { saveCurrent = true } = {}) {
+  const seq = ++loadSeq;
+  document.body.classList.add('loading');
+  // The current session stays intact (and is what gets saved) until the new
+  // case has fully loaded, so leaving mid-load can never overwrite saved work.
+  if (saveCurrent) save();
+
+  let data, demo;
   try {
     data = await loadCase(caseId, roleId);
+    demo = await loadDemoScript(caseId, data.role.id);
   } catch (err) {
-    showFatal(`Could not load case “${caseId}”: ${err.message}`);
+    if (seq === loadSeq) showFatal(`Could not load case “${caseId}”: ${err.message}`);
     return;
   }
-  state.caseData = data;
+  if (seq !== loadSeq) return;
+
+  state.caseId = caseId;
   state.roleId = data.role.id;
+  state.mode = mode === 'live' && hasModel() ? 'live' : 'demo';
+  resetSession();
+  state.caseData = data;
   state.docsById = Object.fromEntries(data.documents.map((d) => [d.id, d]));
-  state.demo = await loadDemoScript(caseId, data.role.id);
+  state.demo = demo;
 
   const restored = restore();
   if (!restored) log('session_started', { caseId, roleId: data.role.id, mode: state.mode });
@@ -195,6 +205,7 @@ async function renderHome() {
 }
 
 function showHome({ push = true } = {}) {
+  cancelLoads();
   if (state.caseData) save();
   document.body.classList.add('at-home');
   $('#home').hidden = false;
@@ -205,12 +216,12 @@ function showHome({ push = true } = {}) {
   window.scrollTo(0, 0);
 }
 
-async function openCase(caseId, roleId, { push = true } = {}) {
+async function openCase(caseId, roleId, { push = true, mode = state.mode || 'demo' } = {}) {
   const first = !state.caseData;
-  if (push) history.pushState(null, '', `#${new URLSearchParams({ case: caseId, role: roleId, mode: state.mode || 'demo' })}`);
+  if (push) history.pushState(null, '', `#${new URLSearchParams({ case: caseId, role: roleId, mode })}`);
   document.body.classList.remove('at-home');
   $('#home').hidden = true;
-  await loadSession({ caseId, roleId, mode: state.mode || 'demo' }, { saveCurrent: !first });
+  await loadSession({ caseId, roleId, mode }, { saveCurrent: !first });
   if (first) refreshPlaceholder();
   window.scrollTo(0, 0); // on phones the start screen may have been scrolled down
 }
@@ -221,8 +232,11 @@ function followAddress() {
   const c = cases.find((x) => x.id === wanted.caseId);
   if (!c) { if (!document.body.classList.contains('at-home')) showHome({ push: false }); return; }
   const r = c.roles.find((x) => x.id === wanted.roleId) || c.roles[0];
-  const onScreen = !document.body.classList.contains('at-home') && state.caseId === c.id && state.roleId === r.id;
-  if (!onScreen) openCase(c.id, r.id, { push: false });
+  const mode = wanted.mode === 'live' && hasModel() ? 'live' : 'demo';
+  // While another case is still loading, the screen is about to change: always follow the address.
+  const onScreen = !document.body.classList.contains('at-home') && !document.body.classList.contains('loading')
+    && state.caseId === c.id && state.roleId === r.id && state.mode === mode;
+  if (!onScreen) openCase(c.id, r.id, { push: false, mode });
 }
 
 function showFatal(message) {
@@ -238,7 +252,7 @@ function showFatal(message) {
 function wireTopbar() {
   $('#case-select').addEventListener('change', (e) => {
     const [caseId, roleId] = e.target.value.split('/');
-    loadSession({ caseId, roleId, mode: state.mode });
+    openCase(caseId, roleId); // a history entry, like opening it from the start screen
   });
   $('#mode-demo').addEventListener('click', () => {
     if (state.mode !== 'demo') loadSession({ caseId: state.caseId, roleId: state.roleId, mode: 'demo' });

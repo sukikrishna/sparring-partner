@@ -2,12 +2,12 @@
 // document chat ("Ask this document") (separate history per gap/document), and a
 // case-wide chat for general questions that are not tied to a gap.
 
-import * as engine from './engine.js?v=0.3.0';
-import { dismissGap, readNotes, reopenGap, scrollToGap } from './editor.js?v=0.3.0';
+import * as engine from './engine.js?v=0.3.2';
+import { dismissGap, readNotes, reopenGap, scrollToGap } from './editor.js?v=0.3.2';
 import {
   addInsight, changed, doc, gapById, log, openGaps, state, thread, threadKey,
-} from './store.js?v=0.3.0';
-import { $, $$, button, el, flash, plural, uid } from './util.js?v=0.3.0';
+} from './store.js?v=0.3.2';
+import { $, $$, button, el, flash, plural, uid } from './util.js?v=0.3.2';
 
 let selectGap = () => {};
 

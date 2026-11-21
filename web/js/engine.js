@@ -3,10 +3,10 @@
 //  - live: the Python backend calling Claude
 // Every function returns plain objects in the same shape for both modes.
 
-import { api } from './api.js?v=0.3.0';
-import { Index, excerpt } from './search.js?v=0.3.0';
-import { state } from './store.js?v=0.3.0';
-import { normalize, similarity, sleep } from './util.js?v=0.3.0';
+import { api } from './api.js?v=0.3.2';
+import { Index, excerpt } from './search.js?v=0.3.2';
+import { state } from './store.js?v=0.3.2';
+import { normalize, similarity, sleep } from './util.js?v=0.3.2';
 
 let caseIndex = null;
 let caseIndexKey = null;

@@ -6,7 +6,7 @@
 <title>Sparring Partner</title>
 <meta name="description" content="Prepare for a negotiation: write your own strategy, examine the passages that need another look against the case documents, and collect evidence-grounded insights.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b45c9'/%3E%3Cpath d='M9 22l7-12 7 12' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/app.css?v=0.3.0">
+<link rel="stylesheet" href="css/app.css?v=0.3.2">
 </head>
 <body class="loading">
 
@@ -120,14 +120,13 @@
   Sparring Partner did not finish loading. Your browser may be using an outdated copy of the app:
   press <b>Ctrl + Shift + R</b> (<b>⌘ + Shift + R</b> on a Mac) to reload it.
 </div>
-<script type="module" src="js/main.js?v=0.3.0"></script>
+<script type="module" src="js/main.js?v=0.3.2"></script>
 <script>
-  // If the app's scripts fail to load (old cached copies, blocked files), say so instead of a faded page.
+  // If the app's scripts never start (old cached copies, blocked files), say so instead of a faded page.
+  // A slow but working load is not an error: the app sets __spBooted as soon as its code runs.
   setTimeout(function () {
-    if (!window.__spBooted || (document.body.classList.contains('loading') && !document.querySelector('.fatal'))) {
-      document.getElementById('boot-error').hidden = false;
-    }
-  }, 6000);
+    if (!window.__spBooted) document.getElementById('boot-error').hidden = false;
+  }, 8000);
 </script>
 </body>
 </html>
