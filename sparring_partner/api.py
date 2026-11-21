@@ -41,6 +41,19 @@ log = logging.getLogger("sparring_partner")
 app = FastAPI(title="Sparring Partner", version=__version__)
 
 
+@app.middleware("http")
+async def _revalidate_static(request: Request, call_next):
+    """Make browsers re-check the app's files on every load.
+
+    The frontend is a set of ES modules without a build step or hashed file
+    names, so a cached old module next to a new one can break the page.
+    ``no-cache`` still allows cached copies; it only forces a cheap ETag check.
+    """
+    response = await call_next(request)
+    response.headers.setdefault("Cache-Control", "no-cache")
+    return response
+
+
 @app.exception_handler(CaseNotFound)
 async def _case_not_found(_: Request, err: CaseNotFound) -> JSONResponse:
     return JSONResponse(status_code=404, content={"detail": f"Unknown case: {err.args[0]}"})
@@ -70,6 +83,7 @@ def health() -> dict:
         "version": __version__,
         "llm": client is not None,
         "model": config.DEFAULT_MODEL if client is not None else None,
+        "provider": config.PROVIDER if client is not None else None,
         "session_logs": config.ACCEPT_SESSION_LOGS,
     }
 

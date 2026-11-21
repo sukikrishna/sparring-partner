@@ -46,7 +46,7 @@ Every item on the synthesis board records its origin:
 
 | Origin | Produced by | Grounding |
 |---|---|---|
-| Document chat ("rabbit hole") | `agents.chat.doc_chat` | One document, cited by paragraph. Separate history per gap and document. |
+| Document chat ("Ask this document") | `agents.chat.doc_chat` | One document, cited by paragraph. Separate history per gap and document. |
 | Case chat ("Ask all documents") | `agents.chat.case_chat` | BM25 passages from all visible documents, cited by document and paragraph. |
 | Your note | the negotiator | None needed; labelled as human. |
 
@@ -87,7 +87,7 @@ web/js/
   store.js      state, localStorage persistence per case/role/mode, event log, export
   api.js        backend detection, data loading, API calls
   engine.js     one interface over demo (scripted + passage search) and live (API) modes
-  editor.js     Human-Only editor: highlights, submit/recheck, dismiss/reopen
+  editor.js     Strategy-notes editor: highlights, Find gaps (new + re-check), dismiss/reopen
   sources.js    gaps, library, document and case chats
   synthesis.js  board and structured view
   search.js     client-side BM25 (mirrors retrieval.py)

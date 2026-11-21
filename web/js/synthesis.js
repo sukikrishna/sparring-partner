@@ -9,13 +9,13 @@
 // the phrase in the notes, the insight it came from, or is marked as a
 // question the framework raises.
 
-import * as engine from './engine.js';
-import { readNotes, revealPhrase, setStatus } from './editor.js';
-import { openOrigin } from './sources.js';
+import * as engine from './engine.js?v=0.3.0';
+import { readNotes, revealPhrase, setStatus } from './editor.js?v=0.3.0';
+import { openOrigin } from './sources.js?v=0.3.0';
 import {
   addInsight, changed, doc, gapById, log, moveInsight, removeInsight, state,
-} from './store.js';
-import { $, button, el, flash, hash, plural } from './util.js';
+} from './store.js?v=0.3.0';
+import { $, button, el, flash, hash, plural } from './util.js?v=0.3.0';
 
 let selectGap = () => {};
 export function initSynthesis(opts) { selectGap = opts.selectGap; }
@@ -236,7 +236,7 @@ function renderStructured() {
   if (s?.message) wrap.append(el('div', { className: 'banner', text: s.message }));
   if (!s?.view) {
     wrap.append(el('div', { className: 'empty-struct' },
-      el('p', { text: 'Write freely in the Human-Only column: fragments, worries, half-formed plans. When you want to see it organised, press “Structure my notes”.' })));
+      el('p', { text: 'Write freely in Your strategy notes: fragments, worries, half-formed plans. When you want to see it organised, press “Structure my notes”.' })));
     return wrap;
   }
   const v = s.view;

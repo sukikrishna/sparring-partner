@@ -8,14 +8,28 @@
    "name": "FWB delegate",
    "brief": "You are the newly arrived Food Without Borders (FWB) delegate for Northern Alpha. You must secure the Camp Commander's agreement to distribute food in Alpha's largest refugee camp. Your Country Director has set FWB's neutrality as a red line: no direct transfer of food or resources to anyone linked to security structures. Messages from your director, local contacts and officials are in your documents.",
    "counterpart": "Camp Commander",
-   "starter_notes": ""
+   "starter_notes": "",
+   "start_here": [
+    "fwb-director",
+    "news-camp-conditions",
+    "contact-note-6",
+    "security-log",
+    "mayor-to-fwb"
+   ]
   },
   {
    "id": "commander",
    "name": "Camp Commander",
    "brief": "You command Alpha's largest refugee camp: about 160,000 refugees from Omega and about 700 guards drawn from local militias, many of them unpaid. A new FWB delegate wants access to distribute food. Your role card and the messages you have received are in your documents.",
    "counterpart": "FWB delegate",
-   "starter_notes": ""
+   "starter_notes": "",
+   "start_here": [
+    "commander-rolecard",
+    "fwb-minutes",
+    "militia-voice-4",
+    "mayor-to-commander",
+    "news-refugee-crisis"
+   ]
   }
  ],
  "documents": [

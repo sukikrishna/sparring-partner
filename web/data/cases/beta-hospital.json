@@ -8,14 +8,28 @@
    "name": "HfA delegation",
    "brief": "You lead the Health for All delegation sent from Geneva to Iguwafe, where tribesmen have confined nine of your international surgical staff to their residence after HfA announced it was closing its surgical operations. HfA has a strict no-ransom policy and its main donors want the team redeployed. You have met many local and international actors; their accounts are in your documents. Next, you negotiate with the tribal leaders.",
    "counterpart": "Tribal council",
-   "starter_notes": ""
+   "starter_notes": "",
+   "start_here": [
+    "hfa-case-00",
+    "hfa-case-16",
+    "hfa-case-12",
+    "hfa-case-05",
+    "hfa-case-06"
+   ]
   },
   {
    "id": "tribal-council",
    "name": "Tribal council",
    "brief": "You speak for the tribal leadership of Beta Town, whose people have confined nine HfA surgeons to their residence after HfA announced, without consulting you, that it would close the surgical unit at the district hospital. Your documents include press coverage and reports passed to you by informants about HfA's meetings.",
    "counterpart": "HfA delegation",
-   "starter_notes": ""
+   "starter_notes": "",
+   "start_here": [
+    "hfa-website",
+    "un-statement",
+    "guards-meeting",
+    "district-meeting",
+    "beta-news-ch"
+   ]
   }
  ],
  "documents": [

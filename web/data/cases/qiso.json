@@ -8,14 +8,28 @@
    "name": "Mayor of Qiso",
    "brief": "You are the Mayor of Qiso, a farming town on Sitwan's eastern border with Chiasa. Several thousand people from Chiasa, many of them from the neighbouring town of Kiman, have fled into Qiso. The Border Authority has written that your police must gather every Chiasan in the municipal stadium so they can be registered and bussed to Refugee Detention Facilities (RDFs). An officer of the Border Authority arrives this week to agree a timeline with you. Messages from your residents, farmers, churches, school, police chief and finance department are in your documents.",
    "counterpart": "Officer of the Border Authority",
-   "starter_notes": "meeting w/ the border authority officer on thursday. they want every chiasan in qiso in the stadium and bussed to the RDFs within 2 weeks.\n\nhonestly the stadium might be ok short term. BA pays 6 SD per person per day so that should mostly cover it, and we can float anything extra from the reserve until the money comes through.\n\npolice can handle gathering people at the stadium, the chief will grumble but they manage the crowds every harvest festival.\n\nthe farmers will be upset but they'll come round once it's done, harvest isn't for another month anyway.\n\nnumbers - tell him around 6,000, that's the figure we've been using.\n\nschool gym is the worst of it. parents furious, cholera rumours, toilets broken. maybe the gym families go first.\n\nEI wants a list of names, ages and locations of everyone so they can plan food. we should just send them what we have, they're a big legit NGO and people need food.\n\nchurch is hosting ~900 in halls and homes. not sure that's even legal under the protocols, might have to tell them to stop.\n\nwhat I actually want: keep qiso calm, keep kiman families together, don't bankrupt the town, save the harvest. and don't get on the wrong side of the BA, they report straight to the president."
+   "starter_notes": "meeting w/ the border authority officer on thursday. they want every chiasan in qiso in the stadium and bussed to the RDFs within 2 weeks.\n\nhonestly the stadium might be ok short term. BA pays 6 SD per person per day so that should mostly cover it, and we can float anything extra from the reserve until the money comes through.\n\npolice can handle gathering people at the stadium, the chief will grumble but they manage the crowds every harvest festival.\n\nthe farmers will be upset but they'll come round once it's done, harvest isn't for another month anyway.\n\nnumbers - tell him around 6,000, that's the figure we've been using.\n\nschool gym is the worst of it. parents furious, cholera rumours, toilets broken. maybe the gym families go first.\n\nEI wants a list of names, ages and locations of everyone so they can plan food. we should just send them what we have, they're a big legit NGO and people need food.\n\nchurch is hosting ~900 in halls and homes. not sure that's even legal under the protocols, might have to tell them to stop.\n\nwhat I actually want: keep qiso calm, keep kiman families together, don't bankrupt the town, save the harvest. and don't get on the wrong side of the BA, they report straight to the president.",
+   "start_here": [
+    "ba-letter",
+    "protocols",
+    "finance-memo",
+    "police-memo",
+    "kiman-elders"
+   ]
   },
   {
    "id": "border-officer",
    "name": "Border Authority officer",
    "brief": "You are an officer of Sitwan's Border Authority, sent to Qiso to work with the Mayor to register the Chiasans in the town and transfer them to Refugee Detention Facilities within two weeks. Your role card and your instructions from headquarters are in your documents.",
    "counterpart": "Mayor of Qiso",
-   "starter_notes": ""
+   "starter_notes": "",
+   "start_here": [
+    "officer-rolecard",
+    "hq-instructions",
+    "ba-letter",
+    "protocols",
+    "intl-news-4"
+   ]
   }
  ],
  "documents": [

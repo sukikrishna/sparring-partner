@@ -1,7 +1,7 @@
 // Application state, persistence (per case/role/mode in localStorage) and the
 // interaction event log used for exports and user studies.
 
-import { uid } from './util.js';
+import { uid } from './util.js?v=0.3.0';
 
 const VERSION = 2;
 
@@ -19,7 +19,7 @@ export const state = {
 
   // human-only
   notesHTML: '',
-  notesSubmittedText: '',
+  notesCheckedText: '',
 
   // gaps
   gaps: [], // {id, n, quote, title, question, assumption, lens, doc_ids, severity, status, statusNote}
@@ -48,7 +48,7 @@ export const state = {
 };
 
 const PERSISTED = [
-  'sessionId', 'notesHTML', 'notesSubmittedText', 'gaps', 'gapCounter', 'gapsChecked', 'selectedGapId',
+  'sessionId', 'notesHTML', 'notesCheckedText', 'gaps', 'gapCounter', 'gapsChecked', 'selectedGapId',
   'rightTab', 'libraryDocId', 'gapDocId', 'threads', 'insights', 'autoAdd', 'leftTab', 'expanded',
   'includeInsights', 'structured', 'events',
 ];
@@ -95,7 +95,7 @@ export function resetSession({ clearStorage = false } = {}) {
   }
   Object.assign(state, {
     sessionId: uid('session'),
-    notesHTML: '', notesSubmittedText: '',
+    notesHTML: '', notesCheckedText: '',
     gaps: [], gapCounter: 0, gapsChecked: false, selectedGapId: null,
     rightTab: 'gaps', libraryDocId: null, gapDocId: {}, libraryFilter: '',
     threads: {}, insights: [], autoAdd: true, leftTab: 'board', expanded: { general: true },
@@ -112,7 +112,6 @@ export function registerRenderer(name, fn) { renderers[name] = fn; }
 export function changed(...parts) {
   const list = parts.length ? parts : ['left', 'right'];
   for (const p of list) renderers[p] && renderers[p]();
-  renderers.steps && renderers.steps();
   save();
 }
 

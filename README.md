@@ -13,16 +13,17 @@ inconsistent, both within one's notes and across sources. Rehearsing the
 negotiation against a simulated counterpart (role play / replay) is planned for
 a later version and is not part of this release.
 
-![Sparring Partner: AI-Synthesis board, Human-Only notes with highlighted gaps, and a source document with its chat](docs/images/overview.png)
+![Sparring Partner: AI-Synthesis board, strategy notes with highlighted gaps, and a source document with its chat](docs/images/overview.png)
 
 ## How it works
 
-The screen has three columns:
+You start by choosing a case and the role you will play. The case screen then
+has three columns:
 
 | Column | Who writes there | What it does |
 |---|---|---|
-| **Human-Only** (centre) | only you | Free-flow notes. *Find gaps* highlights passages whose reasoning the documents call into question, each with a question rather than a verdict. Edit a passage and *Submit changes* to re-check it. |
-| **Source Documents** (right) | — | Click a highlight to read the documents behind it, with a separate "rabbit-hole" chat per document. Browse the full **Library**, or **Ask all documents** for questions that are not about one passage. Answers cite paragraphs. |
+| **Your strategy notes** (centre) | only you | Free-flow notes. *Find gaps* highlights passages whose reasoning the documents call into question, each with a question rather than a verdict. After editing, press it again: revised passages are re-checked and clear once they no longer rest on the assumption, and new gaps are added. |
+| **Source Documents** (right) | — | Click a highlight to read the documents behind it, each with its own chat (*Ask this document*). Browse the full **Library**, or **Ask all documents** for questions that are not about one passage. Answers cite paragraphs. |
 | **AI-Synthesis** (left) | AI, plus your own notes | A **Board** of insights from any chat and notes you jot down, filed under a gap or *General*, each labelled with its source. A **Structured view** restates your free-flow notes in negotiation terms (iceberg of positions, interests and values; island of agreement; stakeholders; red lines; alternatives; options) and lists what your notes leave open. |
 
 Every AI claim links back to a document and paragraph, and every item in the
@@ -49,10 +50,11 @@ python3 -m venv .venv
 .venv/bin/sparring-partner serve          # http://127.0.0.1:8000
 ```
 
-**Live mode** (any case, any notes) needs Claude API access:
+**Live mode** (any case, any notes) needs access to Claude, either through the
+Claude API or through Amazon Bedrock:
 
 ```bash
-cp .env.example .env                       # then set ANTHROPIC_API_KEY
+cp .env.example .env     # then set ANTHROPIC_API_KEY, or AWS_BEARER_TOKEN_BEDROCK + AWS_REGION
 .venv/bin/sparring-partner serve
 ```
 
@@ -67,6 +69,12 @@ chats fall back to returning the best-matching passages.
 | Beta: detained surgical staff | HfA delegation · tribal council |
 | Alpha: food access at the refugee camp | FWB delegate · Camp Commander |
 
+Each case folder has a short introduction for newcomers: the situation, what
+each role is preparing for, which documents to read first, and questions to keep
+in mind ([Qiso](cases/qiso/README.md), [Beta](cases/beta-hospital/README.md),
+[Alpha](cases/alpha-camp/README.md)). The same reading list appears in the app
+under *Your role*.
+
 Each role sees only its own documents plus the shared ones. When the Python
 server is running, this barrier is enforced server-side for data, retrieval and
 every model prompt. Built corpora are in `web/data/cases/`; to rebuild them from
@@ -80,13 +88,35 @@ Set in the environment or in `.env`:
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | — | Enables live mode |
+| `ANTHROPIC_API_KEY` | — | Enables live mode through the Claude API |
+| `AWS_BEARER_TOKEN_BEDROCK` | — | Enables live mode through Amazon Bedrock (a Bedrock API key) |
+| `AWS_REGION` | `us-east-1` | Bedrock region where the Claude models are enabled |
+| `SPARRING_PROVIDER` | `auto` | `anthropic` or `bedrock`; `auto` uses Bedrock when only a Bedrock key is set |
 | `SPARRING_LLM_MODE` | `auto` | `auto`, `anthropic` (require a model) or `offline` |
-| `SPARRING_MODEL` | `claude-opus-5-5` | Model for all tasks |
+| `SPARRING_MODEL` | `claude-opus-5-5` (`anthropic.claude-opus-5-5` on Bedrock) | Model for all tasks |
 | `SPARRING_EFFORT_GAPS` / `_CHAT` / `_STRUCTURE` | `high` / `low` / `medium` | Reasoning effort per task |
-| `SPARRING_FALLBACKS` | `default` | Server-side refusal fallback (`off` to disable) |
+| `SPARRING_FALLBACKS` | `default` (`off` on Bedrock) | Server-side refusal fallback (`off` to disable) |
 | `SPARRING_RAW_DIR` | `cases_raw` | Raw case files for ingestion |
 | `SPARRING_ACCEPT_SESSION_LOGS` | `0` | `1` lets the browser post sessions to `/api/sessions` |
+
+## Deploying
+
+The repository is ready for [Vercel](https://vercel.com): `vercel.json` serves
+`web/` as a static site and runs the API as a Python function from
+`api/index.py`.
+
+```bash
+npx vercel login
+npx vercel            # preview deployment; add --prod for production
+```
+
+Without credentials the deployment runs the scripted demo. For live mode, add
+`AWS_BEARER_TOKEN_BEDROCK` and `AWS_REGION` (or `ANTHROPIC_API_KEY`) under the
+project's environment variables and redeploy. Note that the static site also
+serves the built corpora in `web/data/cases/`, so every role's documents are
+publicly readable on a hosted copy; only deploy cases you are allowed to publish.
+
+Any other static host works for the demo alone (serve `web/`).
 
 ## Research use
 

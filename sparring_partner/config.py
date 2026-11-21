@@ -50,7 +50,30 @@ SESSION_LOG_DIR = _path("SPARRING_SESSION_LOG_DIR", REPO_ROOT / "sessions")
 #: "offline" never calls a model (retrieval-only answers).
 LLM_MODE = os.environ.get("SPARRING_LLM_MODE", "auto").lower()
 
-DEFAULT_MODEL = os.environ.get("SPARRING_MODEL", "claude-opus-5-5")
+#: Where the model is served: "anthropic" (Claude API) or "bedrock" (Amazon
+#: Bedrock). "auto" picks Bedrock when a Bedrock API key is set and no
+#: Anthropic key is, otherwise the Claude API.
+BEDROCK_KEY_VARS = ("AWS_BEARER_TOKEN_BEDROCK", "ANTHROPIC_AWS_API_KEY")
+ANTHROPIC_KEY_VARS = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN")
+
+
+def _provider() -> str:
+    value = os.environ.get("SPARRING_PROVIDER", "auto").lower()
+    if value not in ("auto", "anthropic", "bedrock"):
+        raise ValueError(f"SPARRING_PROVIDER must be auto, anthropic or bedrock (got {value!r})")
+    if value != "auto":
+        return value
+    has = lambda names: any(os.environ.get(n) for n in names)  # noqa: E731
+    return "bedrock" if has(BEDROCK_KEY_VARS) and not has(ANTHROPIC_KEY_VARS) else "anthropic"
+
+
+PROVIDER = _provider()
+#: AWS region for Bedrock (Claude models must be enabled in it).
+AWS_REGION = os.environ.get("AWS_REGION") or os.environ.get("AWS_DEFAULT_REGION") or "us-east-1"
+
+DEFAULT_MODEL = os.environ.get(
+    "SPARRING_MODEL", "anthropic.claude-opus-5-5" if PROVIDER == "bedrock" else "claude-opus-5-5"
+)
 
 #: Per-task model and effort. Chat turns are latency-sensitive; gap finding
 #: and structuring read the whole case and benefit from more reasoning.
@@ -65,7 +88,8 @@ TASKS: dict[str, dict[str, str]] = {
 MAX_TOKENS = int(os.environ.get("SPARRING_MAX_TOKENS", "16000"))
 
 #: Server-side refusal fallback ("default" or "off").
-FALLBACKS = os.environ.get("SPARRING_FALLBACKS", "default").lower()
+#: Not offered on Bedrock, so it is off there unless set explicitly.
+FALLBACKS = os.environ.get("SPARRING_FALLBACKS", "off" if PROVIDER == "bedrock" else "default").lower()
 
 # --- Retrieval ----------------------------------------------------------------
 

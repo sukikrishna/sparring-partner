@@ -175,6 +175,7 @@ def build_case(manifest_path: Path, raw_dir: Path | None = None) -> Case:
                 brief=r["brief"].strip(),
                 counterpart=r.get("counterpart", ""),
                 starter_notes=notes,
+                start_here=list(r.get("start_here", [])),
             )
         )
     role_ids = {r.id for r in roles}
@@ -225,6 +226,11 @@ def build_case(manifest_path: Path, raw_dir: Path | None = None) -> Case:
     empty = [doc.id for doc in documents if not doc.paragraphs]
     if empty:
         raise ValueError(f"documents with no text: {empty}")
+    by_id = {doc.id: doc for doc in documents}
+    for role in roles:
+        bad = [i for i in role.start_here if i not in by_id or role.id not in by_id[i].visible_to]
+        if bad:
+            raise ValueError(f"start_here for role {role.id!r} lists documents it cannot see: {bad}")
 
     return Case(
         id=manifest["id"],

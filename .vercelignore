@@ -1,0 +1,8 @@
+.venv/
+.env
+cases_raw/
+notes/
+sessions/
+tests/
+*.zip
+*.egg-info/

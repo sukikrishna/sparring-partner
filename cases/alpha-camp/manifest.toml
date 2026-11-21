@@ -10,6 +10,7 @@ source_root = "Cases/Simulation 2"
 
 [[roles]]
 id = "fwb"
+start_here = ["fwb-director", "news-camp-conditions", "contact-note-6", "security-log", "mayor-to-fwb"]
 name = "FWB delegate"
 counterpart = "Camp Commander"
 brief = """
@@ -22,6 +23,7 @@ your documents.
 
 [[roles]]
 id = "commander"
+start_here = ["commander-rolecard", "fwb-minutes", "militia-voice-4", "mayor-to-commander", "news-refugee-crisis"]
 name = "Camp Commander"
 counterpart = "FWB delegate"
 brief = """

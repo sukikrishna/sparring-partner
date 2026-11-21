@@ -1,6 +1,7 @@
 """LLM access. Agents depend on the small ``LLMClient`` protocol only.
 
-``ClaudeClient`` calls the Anthropic Messages API with structured outputs.
+``ClaudeClient`` calls the Messages API (Claude API or Amazon Bedrock) with
+structured outputs.
 ``StubLLMClient`` serves canned objects for tests. ``get_client()`` returns
 ``None`` when no model is configured, and every agent then falls back to a
 retrieval-only answer.
@@ -53,11 +54,20 @@ class ClaudeClient:
 
     FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
+    @property
+    def service(self) -> str:
+        return "Amazon Bedrock" if config.PROVIDER == "bedrock" else "the Claude API"
+
     def __init__(self) -> None:
         import anthropic  # imported lazily: optional dependency
 
         self._anthropic = anthropic
-        self._client = anthropic.Anthropic()
+        if config.PROVIDER == "bedrock":
+            # Bedrock's Messages-API endpoint, authenticated with a Bedrock API
+            # key (AWS_BEARER_TOKEN_BEDROCK).
+            self._client = anthropic.AnthropicBedrockMantle(aws_region=config.AWS_REGION)
+        else:
+            self._client = anthropic.Anthropic()
         self._fallbacks = config.FALLBACKS == "default"
 
     def _kwargs(self, task: str, system: str, messages: list[dict]) -> dict[str, Any]:
@@ -91,15 +101,17 @@ class ClaudeClient:
                 else:
                     raise
         except anthropic.AuthenticationError as err:
-            raise LLMError("Claude API credentials were rejected.") from err
+            raise LLMError(f"{self.service} credentials were rejected.") from err
         except anthropic.NotFoundError as err:
             raise LLMError(f"Model not found: {kwargs['model']}") from err
         except anthropic.RateLimitError as err:
-            raise LLMError("Rate limited by the Claude API; try again shortly.") from err
+            raise LLMError(f"Rate limited by {self.service}; try again shortly.") from err
         except anthropic.APIStatusError as err:
-            raise LLMError(f"Claude API error ({err.status_code}).") from err
+            raise LLMError(f"{self.service} error ({err.status_code}).") from err
         except anthropic.APIConnectionError as err:
-            raise LLMError("Could not reach the Claude API.") from err
+            raise LLMError(f"Could not reach {self.service}.") from err
+        except ImportError as err:  # e.g. Bedrock request signing without boto3
+            raise LLMError(f"{self.service} needs an API key (see .env.example).") from err
 
         if response.stop_reason == "refusal":
             raise LLMError("The model declined this request.")
@@ -128,7 +140,10 @@ class StubLLMClient:
 
 
 def _has_credentials() -> bool:
-    if any(os.environ.get(k) for k in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN")):
+    if config.PROVIDER == "bedrock":
+        # A Bedrock API key. (Signing with IAM credentials instead would need boto3.)
+        return any(os.environ.get(k) for k in config.BEDROCK_KEY_VARS)
+    if any(os.environ.get(k) for k in config.ANTHROPIC_KEY_VARS):
         return True
     # Profiles from `ant auth login` live here; the SDK picks them up itself.
     return os.path.isdir(os.path.expanduser("~/.config/anthropic"))

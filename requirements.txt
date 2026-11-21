@@ -1,0 +1,5 @@
+# Runtime dependencies for hosted deployments (e.g. Vercel). Local installs use
+# pyproject.toml: pip install -e ".[all]"
+fastapi>=0.110
+pydantic>=2.6
+anthropic>=2.6

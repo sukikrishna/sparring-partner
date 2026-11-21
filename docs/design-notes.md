@@ -62,7 +62,7 @@ can be moved. Findings are saved automatically or only on request.
   visible document and cites them.
 - *Your notes:* typed directly on the board, marked as human.
 
-**Free-flow notes, structured on demand.** The Human-Only column now starts
+**Free-flow notes, structured on demand.** The centre column (Human-Only in v1, now "Your strategy notes") now starts
 with rough notes (lower case, fragments, half-formed plans) and nothing is
 highlighted until the user asks for a check. A *Structured view* tab restates
 the notes in negotiation-framework terms:
@@ -81,9 +81,11 @@ show up as empty sections and open questions rather than AI-supplied answers.
 **Real cases and documents.** v2 runs on the course simulation cases, ingested
 from their original files, with role-specific document sets.
 
-**Gap lifecycle.** Gaps can be resolved by editing (re-checked on *Submit
-changes*; in live mode a model judges whether the revision still rests on the
-assumption), dismissed by the user, or reopened.
+**One button.** v1 had separate *Find gaps* and *Submit changes* buttons. v2
+has a single *Find gaps*: it re-checks highlighted passages the writer edited (in
+live mode a model judges whether the revision still rests on the assumption) and
+reads the whole text again for new gaps. A passage the writer resolved or
+dismissed is never raised again; dismissed gaps can be reopened.
 
 **Infrastructure.** A Python backend with Claude-powered agents, offline
 fallbacks, an information barrier between roles, session export and an

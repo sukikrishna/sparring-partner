@@ -1,23 +1,24 @@
-// Human-Only column: a plain contenteditable for free-flow notes. The AI never
+// Your strategy notes (centre column): a plain contenteditable for free-flow notes. The AI never
 // writes here; it only adds highlights that point at passages worth checking.
 
-import * as engine from './engine.js';
-import { changed, gapById, log, openGaps, state } from './store.js';
-import { $, $$, debounce, el, escapeHTML, normalize, plural, uid } from './util.js';
+import * as engine from './engine.js?v=0.3.0';
+import { changed, gapById, log, openGaps, state } from './store.js?v=0.3.0';
+import { $, $$, debounce, el, escapeHTML, normalize, plural, uid } from './util.js?v=0.3.0';
 
 const editor = () => $('#editor');
 let onSelectGap = () => {};
+let onFirstGaps = () => {};
 
-export function initEditor({ selectGap }) {
+export function initEditor({ selectGap, firstGaps }) {
   onSelectGap = selectGap;
+  if (firstGaps) onFirstGaps = firstGaps;
   const ed = editor();
   try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch { /* old browsers */ }
 
   ed.addEventListener('input', () => {
-    setStatus('Unsubmitted changes');
-    $('#submit').disabled = !openGaps().length;
     updatePlaceholder();
     persist();
+    if (openGaps().length) setStatus('Edited · press “Find gaps” to re-check');
   });
   ed.addEventListener('paste', (e) => {
     e.preventDefault();
@@ -29,10 +30,9 @@ export function initEditor({ selectGap }) {
     if (mark) onSelectGap(mark.dataset.gap);
   });
   ed.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); submit(); }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); findGaps(); }
   });
-  $('#find-gaps').addEventListener('click', runFindGaps);
-  $('#submit').addEventListener('click', submit);
+  $('#find-gaps').addEventListener('click', findGaps);
 }
 
 const persist = debounce(() => {
@@ -63,7 +63,6 @@ export function loadNotes() {
   }
   syncMarks();
   setStatus('');
-  $('#submit').disabled = true;
   updatePlaceholder();
 }
 
@@ -142,8 +141,36 @@ function unwrap(gapId) {
   }
 }
 
+/** Caret position as a character offset into the editor's text, or null if not inside it. */
+function saveCaret() {
+  const sel = window.getSelection();
+  const ed = editor();
+  if (!sel.rangeCount || !ed.contains(sel.anchorNode)) return null;
+  const range = sel.getRangeAt(0);
+  const pre = document.createRange();
+  pre.selectNodeContents(ed);
+  pre.setEnd(range.endContainer, range.endOffset);
+  return pre.toString().length;
+}
+
+function restoreCaret(offset) {
+  if (offset == null) return;
+  const walker = document.createTreeWalker(editor(), NodeFilter.SHOW_TEXT);
+  let left = offset;
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (left <= node.data.length) {
+      const sel = window.getSelection();
+      sel.collapse(node, left);
+      return;
+    }
+    left -= node.data.length;
+  }
+}
+
 /** Make the highlights match the gap list: open gaps marked, others not. */
 export function syncMarks() {
+  const caret = saveCaret();
   for (const mark of $$('mark[data-gap]', editor())) {
     const gap = gapById(mark.dataset.gap);
     if (!gap || gap.status !== 'open') unwrap(mark.dataset.gap);
@@ -154,6 +181,7 @@ export function syncMarks() {
   for (const mark of $$('mark[data-gap]', editor())) {
     mark.classList.toggle('selected', mark.dataset.gap === state.selectedGapId);
   }
+  restoreCaret(caret);
   state.notesHTML = editor().innerHTML;
 }
 
@@ -177,88 +205,114 @@ export function revealPhrase(phrase) {
   return true;
 }
 
-// ---------------------------------------------------------------- actions
+// ---------------------------------------------------------------- finding gaps
+//
+// One button does both jobs: highlights whose passage was edited are
+// re-checked (and clear if the assumption is gone), and the whole text is read
+// again for new passages worth examining.
 
-export async function runFindGaps() {
+let running = false;
+
+export async function findGaps() {
+  if (running) return;
   const notes = readNotes();
   if (!notes) { setStatus('Write some notes first.', 'warn'); return; }
+  running = true;
+  log('find_gaps_requested', { chars: notes.length });
   const btn = $('#find-gaps');
   btn.disabled = true;
+  const session = state.sessionId;
   setStatus(state.mode === 'live' ? 'Reading your notes against the case documents…' : 'Checking your notes…', 'busy');
-  log('find_gaps_requested', { chars: notes.length });
   try {
-    const { gaps, message } = await engine.findGaps(notes);
-    let added = 0;
-    for (const g of gaps) {
-      const dup = state.gaps.find((x) => x.status === 'open' && normalize(x.quote).toLowerCase() === normalize(g.quote).toLowerCase());
-      if (dup) continue;
-      const gap = {
-        ...g,
-        scriptId: g.id || null,
-        id: uid('gap'),
-        n: ++state.gapCounter,
-        status: 'open',
-        statusNote: '',
-      };
-      if (!locate(gap.quote)) { state.gapCounter--; continue; }
-      state.gaps.push(gap);
-      added++;
-    }
+    const rechecked = await recheckEdited(notes);
+    if (state.sessionId !== session) return; // case, role or Reset changed mid-run
+    const found = await engine.findGaps(notes);
+    if (state.sessionId !== session) return;
+    const resolved = commitRechecks(rechecked);
+    const added = commitNew(found);
+    const first = !state.gapsChecked;
     state.gapsChecked = true;
+    state.notesCheckedText = notes;
     syncMarks();
-    log('find_gaps_result', { added, total: openGaps().length });
-    const n = openGaps().length;
-    setStatus(message || (added ? `${plural(added, 'passage')} flagged · click a highlight to examine it` : n ? 'No new gaps found' : 'No gaps found'), message ? 'warn' : '');
-    if (state.rightTab !== 'gaps') state.rightTab = 'gaps';
+    if (first && added.count) {
+      state.rightTab = 'gaps';
+      onFirstGaps(); // make room for the highlights
+    }
+    const stillOpen = rechecked.filter(([, , r]) => !r.resolved).length;
+    setStatus(summary(added.count, resolved, stillOpen, added.message), added.message && !openGaps().length ? 'warn' : resolved ? 'ok' : '');
     changed('left', 'right');
   } catch (err) {
     setStatus(`Could not check notes: ${err.message}`, 'error');
     log('error', { where: 'find_gaps', message: err.message });
   } finally {
+    running = false;
     btn.disabled = false;
   }
 }
 
-export async function submit() {
-  const notes = readNotes();
-  const open = openGaps();
-  if (!open.length) { setStatus('Saved'); return; }
-  const btn = $('#submit');
-  btn.disabled = true;
-  setStatus('Re-checking edited passages…', 'busy');
-  try {
-    const results = await Promise.all(open.map(async (gap) => {
-      let revised = marksFor(gap.id).map((m) => m.textContent).join('');
-      if (!revised && locate(gap.quote)) { wrap(gap); revised = gap.quote; }
-      return [gap, await engine.recheck(gap, revised, notes)];
-    }));
-    const resolved = [];
-    for (const [gap, r] of results) {
-      if (r.resolved) {
-        gap.status = 'resolved';
-        gap.statusNote = r.explanation;
-        resolved.push(gap);
-        log('gap_resolved', { gapId: gap.id, n: gap.n, explanation: r.explanation });
-      } else if (r.explanation && r.explanation !== 'Unchanged.') {
-        gap.statusNote = r.explanation;
-      }
-    }
-    if (resolved.some((g) => g.id === state.selectedGapId)) state.selectedGapId = null;
-    syncMarks();
-    state.notesSubmittedText = notes;
-    const left = openGaps().length;
-    setStatus(
-      resolved.length
-        ? `${plural(resolved.length, 'gap')} resolved · ${left} still open`
-        : `No flagged passage changed enough · ${left} still open`,
-      resolved.length ? 'ok' : '',
-    );
-    log('notes_submitted', { resolved: resolved.map((g) => g.n), open: left });
-    changed('left', 'right');
-  } catch (err) {
-    setStatus(`Re-check failed: ${err.message}`, 'error');
-    btn.disabled = false;
+function summary(added, resolved, stillOpen, message) {
+  const open = openGaps().length;
+  if (!open && !resolved && message) return message;
+  const parts = [];
+  if (resolved) parts.push(`${plural(resolved, 'gap')} resolved by your edit`);
+  if (stillOpen) parts.push(`${plural(stillOpen, 'edited passage')} still ${stillOpen === 1 ? 'rests' : 'rest'} on the assumption`);
+  if (added) parts.push(`${plural(added, 'new gap')}`);
+  parts.push(open ? `${open} open · click a highlight to examine it` : 'no open gaps');
+  return parts.join(' · ');
+}
+
+/** Ask whether each edited highlight still rests on its assumption. Changes no state. */
+async function recheckEdited(notes) {
+  const edited = [];
+  for (const gap of openGaps()) {
+    let text = marksFor(gap.id).map((m) => m.textContent).join('');
+    // Highlight lost (e.g. restored session) but the passage is still there: unchanged.
+    if (!text && locate(gap.quote)) { wrap(gap); text = gap.quote; }
+    if (normalize(text) !== normalize(gap.checkedText ?? gap.quote)) edited.push([gap, text]);
   }
+  return Promise.all(edited.map(async ([gap, text]) => [gap, text, await engine.recheck(gap, text, notes)]));
+}
+
+function commitRechecks(results) {
+  let resolved = 0;
+  for (const [gap, text, r] of results) {
+    gap.checkedText = text;
+    if (r.resolved) {
+      gap.status = 'resolved';
+      gap.statusNote = r.explanation;
+      resolved++;
+      if (state.selectedGapId === gap.id) state.selectedGapId = null;
+      log('gap_resolved', { gapId: gap.id, n: gap.n, explanation: r.explanation });
+    } else if (r.explanation && r.explanation !== 'Unchanged.') {
+      gap.statusNote = r.explanation;
+    }
+  }
+  return resolved;
+}
+
+/** True if `quote` is, or overlaps, a passage that already has a gap (any status). */
+function alreadyFlagged(quote) {
+  const q = normalize(quote).toLowerCase();
+  if (state.gaps.some((g) => {
+    const k = normalize(g.quote).toLowerCase();
+    const c = g.checkedText ? normalize(g.checkedText).toLowerCase() : '';
+    return k === q || k.includes(q) || q.includes(k) || (c && (c.includes(q) || q.includes(c)));
+  })) return true;
+  // Overlaps a highlight that is on screen now.
+  const segments = locate(quote) || [];
+  return segments.some((seg) => seg.node.parentElement.closest('mark[data-gap]'));
+}
+
+/** Add newly found gaps, never re-raising a passage that is flagged, resolved or dismissed. */
+function commitNew({ gaps, message }) {
+  let count = 0;
+  for (const g of gaps) {
+    if (!locate(g.quote) || alreadyFlagged(g.quote)) continue;
+    state.gaps.push({ ...g, scriptId: g.id || null, id: uid('gap'), n: ++state.gapCounter, status: 'open', statusNote: '' });
+    count++;
+  }
+  log('find_gaps_result', { added: count, total: openGaps().length });
+  return { count, message };
 }
 
 export function dismissGap(gapId) {

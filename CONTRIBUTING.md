@@ -11,7 +11,7 @@ make serve          # http://127.0.0.1:8000
 ## Guidelines
 
 - Keep the human and AI spaces separate. Nothing the model produces should be
-  written into the Human-Only editor.
+  written into the strategy-notes editor.
 - Every AI claim shown to users needs a source (document + paragraph) or must
   say it has none. New agents should validate citations server-side.
 - Respect the information barrier: build prompts from
@@ -20,6 +20,8 @@ make serve          # http://127.0.0.1:8000
 - Agents must work offline (return a retrieval-only or heuristic answer when
   `llm is None`) so the app and tests run without credentials.
 - The frontend has no build step. Use plain ES modules and keep dependencies at
-  zero.
+  zero. Module imports and the asset links in `index.html` carry `?v=<version>`
+  so browsers never mix files from two releases: when you change the frontend,
+  bump `__version__` and update those strings (a test checks they match).
 - If you change the starter notes or corpus, run `pytest`: the scripted demo is
   validated against both.

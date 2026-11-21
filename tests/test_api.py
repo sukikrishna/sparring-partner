@@ -125,3 +125,52 @@ def test_session_logging_enabled(tmp_path, monkeypatch):
 @pytest.mark.parametrize("path", ["/", "/js/main.js", "/css/app.css", "/data/demo/qiso-mayor.json"])
 def test_static_files(path):
     assert client.get(path).status_code == 200
+
+
+@pytest.mark.parametrize(
+    "env, expected",
+    [
+        ({"AWS_BEARER_TOKEN_BEDROCK": "k"}, "bedrock"),
+        ({"ANTHROPIC_API_KEY": "k"}, "anthropic"),
+        ({"ANTHROPIC_API_KEY": "k", "AWS_BEARER_TOKEN_BEDROCK": "k"}, "anthropic"),
+        ({"AWS_BEARER_TOKEN_BEDROCK": "k", "SPARRING_PROVIDER": "anthropic"}, "anthropic"),
+        ({}, "anthropic"),
+    ],
+)
+def test_provider_selection(monkeypatch, env, expected):
+    for name in ("AWS_BEARER_TOKEN_BEDROCK", "ANTHROPIC_AWS_API_KEY", "ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "SPARRING_PROVIDER"):
+        monkeypatch.delenv(name, raising=False)
+    for name, value in env.items():
+        monkeypatch.setenv(name, value)
+    assert config._provider() == expected
+
+
+def test_start_here_is_visible_to_role():
+    client = TestClient(app)
+    for case in client.get("/api/cases").json()["cases"]:
+        for role in case["roles"]:
+            view = client.get(f"/api/cases/{case['id']}?role={role['id']}").json()
+            visible = {d["id"] for d in view["documents"]}
+            assert view["role"]["start_here"], (case["id"], role["id"])
+            assert set(view["role"]["start_here"]) <= visible
+
+
+def test_static_files_are_revalidated():
+    client = TestClient(app)
+    assert client.get("/").headers.get("cache-control") == "no-cache"
+    assert client.get("/js/main.js").headers.get("cache-control") == "no-cache"
+
+
+def test_frontend_files_carry_the_release_version():
+    """Every module import and asset link is versioned, so browsers never mix releases."""
+    import re
+
+    from sparring_partner import __version__
+
+    web = config.WEB_DIR
+    html = (web / "index.html").read_text()
+    assert f'css/app.css?v={__version__}"' in html
+    assert f'js/main.js?v={__version__}"' in html
+    for path in (web / "js").glob("*.js"):
+        for spec in re.findall(r"from '(\./[^']+)'", path.read_text()):
+            assert spec.endswith(f".js?v={__version__}"), (path.name, spec)

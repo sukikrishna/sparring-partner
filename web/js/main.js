@@ -1,15 +1,13 @@
 // Entry point: picks the case, role and mode, loads data, wires the columns.
 
-import { detectBackend, hasBackend, hasModel, listCases, loadCase, loadDemoScript, modelName } from './api.js';
-import { initEditor, loadNotes, readNotes, refreshPlaceholder, setStatus, syncMarks } from './editor.js';
-import { initSources, renderSources } from './sources.js';
+import { demoScripts, detectBackend, hasBackend, hasModel, listCases, loadCase, loadDemoScript, modelName } from './api.js?v=0.3.0';
+import { initEditor, loadNotes, readNotes, refreshPlaceholder, setStatus, syncMarks } from './editor.js?v=0.3.0';
+import { initSources, openInLibrary, renderSources } from './sources.js?v=0.3.0';
 import {
   changed, exportSession, log, registerRenderer, resetSession, restore, save, state,
-} from './store.js';
-import { initSynthesis, renderStale, renderSynthesis } from './synthesis.js';
-import { $, $$, download, el } from './util.js';
-
-const DEFAULT = { caseId: 'qiso', roleId: 'mayor' };
+} from './store.js?v=0.3.0';
+import { initSynthesis, renderStale, renderSynthesis } from './synthesis.js?v=0.3.0';
+import { $, $$, download, el } from './util.js?v=0.3.0';
 
 function selectGap(id) {
   const gap = state.gaps.find((g) => g.id === id);
@@ -19,6 +17,7 @@ function selectGap(id) {
   state.expanded[id] = true;
   syncMarks();
   log('gap_selected', { gapId: id, n: gap.n });
+  setBriefOpen(false); // the role brief has done its job once work starts
   changed('left', 'right');
   reveal('src');
 }
@@ -26,30 +25,6 @@ function selectGap(id) {
 registerRenderer('left', renderSynthesis);
 registerRenderer('right', renderSources);
 registerRenderer('leftStale', renderStale);
-registerRenderer('steps', renderSteps);
-
-// ------------------------------------------------------------- step guide
-
-/** Write → Find gaps → Investigate → Revise, derived from session state. */
-function renderSteps() {
-  const done = {
-    write: readNotes().trim().length > 0,
-    gaps: state.gapsChecked,
-    investigate: state.insights.length > 0
-      || Object.values(state.threads).some((t) => t.some((m) => m.role === 'user')),
-    revise: state.gaps.some((g) => g.status === 'resolved'),
-  };
-  let current = false;
-  for (const li of $$('#steps li')) {
-    const key = li.dataset.step;
-    li.removeAttribute('aria-current');
-    if (done[key]) li.dataset.state = 'done';
-    else if (!current) { li.dataset.state = 'current'; li.setAttribute('aria-current', 'step'); current = true; }
-    else delete li.dataset.state;
-    const label = li.dataset.label || (li.dataset.label = li.textContent.trim());
-    li.setAttribute('aria-label', `${label}: ${done[key] ? 'done' : li.dataset.state === 'current' ? 'current step' : 'not started'}`);
-  }
-}
 
 // ------------------------------------------------------- collapsible panels
 
@@ -138,8 +113,8 @@ function renderTopbar() {
       : 'Live mode needs the Python server (see README)';
   demoBtn.title = state.demo
     ? 'Prepared gaps and answers for this scenario, plus passage search'
-    : 'No script for this role: passage search only';
-  $('#mode-note').textContent = state.mode === 'live' ? modelName() : state.demo ? '' : 'No script for this role: passage search only';
+    : 'Passage search only';
+  $('#mode-note').textContent = state.mode === 'live' ? modelName() : state.demo ? '' : 'Passage search only';
 }
 
 // ------------------------------------------------------------------ loading
@@ -169,16 +144,85 @@ async function loadSession({ caseId, roleId, mode }, { saveCurrent = true } = {}
 
   $('#role-brief-title').textContent = `${data.role.name}`;
   $('#role-brief-text').textContent = data.role.brief;
-  $('#case-summary').textContent = data.summary;
+  renderStartHere(data);
+  // Newcomers see the brief and the reading list; once gaps are found it makes room for the notes.
+  setBriefOpen(!state.gapsChecked);
 
   loadNotes();
   writeHash();
   renderTopbar();
   renderSynthesis();
   renderSources();
-  renderSteps();
-  if (restored) setStatus('Session restored', 'ok');
+  if (restored && (state.gapsChecked || state.insights.length)) setStatus('Session restored', 'ok');
   document.body.classList.remove('loading');
+}
+
+function renderStartHere(data) {
+  const docs = (data.role.start_here || []).map((id) => state.docsById[id]).filter(Boolean);
+  $('#start-here').hidden = !docs.length;
+  $('#start-here-list').replaceChildren(...docs.map((d) => el('li', {}, el('span', {},
+    el('button', {
+      type: 'button',
+      className: 'link-btn',
+      text: d.title,
+      title: `Open “${d.title}” in Source Documents`,
+      onClick: () => { openInLibrary(d.id); reveal('src'); },
+    }),
+    el('span', { className: 'doc-type', text: d.kind })))));
+}
+
+function setBriefOpen(open) {
+  $('#role-brief').toggleAttribute('open', open);
+  $('#brief-toggle').setAttribute('aria-expanded', String(open));
+}
+
+// ------------------------------------------------------------------ start screen
+
+async function renderHome() {
+  const scripted = new Set(await demoScripts());
+  const ordered = [...cases].sort((a, b) => Number(b.roles.some((r) => scripted.has(`${b.id}-${r.id}`))) - Number(a.roles.some((r) => scripted.has(`${a.id}-${r.id}`))));
+  $('#home-cases').replaceChildren(...ordered.map((c) => el('article', { className: 'case-card' },
+    el('h2', { text: c.title }),
+    el('p', { text: c.summary }),
+    el('div', { className: 'role-row' },
+      el('span', { className: 'role-label', text: 'Play as' }),
+      ...c.roles.map((r) => el('button', {
+        type: 'button',
+        className: 'role-btn',
+        onClick: () => openCase(c.id, r.id),
+      }, r.name, scripted.has(`${c.id}-${r.id}`) ? el('span', { className: 'demo-tag', text: 'scripted demo' }) : null))),
+  )));
+}
+
+function showHome({ push = true } = {}) {
+  if (state.caseData) save();
+  document.body.classList.add('at-home');
+  $('#home').hidden = false;
+  if (location.hash) {
+    const url = location.pathname + location.search;
+    if (push) history.pushState(null, '', url); else history.replaceState(null, '', url);
+  }
+  window.scrollTo(0, 0);
+}
+
+async function openCase(caseId, roleId, { push = true } = {}) {
+  const first = !state.caseData;
+  if (push) history.pushState(null, '', `#${new URLSearchParams({ case: caseId, role: roleId, mode: state.mode || 'demo' })}`);
+  document.body.classList.remove('at-home');
+  $('#home').hidden = true;
+  await loadSession({ caseId, roleId, mode: state.mode || 'demo' }, { saveCurrent: !first });
+  if (first) refreshPlaceholder();
+  window.scrollTo(0, 0); // on phones the start screen may have been scrolled down
+}
+
+/** Back/forward and edited links: show whatever the address now says. */
+function followAddress() {
+  const wanted = readHash();
+  const c = cases.find((x) => x.id === wanted.caseId);
+  if (!c) { if (!document.body.classList.contains('at-home')) showHome({ push: false }); return; }
+  const r = c.roles.find((x) => x.id === wanted.roleId) || c.roles[0];
+  const onScreen = !document.body.classList.contains('at-home') && state.caseId === c.id && state.roleId === r.id;
+  if (!onScreen) openCase(c.id, r.id, { push: false });
 }
 
 function showFatal(message) {
@@ -215,17 +259,17 @@ function wireTopbar() {
     download(`sparring-partner-${state.caseId}-${state.roleId}-${stamp}.json`, JSON.stringify(data, null, 2));
   });
   $('#help').addEventListener('click', () => $('#help-dialog').showModal());
-  $('#brief-toggle').addEventListener('click', () => {
-    const open = $('#role-brief').toggleAttribute('open');
-    $('#brief-toggle').setAttribute('aria-expanded', String(open));
-  });
+  $('#home-link').addEventListener('click', () => showHome());
+  window.addEventListener('popstate', followAddress);
+  $('#brief-toggle').addEventListener('click', () => setBriefOpen(!$('#role-brief').hasAttribute('open')));
   window.addEventListener('beforeunload', save);
 }
 
 // ------------------------------------------------------------------ boot
 
 async function boot() {
-  initEditor({ selectGap });
+  window.__spBooted = true;
+  initEditor({ selectGap, firstGaps: () => setBriefOpen(false) });
   initSources({ selectGap });
   initSynthesis({ selectGap });
   wireTopbar();
@@ -240,13 +284,25 @@ async function boot() {
   }
   if (!cases.length) { showFatal('No cases have been built yet.'); return; }
 
+  // A link with a case in it opens that case; otherwise start on the case list.
   const wanted = readHash();
-  const caseEntry = cases.find((c) => c.id === wanted.caseId) || cases.find((c) => c.id === DEFAULT.caseId) || cases[0];
-  const roleEntry = caseEntry.roles.find((r) => r.id === wanted.roleId)
-    || caseEntry.roles.find((r) => r.id === DEFAULT.roleId) || caseEntry.roles[0];
+  const caseEntry = cases.find((c) => c.id === wanted.caseId);
+  if (!caseEntry) {
+    document.body.classList.remove('loading');
+    await renderHome();
+    showHome();
+    welcomeOnce();
+    return;
+  }
+  renderHome();
+  const roleEntry = caseEntry.roles.find((r) => r.id === wanted.roleId) || caseEntry.roles[0];
   await loadSession({ caseId: caseEntry.id, roleId: roleEntry.id, mode: wanted.mode || 'demo' });
   refreshPlaceholder();
+  welcomeOnce();
+}
 
+/** Show "How it works" the first time someone opens the app in this browser. */
+function welcomeOnce() {
   let seen = true;
   try {
     seen = Boolean(localStorage.getItem('sparring-partner:seen-help'));

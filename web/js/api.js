@@ -51,6 +51,14 @@ export async function loadCase(caseId, roleId) {
 
 let demoIndex = null;
 
+/** Names ("case-role") of the roles that have a hand-written demo script. */
+export async function demoScripts() {
+  try {
+    demoIndex ||= (await getJSON('data/demo/index.json')).scripts;
+  } catch { demoIndex = []; }
+  return demoIndex;
+}
+
 /** The hand-written demo script for this case and role, if one exists. */
 export async function loadDemoScript(caseId, roleId) {
   try {

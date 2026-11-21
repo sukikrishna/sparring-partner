@@ -1,13 +1,13 @@
 // Source Documents column: the gap list, the full document library, one
-// "rabbit-hole" chat per document (separate history per gap/document), and a
+// document chat ("Ask this document") (separate history per gap/document), and a
 // case-wide chat for general questions that are not tied to a gap.
 
-import * as engine from './engine.js';
-import { dismissGap, readNotes, reopenGap, scrollToGap } from './editor.js';
+import * as engine from './engine.js?v=0.3.0';
+import { dismissGap, readNotes, reopenGap, scrollToGap } from './editor.js?v=0.3.0';
 import {
   addInsight, changed, doc, gapById, log, openGaps, state, thread, threadKey,
-} from './store.js';
-import { $, $$, button, el, flash, plural, uid } from './util.js';
+} from './store.js?v=0.3.0';
+import { $, $$, button, el, flash, plural, uid } from './util.js?v=0.3.0';
 
 let selectGap = () => {};
 
@@ -59,8 +59,8 @@ function renderGapsTab() {
   const wrap = el('div', { className: 'intro', dataset: { scrollKey: 'gaps' } });
   if (!state.gapsChecked) {
     wrap.append(
-      el('h3', { text: 'Write first, then check' }),
-      el('p', { text: 'Your notes in the Human-Only column can be as rough as you like. When you are ready, press “Find gaps”: passages that rest on a questionable assumption get highlighted, each linked to the documents that bear on it.' }),
+      el('h3', { text: 'Write first, then find gaps' }),
+      el('p', { text: 'Your strategy notes can be as rough as you like. When you are ready, press “Find gaps”: passages that rest on a questionable assumption get highlighted, each linked to the documents that bear on it. Press it again after editing to re-check.' }),
       el('p', { text: 'You can also browse the Library or ask a question across all documents at any time. Anything useful you find can be saved to the AI-Synthesis board.' }),
     );
     return wrap;
@@ -251,7 +251,7 @@ function renderChat(ctx) {
   const box = el('section', { className: 'chatbox' + (ctx.scope === 'case' ? ' tall' : ''), dataset: { key: ctx.key } });
   const label = ctx.scope === 'case'
     ? el('span', {}, el('b', { text: 'Case chat' }), ' · all documents')
-    : el('span', {}, el('b', { text: 'Rabbit-hole chat' }), ' · this document only', ctx.gap ? ` · gap ${ctx.gap.n}` : '');
+    : el('span', {}, el('b', { text: 'Ask this document' }), ' · this document only', ctx.gap ? ` · gap ${ctx.gap.n}` : '');
   box.append(el('div', { className: 'chat-head' }, label));
   box.append(el('div', { className: 'msgs', attrs: { 'aria-live': 'polite' } }));
   box.append(el('div', { className: 'chips' }));
@@ -336,8 +336,8 @@ function renderMessage(m, ctx) {
     }
     node.append(cs);
   }
+  const onBoard = m.insightId && state.insights.some((i) => i.id === m.insightId);
   if (m.keyFinding) {
-    const onBoard = m.insightId && state.insights.some((i) => i.id === m.insightId);
     node.append(el('div', { className: 'kf' },
       el('div', { className: 'label', text: 'Key finding' }),
       el('div', { text: m.keyFinding }),
@@ -345,8 +345,23 @@ function renderMessage(m, ctx) {
         ? el('div', { className: 'kf-act', text: '✓ On your synthesis board' })
         : button('Save to board', () => saveFinding(m, ctx), 'pin-btn'),
     ));
+  } else if ((m.cites?.length || m.citations?.length) && findingText(m)) {
+    // No key finding (e.g. passage search): the writer can still keep the answer.
+    node.append(onBoard
+      ? el('div', { className: 'kf-act', text: '✓ On your synthesis board' })
+      : button('Save to board', () => saveFinding(m, ctx), 'pin-btn plain'));
   }
   return node;
+}
+
+/** What gets saved for an answer: its key finding, else the best passage or the answer itself. */
+function findingText(m) {
+  if (m.keyFinding) return m.keyFinding;
+  const lines = (m.text || '').split('\n').map((l) => l.trim()).filter(Boolean);
+  let text = m.passagesOnly && lines.length > 1 ? lines[1] : lines.join(' ');
+  // Passage lines read "¶6 text…" or "Title ¶6: text…"; the source label already names the paragraph.
+  if (m.passagesOnly) text = text.replace(/^(.*?¶\d+:?\s*)/, '');
+  return text.length > 320 ? `${text.slice(0, 317)}…` : text;
 }
 
 function originFor(m, ctx) {
@@ -357,7 +372,7 @@ function originFor(m, ctx) {
 
 function saveFinding(m, ctx, how = 'pin') {
   if (m.insightId && state.insights.some((i) => i.id === m.insightId)) return;
-  const ins = addInsight({ text: m.keyFinding, author: 'ai', origin: { ...originFor(m, ctx), how }, gapId: ctx.gap?.id || null });
+  const ins = addInsight({ text: findingText(m), author: 'ai', origin: { ...originFor(m, ctx), how }, gapId: ctx.gap?.id || null });
   m.insightId = ins.id;
   refreshThread(ctx.key);
   changed('left');
@@ -382,6 +397,7 @@ async function ask(ctx, question) {
       cites: r.cites || [],
       citations: r.citations || [],
       keyFinding: r.keyFinding || null,
+      passagesOnly: Boolean(r.passagesOnly),
       followUps: r.followUps || [],
       qaId: r.qaId || null,
     });

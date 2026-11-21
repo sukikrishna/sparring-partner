@@ -33,6 +33,8 @@ class Role(BaseModel):
     counterpart: str = ""
     #: Starting notes shown in the Human-Only editor for this role (may be empty).
     starter_notes: str = ""
+    #: Documents a newcomer to this role should read first, in order.
+    start_here: list[str] = Field(default_factory=list)
 
 
 class Case(BaseModel):

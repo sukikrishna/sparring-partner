@@ -31,7 +31,7 @@ def _serve(args: argparse.Namespace) -> int:
 
     from .llm import get_client
 
-    mode = "Claude (" + config.DEFAULT_MODEL + ")" if get_client() else "offline (retrieval only)"
+    mode = f"{config.DEFAULT_MODEL} via {config.PROVIDER}" if get_client() else "offline (retrieval only)"
     print(f"Sparring Partner on http://{args.host}:{args.port}  ·  model: {mode}")
     uvicorn.run("sparring_partner.api:app", host=args.host, port=args.port, reload=args.reload)
     return 0
