@@ -13,7 +13,7 @@ import * as engine from './engine.js?v=0.3.2';
 import { readNotes, revealPhrase, setStatus } from './editor.js?v=0.3.2';
 import { openOrigin } from './sources.js?v=0.3.2';
 import {
-  addInsight, changed, doc, gapById, log, moveInsight, removeInsight, state,
+  addInsight, changed, doc, gapById, log, removeInsight, state,
 } from './store.js?v=0.3.2';
 import { $, button, el, flash, hash, plural } from './util.js?v=0.3.2';
 
@@ -54,23 +54,12 @@ function renderTabs() {
 
 // ==================================================================== board
 
-function gapLabel(g) { return `Gap ${g.n}: ${g.title}`; }
+function gapLabel(g) { return `Gap ${g.n}`; }
 
 function linkableGaps() { return state.gaps.filter((g) => g.status !== 'dismissed' || state.insights.some((i) => i.gapId === g.id)); }
 
 function renderBoard() {
   const wrap = el('div', { className: 'board' });
-
-  // Controls
-  const seg = el('div', { className: 'seg', attrs: { role: 'group', 'aria-label': 'Saving key findings' } });
-  for (const [val, label] of [[true, 'Save automatically'], [false, 'Ask me first']]) {
-    seg.append(el('button', {
-      type: 'button',
-      attrs: { 'aria-pressed': String(state.autoAdd === val) },
-      onClick: () => { state.autoAdd = val; log('setting', { autoAdd: val }); changed('left'); },
-    }, label));
-  }
-  wrap.append(el('div', { className: 'board-controls' }, el('span', { className: 'small', text: 'Key findings from chats:' }), seg));
 
   // Quick note: the human's own free-flow ideas live here too, clearly labelled.
   const text = el('textarea', {
@@ -92,15 +81,17 @@ function renderBoard() {
   text.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); add(); } });
   wrap.append(el('div', { className: 'note-composer' }, text, el('div', { className: 'note-row' }, target, button('Save note', add, 'btn-small'))));
 
-  // Sections: one per gap, then General.
-  const sections = [];
+  // Sections: open gaps first (they are the focus), then General, then gaps that are resolved or
+  // dismissed (kept for their saved insights) at the bottom.
+  const open = [];
+  const closed = [];
   for (const g of state.gaps) {
     const items = state.insights.filter((i) => i.gapId === g.id);
-    if (g.status === 'dismissed' && !items.length) continue;
-    sections.push(renderGapSection(g, items));
+    if (g.status === 'open') open.push(renderGapSection(g, items));
+    else if (items.length || g.status === 'resolved') closed.push(renderGapSection(g, items));
   }
-  sections.push(renderGeneralSection(state.insights.filter((i) => !i.gapId || !gapById(i.gapId))));
-  wrap.append(el('div', { className: 'sections' }, sections));
+  const general = renderGeneralSection(state.insights.filter((i) => !i.gapId || !gapById(i.gapId)));
+  wrap.append(el('div', { className: 'sections' }, [...open, general, ...closed]));
 
   if (!state.insights.length && !state.gaps.length) {
     wrap.append(el('p', { className: 'muted small board-hint', text:
@@ -183,17 +174,9 @@ function provenance(ins) {
 function renderCard(ins) {
   const li = el('li', { className: `finding ${ins.author}`, id: `ins-${ins.id}` });
   li.append(el('div', { className: 'finding-text', text: ins.text }));
-  const move = el('select', {
-    className: 'move',
-    attrs: { 'aria-label': 'Attach to' },
-    onChange: (e) => { moveInsight(ins.id, e.target.value); changed('left'); },
-  },
-  el('option', { value: '', text: 'General', selected: !ins.gapId }),
-  ...linkableGaps().map((g) => el('option', { value: g.id, text: `Gap ${g.n}`, selected: g.id === ins.gapId })));
   li.append(el('div', { className: 'finding-meta' },
     provenance(ins),
     el('span', { className: 'spacer' }),
-    move,
     button('×', () => { removeInsight(ins.id); changed('left', 'right'); }, 'icon-btn', { 'aria-label': 'Remove insight', title: 'Remove' }),
   ));
   return li;

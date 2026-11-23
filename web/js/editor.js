@@ -2,8 +2,8 @@
 // writes here; it only adds highlights that point at passages worth checking.
 
 import * as engine from './engine.js?v=0.3.2';
-import { changed, gapById, log, openGaps, state } from './store.js?v=0.3.2';
-import { $, $$, debounce, el, escapeHTML, normalize, plural, uid } from './util.js?v=0.3.2';
+import { changed, doc, gapById, log, openGaps, state } from './store.js?v=0.3.2';
+import { $, $$, debounce, el, escapeHTML, normalize, plural, stripScaffold, uid } from './util.js?v=0.3.2';
 
 const editor = () => $('#editor');
 let onSelectGap = () => {};
@@ -15,7 +15,12 @@ export function initEditor({ selectGap, firstGaps }) {
   const ed = editor();
   try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch { /* old browsers */ }
 
-  ed.addEventListener('input', () => {
+  // Text and new lines typed at the edge of a highlight belong outside it.
+  ed.addEventListener('beforeinput', (e) => {
+    if (e.inputType.startsWith('insert')) escapeMarkEdge();
+  });
+  ed.addEventListener('input', (e) => {
+    tidyMarks(e.inputType || '');
     updatePlaceholder();
     persist();
     if (openGaps().length) setStatus('Edited · press “Find gaps” to re-check');
@@ -54,7 +59,7 @@ export function loadNotes() {
     ed.innerHTML = state.notesHTML;
   } else {
     const text = state.caseData.role.starter_notes || '';
-    ed.innerHTML = text
+    ed.innerHTML = SCAFFOLD_HTML + text
       .split(/\n\s*\n/)
       .filter((p) => p.trim())
       .map((p) => `<p>${escapeHTML(p.trim()).replace(/\n/g, '<br>')}</p>`)
@@ -66,18 +71,41 @@ export function loadNotes() {
   updatePlaceholder();
 }
 
+// Pre-filled prompts: real content (they stay once the writer starts), not a placeholder. Each is a
+// bold line with an empty line under it for the answer. Keep in step with SCAFFOLD_LABELS in util.js.
+const SCAFFOLD_HTML = [
+  'What do I want?',
+  'What does the other side want?',
+  'What’s my plan?',
+].map((q) => `<p><b>${q}</b></p><p><br></p>`).join('');
+
+/** True while the writer has written nothing beyond the pre-filled headings. */
+export function isBlank(text = readNotes()) {
+  return !stripScaffold(text);
+}
+
+// The hint shows only while there is nothing but the headings, and goes with the first character.
 function updatePlaceholder() {
-  editor().classList.toggle('is-empty', !readNotes().trim());
+  editor().classList.toggle('is-empty', isBlank());
 }
 
 /** The notes as plain text, paragraphs separated by blank lines. */
 export function readNotes() {
   const ed = editor();
-  const blocks = $$(':scope > p, :scope > div, :scope > ul, :scope > ol, :scope > h1, :scope > h2, :scope > h3', ed);
-  const text = blocks.length && blocks.length === ed.children.length
-    ? blocks.map((b) => b.innerText.trim()).filter(Boolean).join('\n\n')
-    : ed.innerText;
-  return text.replace(/\u00a0/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+  const BLOCK = /^(P|DIV|UL|OL|H[1-6]|BLOCKQUOTE)$/;
+  const out = [];
+  let loose = ''; // text typed straight into the editor, outside any paragraph
+  const flush = () => { if (loose.trim()) out.push(loose.trim()); loose = ''; };
+  for (const node of ed.childNodes) {
+    if (node.nodeType === 1 && BLOCK.test(node.tagName)) {
+      flush();
+      const t = node.innerText.trim();
+      if (t) out.push(t);
+    } else if (node.nodeType === 3) loose += node.data;
+    else if (node.nodeType === 1) loose += node.tagName === 'BR' ? '\n' : node.textContent;
+  }
+  flush();
+  return out.join('\n\n').replace(/\u200b/g, '').replace(/\u00a0/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 // ---------------------------------------------------------------- marks
@@ -93,7 +121,11 @@ function locate(quote, root = editor()) {
     const block = node.parentElement.closest('p, div, li, h1, h2, h3') || root;
     if (lastBlock && block !== lastBlock) { full += '\n'; chars.push(null); }
     lastBlock = block;
-    for (let i = 0; i < node.data.length; i++) { full += node.data[i]; chars.push([node, i]); }
+    for (let i = 0; i < node.data.length; i++) {
+      if (node.data[i] === ZWSP) continue; // hidden caret-room characters are not text
+      full += node.data[i];
+      chars.push([node, i]);
+    }
   }
   const tokens = normalize(quote).split(' ').filter(Boolean);
   if (!tokens.length) return null;
@@ -111,6 +143,68 @@ function locate(quote, root = editor()) {
     else segments.push({ node, start: off, end: off + 1 });
   }
   return segments;
+}
+
+// A highlight must not swallow what is typed next to it. Chrome extends an inline element when you
+// type at its edge, and clones it into the new line when you press Enter, so before an insertion we
+// move the caret just outside the highlight; afterwards empty clones and repeated badges are tidied.
+// The number badge is drawn by CSS, so the caret could never stand behind it: each numbered
+// highlight is followed by a zero-width character that gives the caret somewhere to go.
+
+const ZWSP = '​';
+const EDGE = 'mark[data-gap], span.supported';
+
+function escapeMarkEdge() {
+  const sel = window.getSelection();
+  if (!sel.rangeCount || !sel.isCollapsed || !editor().contains(sel.anchorNode)) return;
+  const origin = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
+  const mark = origin && origin.closest(EDGE);
+  if (!mark) return;
+  const edge = (side) => {
+    const r = document.createRange();
+    r.selectNodeContents(mark);
+    if (side === 'end') r.setStart(sel.anchorNode, sel.anchorOffset);
+    else r.setEnd(sel.anchorNode, sel.anchorOffset);
+    return r.toString() === '';
+  };
+  const atEnd = edge('end');
+  if (!atEnd && !edge('start')) return; // inside the passage: editing it is the point
+  const sibling = atEnd ? mark.nextSibling : mark.previousSibling;
+  let target = sibling && sibling.nodeType === 3 ? sibling : null;
+  if (!target) {
+    target = document.createTextNode(ZWSP);
+    if (atEnd) mark.after(target); else mark.before(target);
+  }
+  sel.collapse(target, atEnd ? (target.data.startsWith(ZWSP) ? 1 : 0) : target.data.length);
+}
+
+/** Put a hidden character behind every numbered highlight so the caret can stand after its badge. */
+function ensureCaretRoom() {
+  for (const mark of $$('mark[data-n]', editor())) {
+    const next = mark.nextSibling;
+    if (!(next && next.nodeType === 3 && next.data.startsWith(ZWSP))) mark.after(document.createTextNode(ZWSP));
+  }
+}
+
+// Runs after every edit. It never moves the caret: restoring it by character offset used to throw
+// it back to the end of the previous line after Enter.
+function tidyMarks(inputType = '') {
+  const ed = editor();
+  const pieces = new Map();
+  for (const m of $$('mark[data-gap]', ed)) {
+    if (!m.textContent) { m.replaceWith(...m.childNodes); continue; } // empty clone left by Enter
+    if (!pieces.has(m.dataset.gap)) pieces.set(m.dataset.gap, []);
+    pieces.get(m.dataset.gap).push(m);
+  }
+  // Only the last piece of a split highlight carries the number badge.
+  for (const list of pieces.values()) list.slice(0, -1).forEach((m) => m.removeAttribute('data-n'));
+  // A green passage the writer has rewritten is no longer known to be supported.
+  for (const span of $$('span.supported', ed)) {
+    if (!span.textContent) span.replaceWith(...span.childNodes);
+    else if (span.textContent !== span.dataset.orig) { span.classList.remove('supported'); span.removeAttribute('title'); }
+  }
+  // Not while deleting: a Backspace that removes the hidden character must not be undone.
+  if (!inputType.startsWith('delete')) ensureCaretRoom();
 }
 
 function marksFor(gapId) {
@@ -141,30 +235,71 @@ function unwrap(gapId) {
   }
 }
 
-/** Caret position as a character offset into the editor's text, or null if not inside it. */
+// ------------------------------------------------- passages the documents support
+
+function supportTitle(item) {
+  const refs = (item.citations || [])
+    .map((c) => { const d = doc(c.docId); return d ? `${d.title} ¶${c.paragraph}` : null; })
+    .filter(Boolean);
+  return 'This is supported by documents!' + (refs.length ? ` (${refs.join('; ')})` : '');
+}
+
+function clearSupported() {
+  for (const span of $$('span[data-support]', editor())) {
+    const parent = span.parentNode;
+    while (span.firstChild) parent.insertBefore(span.firstChild, span);
+    span.remove();
+    parent.normalize();
+  }
+}
+
+/** Mark passages the documents confirm in green. Never touches a gap's highlight. Returns the count. */
+function applySupported(items) {
+  let count = 0;
+  for (const item of items) {
+    const segments = locate(item.quote);
+    if (!segments || segments.some((seg) => seg.node.parentElement.closest('mark[data-gap], span[data-support]'))) continue;
+    const id = uid('sup');
+    const title = supportTitle(item);
+    for (const seg of segments) {
+      const range = document.createRange();
+      range.setStart(seg.node, seg.start);
+      range.setEnd(seg.node, seg.end);
+      const span = el('span', { className: 'supported', dataset: { support: id, orig: seg.node.data.slice(seg.start, seg.end) } });
+      span.title = title;
+      try { range.surroundContents(span); } catch { /* range crosses an element; skip segment */ }
+    }
+    count++;
+  }
+  return count;
+}
+
+/** Caret position as a count of visible characters, or null if it is not inside a text node. */
 function saveCaret() {
   const sel = window.getSelection();
   const ed = editor();
-  if (!sel.rangeCount || !ed.contains(sel.anchorNode)) return null;
+  // A caret anchored on an element (an empty line) survives our edits as it is; restoring it by a
+  // character offset would jump it back to the end of the previous line.
+  if (!sel.rangeCount || !ed.contains(sel.anchorNode) || sel.anchorNode.nodeType !== 3) return null;
   const range = sel.getRangeAt(0);
   const pre = document.createRange();
   pre.selectNodeContents(ed);
   pre.setEnd(range.endContainer, range.endOffset);
-  return pre.toString().length;
+  return pre.toString().replace(/​/g, '').length;
 }
 
 function restoreCaret(offset) {
   if (offset == null) return;
   const walker = document.createTreeWalker(editor(), NodeFilter.SHOW_TEXT);
-  let left = offset;
+  let left = offset; // visible characters only, so hidden ones added meanwhile do not shift it
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (left <= node.data.length) {
-      const sel = window.getSelection();
-      sel.collapse(node, left);
-      return;
+    let seen = 0;
+    for (let i = 0; i <= node.data.length; i++) {
+      if (seen === left) { window.getSelection().collapse(node, i); return; }
+      if (i < node.data.length && node.data[i] !== ZWSP) seen++;
     }
-    left -= node.data.length;
+    left -= seen;
   }
 }
 
@@ -178,6 +313,7 @@ export function syncMarks() {
   for (const gap of openGaps()) {
     if (!marksFor(gap.id).length) wrap(gap);
   }
+  ensureCaretRoom();
   for (const mark of $$('mark[data-gap]', editor())) {
     mark.classList.toggle('selected', mark.dataset.gap === state.selectedGapId);
   }
@@ -216,7 +352,7 @@ let running = false;
 export async function findGaps() {
   if (running) return;
   const notes = readNotes();
-  if (!notes) { setStatus('Write some notes first.', 'warn'); return; }
+  if (isBlank(notes)) { setStatus('Write some notes first.', 'warn'); return; }
   running = true;
   log('find_gaps_requested', { chars: notes.length });
   const btn = $('#find-gaps');
@@ -226,20 +362,26 @@ export async function findGaps() {
   try {
     const rechecked = await recheckEdited(notes);
     if (state.sessionId !== session) return; // case, role or Reset changed mid-run
-    const found = await engine.findGaps(notes);
+    const [found, supported] = await Promise.all([engine.findGaps(notes), engine.findSupported(notes)]);
     if (state.sessionId !== session) return;
+    clearSupported(); // re-marked below, after the gaps, so a gap's highlight always wins
     const resolved = commitRechecks(rechecked);
     const added = commitNew(found);
     const first = !state.gapsChecked;
     state.gapsChecked = true;
     state.notesCheckedText = notes;
+    // A fresh check starts from the overview: every section closed, no gap in focus, and the
+    // right-hand side showing the list of all gaps.
+    state.selectedGapId = null;
+    state.expanded = { general: false };
+    state.rightTab = 'gaps';
     syncMarks();
-    if (first && added.count) {
-      state.rightTab = 'gaps';
-      onFirstGaps(); // make room for the highlights
-    }
+    const supportedCount = applySupported(supported);
+    state.notesHTML = editor().innerHTML;
+    if (first && added.count) onFirstGaps(); // make room for the highlights
     const stillOpen = rechecked.filter(([, , r]) => !r.resolved).length;
-    setStatus(summary(added.count, resolved, stillOpen, added.message), added.message && !openGaps().length ? 'warn' : resolved ? 'ok' : '');
+    const green = supportedCount ? ` · ${supportedCount} supported by documents (green)` : '';
+    setStatus(summary(added.count, resolved, stillOpen, added.message) + green, added.message && !openGaps().length ? 'warn' : resolved ? 'ok' : '');
     changed('left', 'right');
   } catch (err) {
     setStatus(`Could not check notes: ${err.message}`, 'error');

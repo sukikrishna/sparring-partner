@@ -53,7 +53,7 @@ tab on the synthesis side. Editing a highlighted passage enough cleared it.
 **Free-flow synthesis board.** The board now holds three kinds of cards, each
 labelled: findings from document chats, findings from a new case-wide chat, and
 the negotiator's own notes. Cards are filed under a gap or under *General*, and
-can be moved. Findings are saved automatically or only on request.
+can be moved. Findings are saved automatically (an earlier "ask me first" option was removed).
 
 **New sources of general insight.**
 - *Library:* every document the role can see is browsable, each with its own
@@ -99,8 +99,8 @@ interaction log for studies, tests and CI.
 - **Devil's advocate.** Should the system generate counterarguments
   deliberately, even where documents are silent? That trades grounding for
   coverage.
-- **Automatic vs manual saving.** Which default leads to better understanding
-  and less over-reliance? The setting and event log make this testable.
+- **Over-reliance.** Findings are now always saved automatically; does that
+  lead to less careful reading? The event log makes this testable.
 - **Updating structure from chats.** When a chat changes the negotiator's mind,
   should the structured view update automatically, or only when they edit
   their own notes?

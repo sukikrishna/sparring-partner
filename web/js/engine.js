@@ -6,7 +6,7 @@
 import { api } from './api.js?v=0.3.2';
 import { Index, excerpt } from './search.js?v=0.3.2';
 import { state } from './store.js?v=0.3.2';
-import { normalize, similarity, sleep } from './util.js?v=0.3.2';
+import { normalize, similarity, sleep, stripScaffold } from './util.js?v=0.3.2';
 
 let caseIndex = null;
 let caseIndexKey = null;
@@ -60,6 +60,24 @@ export async function findGaps(notesText) {
     ? (found.length < state.demo.gaps.length ? 'Scripted demo: only gaps whose passages are still in your notes are shown.' : '')
     : 'The scripted demo only recognises the starter notes. Reset the demo, or switch to live mode to analyse your own writing.';
   return { gaps: found, message };
+}
+
+/**
+ * Passages of the notes that the documents confirm, for the green highlights:
+ * [{quote, citations: [{docId, paragraph}]}]. A nice-to-have, so it never fails the gap check.
+ */
+export async function findSupported(notesText) {
+  const shape = (list) => list.map((p) => ({
+    quote: p.quote,
+    citations: (p.citations || []).map((c) => ({ docId: c.doc_id ?? c.docId, paragraph: c.paragraph })),
+  }));
+  try {
+    if (isLive()) return shape(await api.supported({ ...base(), notes: notesText }));
+    const text = normalize(notesText);
+    return shape((state.demo?.supported || []).filter((p) => text.includes(normalize(p.quote))));
+  } catch {
+    return [];
+  }
 }
 
 // ------------------------------------------------------------------ chats
@@ -156,7 +174,7 @@ export async function structureNotes(notesText, insights) {
   }
   await thinking();
   if (!state.demo) return { view: null, source: 'demo', message: 'Structuring needs live mode for this case.' };
-  const unchanged = similarity(notesText, state.caseData.role.starter_notes) > 0.97;
+  const unchanged = similarity(stripScaffold(notesText), state.caseData.role.starter_notes) > 0.97;
   return {
     view: state.demo.structured,
     source: 'demo',

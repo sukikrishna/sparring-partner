@@ -22,8 +22,8 @@ has three columns:
 
 | Column | Who writes there | What it does |
 |---|---|---|
-| **Your strategy notes** (centre) | only you | Free-flow notes. *Find gaps* highlights passages whose reasoning the documents call into question, each with a question rather than a verdict. After editing, press it again: revised passages are re-checked and clear once they no longer rest on the assumption, and new gaps are added. |
-| **Source Documents** (right) | — | Click a highlight to read the documents behind it, each with its own chat (*Ask this document*). Browse the full **Library**, or **Ask all documents** for questions that are not about one passage. Answers cite paragraphs. |
+| **Your strategy notes** (centre) | only you | Free-flow notes. *Find gaps* highlights passages whose reasoning the documents call into question, each with a question rather than a verdict. After editing, press it again: revised passages are re-checked and clear once they no longer rest on the assumption, and new gaps are added. The same run marks in green the passages the documents confirm (hover for the source). The notes start with three prompts: **What do I want?**, **What does the other side want?** and **What’s my plan?** |
+| **Source Documents** (right) | — | Click a highlight to read the documents behind it, each with its own chat (*Rabbit Hole*). Browse the full **Library**, or **Ask all documents** for questions that are not about one passage. Answers cite paragraphs. |
 | **AI-Synthesis** (left) | AI, plus your own notes | A **Board** of insights from any chat and notes you jot down, filed under a gap or *General*, each labelled with its source. A **Structured view** restates your free-flow notes in negotiation terms (iceberg of positions, interests and values; island of agreement; stakeholders; red lines; alternatives; options) and lists what your notes leave open. |
 
 Every AI claim links back to a document and paragraph, and every item in the
@@ -94,7 +94,7 @@ Set in the environment or in `.env`:
 | `SPARRING_PROVIDER` | `auto` | `anthropic` or `bedrock`; `auto` uses Bedrock when only a Bedrock key is set |
 | `SPARRING_LLM_MODE` | `auto` | `auto`, `anthropic` (require a model) or `offline` |
 | `SPARRING_MODEL` | `claude-opus-5-5` (`anthropic.claude-opus-5-5` on Bedrock) | Model for all tasks |
-| `SPARRING_EFFORT_GAPS` / `_CHAT` / `_STRUCTURE` | `high` / `low` / `medium` | Reasoning effort per task |
+| `SPARRING_EFFORT_GAPS` / `_CHAT` / `_STRUCTURE` / `_SUPPORT` | `high` / `low` / `medium` / `medium` | Reasoning effort per task |
 | `SPARRING_FALLBACKS` | `default` (`off` on Bedrock) | Server-side refusal fallback (`off` to disable) |
 | `SPARRING_RAW_DIR` | `cases_raw` | Raw case files for ingestion |
 | `SPARRING_ACCEPT_SESSION_LOGS` | `0` | `1` lets the browser post sessions to `/api/sessions` |
@@ -123,9 +123,8 @@ Any other static host works for the demo alone (serve `web/`).
 Sessions persist in the browser per case, role and mode. **Export session**
 downloads the notes, gaps, insights, chat threads, structured view and a
 timestamped interaction log as JSON. For studies, enable
-`SPARRING_ACCEPT_SESSION_LOGS` to collect sessions on the server, and use the
-*Save automatically / Ask me first* toggle to compare how findings reach the
-board.
+`SPARRING_ACCEPT_SESSION_LOGS` to collect sessions on the server. Key findings
+from chats are always saved to the board automatically.
 
 ## Project layout
 

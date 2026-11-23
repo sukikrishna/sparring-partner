@@ -208,7 +208,7 @@ body.at-home #export, body.at-home #reset { display: none; }
 .note-input::placeholder { color: #b4a37d; font-style: italic; }
 .note-row { display: flex; gap: 8px; justify-content: flex-end; align-items: center; margin-top: 4px; }
 .note-target { flex: 1 1 auto; min-width: 0; }
-.note-target, .move { font-size: 12.5px; border: 1px solid var(--line); border-radius: 6px; background: #fff; padding: 2px 5px; max-width: 180px; }
+.note-target { font-size: 12.5px; border: 1px solid var(--line); border-radius: 6px; background: #fff; padding: 2px 5px; max-width: 180px; }
 .btn-small { background: var(--hu); color: #fff; border: 0; border-radius: 7px; padding: 4px 12px; font-size: 13px; font-weight: 600; }
 .board-hint { margin: 2px; }
 
@@ -248,6 +248,8 @@ body.at-home #export, body.at-home #reset { display: none; }
   border-radius: 8px; padding: 9px 11px; color: var(--ai-ink); font-size: 14px;
 }
 .finding.human { border-color: var(--hu-line); border-left-color: var(--hu); background: var(--hu-tint); color: var(--ink); font-family: var(--serif); font-size: 15px; }
+/* Long findings scroll inside their card instead of being cut off. */
+.finding-text { max-height: 9.5em; overflow-y: auto; overflow-wrap: anywhere; scrollbar-width: thin; }
 .finding.flash { animation: flash 1.6s ease-out; }
 @keyframes flash { 0% { background: var(--ai-soft); } 100% { background: #fff; } }
 .finding-meta { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 12px; color: var(--muted); font-family: var(--sans); flex-wrap: wrap; }
@@ -335,7 +337,7 @@ body.at-home #export, body.at-home #reset { display: none; }
   font-family: var(--serif); font-size: 17px; line-height: 1.75; color: #24272b;
 }
 .editor p { margin: 0 0 16px; }
-.editor.is-empty::before { content: attr(data-placeholder); color: #b2ad9f; font-style: italic; pointer-events: none; }
+.editor.is-empty::after { content: attr(data-placeholder); display: block; color: #b2ad9f; font-style: italic; pointer-events: none; }
 mark {
   background: var(--hl); color: inherit; border-radius: 3px; padding: 1px 0; cursor: pointer;
   box-decoration-break: clone; -webkit-box-decoration-break: clone; border-bottom: 2px solid var(--hl-strong);
@@ -345,6 +347,12 @@ mark[data-n]::after {
   font: 700 10.5px/1 var(--sans); vertical-align: super; margin-left: 2px; color: var(--hl-ink);
 }
 mark:hover { background: var(--hl-hover); }
+/* Passages the documents confirm: green, not clickable, explained on hover. */
+.editor .supported {
+  background: var(--ok-tint); border-bottom: 2px solid var(--ok); border-radius: 3px; padding: 1px 0; cursor: help;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.editor .supported:hover { background: #d3ecdc; }
 mark.selected { background: var(--hl-hover); box-shadow: 0 0 0 2px var(--hl-strong); }
 
 /* ---------------------------------------------------------- source documents */
@@ -418,6 +426,18 @@ mark.selected { background: var(--hl-hover); box-shadow: 0 0 0 2px var(--hl-stro
 .chatbox.tall { flex: 1; }
 .chat-head { padding: 7px 14px; border-bottom: 1px solid var(--line-2); font-size: 12.5px; color: var(--muted); }
 .chat-head b { color: var(--src); }
+
+/* A gap's view: while its description shows, the chat is only its input line; focusing the chat
+   (or its input) folds the description and opens the conversation. */
+.gapcard-show { display: none; margin-left: auto; font-size: 12.5px; }
+.gap-detail.has-desc.chat-open .gapcard-desc { display: none; }
+.gap-detail.has-desc.chat-open .gapcard-show { display: inline; }
+.gap-detail.has-desc:not(.chat-open) .chatbox { flex: none; min-height: 0; }
+.gap-detail.has-desc:not(.chat-open) .chat-head,
+.gap-detail.has-desc:not(.chat-open) .msgs,
+.gap-detail.has-desc:not(.chat-open) .chips { display: none; }
+.gap-detail.has-desc:not(.chat-open) .composer { border-top: 0; padding: 8px 10px; }
+.gap-detail.has-desc:not(.chat-open) .docbox { flex: 1 1 0; }
 .msgs { flex: 1; min-height: 110px; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
 .empty-chat { margin: auto 0; text-align: center; padding: 0 20px; }
 .msg { max-width: 94%; border-radius: 12px; padding: 8px 12px; font-size: 14px; }

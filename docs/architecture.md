@@ -17,7 +17,7 @@ Sparring Partner is a small Python service plus a dependency-free browser app.
 | `sparring_partner/corpus.py` | Loads corpora; `role_view()` returns only what a role may see. |
 | `sparring_partner/retrieval.py` | In-memory BM25 over paragraphs, cached per (case, role). No external search service. |
 | `sparring_partner/llm.py` | `LLMClient` protocol; `ClaudeClient` (structured outputs, adaptive thinking, per-task effort, prompt caching, refusal fallback); `StubLLMClient` for tests. |
-| `sparring_partner/agents/` | Gap finder, document chat, case chat, structurer, recheck. Each works offline with a retrieval-only or heuristic fallback. |
+| `sparring_partner/agents/` | Gap finder, support finder, document chat, case chat, structurer, recheck. Each works offline with a retrieval-only or heuristic fallback. |
 | `sparring_partner/api.py` | HTTP API and static file server. |
 | `web/` | Vanilla ES modules, no build step. Works against the API or as static files. |
 
@@ -46,13 +46,13 @@ Every item on the synthesis board records its origin:
 
 | Origin | Produced by | Grounding |
 |---|---|---|
-| Document chat ("Ask this document") | `agents.chat.doc_chat` | One document, cited by paragraph. Separate history per gap and document. |
+| Document chat ("Rabbit Hole") | `agents.chat.doc_chat` | One document, cited by paragraph. Separate history per gap and document. |
 | Case chat ("Ask all documents") | `agents.chat.case_chat` | BM25 passages from all visible documents, cited by document and paragraph. |
 | Your note | the negotiator | None needed; labelled as human. |
 
 Chats return an optional `key_finding`, a single self-contained sentence. The
-board saves it automatically or on request (a per-session setting), linked to
-the gap the chat belonged to or to *General*. Users can re-file any card.
+board saves it automatically, linked to the gap the chat belonged to or to
+*General*.
 
 The **structured view** is a different kind of AI output: it does not add
 information, it reorganises the negotiator's own notes (and, optionally, saved
@@ -73,6 +73,7 @@ sources.
 | Document chat | role brief + one document (cached), notes, optional gap, history | `DocAnswer` | paragraph numbers clamped to the document |
 | Case chat | role brief, notes, top-k passages, history | `CaseAnswer` | citations restricted to visible documents, de-duplicated |
 | Structurer | role brief, notes, saved insights | `StructuredView` | provenance verified |
+| Support finder | role brief, all visible documents (cached), notes | `SupportSet` | quotes anchored to exact spans of the notes, duplicates dropped, citations restricted to visible documents and real paragraphs. Shown as green highlights; empty without a model |
 | Recheck | original passage, assumption, revised passage | `RecheckResult` | — |
 
 Model calls go through `client.beta.messages.parse` with a Pydantic schema, so

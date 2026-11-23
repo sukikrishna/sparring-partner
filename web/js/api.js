@@ -86,6 +86,7 @@ async function post(path, body) {
 
 export const api = {
   gaps: (b) => post('gaps', b),
+  supported: (b) => post('supported', b),
   docChat: (b) => post('chat/document', b),
   caseChat: (b) => post('chat/case', b),
   structure: (b) => post('structure', b),

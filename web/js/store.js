@@ -38,7 +38,6 @@ export const state = {
 
   // synthesis board
   insights: [], // {id, text, author:'human'|'ai', origin:{type, docId, cites, citations, threadKey}, gapId, createdAt}
-  autoAdd: true,
   leftTab: 'board', // 'board' | 'structured'
   expanded: { general: true },
   includeInsights: true,
@@ -49,7 +48,7 @@ export const state = {
 
 const PERSISTED = [
   'sessionId', 'notesHTML', 'notesCheckedText', 'gaps', 'gapCounter', 'gapsChecked', 'selectedGapId',
-  'rightTab', 'libraryDocId', 'gapDocId', 'threads', 'insights', 'autoAdd', 'leftTab', 'expanded',
+  'rightTab', 'libraryDocId', 'gapDocId', 'threads', 'insights', 'leftTab', 'expanded',
   'includeInsights', 'structured', 'events',
 ];
 
@@ -98,7 +97,7 @@ export function resetSession({ clearStorage = false } = {}) {
     notesHTML: '', notesCheckedText: '',
     gaps: [], gapCounter: 0, gapsChecked: false, selectedGapId: null,
     rightTab: 'gaps', libraryDocId: null, gapDocId: {}, libraryFilter: '',
-    threads: {}, insights: [], autoAdd: true, leftTab: 'board', expanded: { general: true },
+    threads: {}, insights: [], leftTab: 'board', expanded: { general: true },
     includeInsights: true, structured: null, events: [],
   });
 }

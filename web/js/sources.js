@@ -1,5 +1,5 @@
 // Source Documents column: the gap list, the full document library, one
-// document chat ("Ask this document") (separate history per gap/document), and a
+// document chat ("Rabbit Hole") (separate history per gap/document), and a
 // case-wide chat for general questions that are not tied to a gap.
 
 import * as engine from './engine.js?v=0.3.2';
@@ -100,7 +100,9 @@ function renderGapsTab() {
 }
 
 function renderGapDetail(gap) {
-  const box = el('div', { className: 'gap-detail' });
+  // The description and the chat share the column: while the description is showing, the chat is
+  // just its input line; clicking into the chat expands it and folds the description away.
+  const box = el('div', { className: 'gap-detail has-desc' + (chatOpen.has(gap.id) ? ' chat-open' : '') });
   const docId = state.gapDocId[gap.id] && gap.doc_ids.includes(state.gapDocId[gap.id])
     ? state.gapDocId[gap.id] : gap.doc_ids[0];
 
@@ -115,9 +117,15 @@ function renderGapDetail(gap) {
       el('span', { className: 'num', text: gap.n }),
       el('span', { text: gap.title }),
       el('span', { className: `sev sev-${gap.severity}`, text: gap.lens }),
+      el('span', { className: 'spacer' }),
+      button('Show description ▾', () => setChatOpen(box, gap.id, false), 'link-btn gapcard-show', {
+        title: 'Show the AI description of this gap (folds the chat back to one line)',
+      }),
     ),
-    el('p', { className: 'gapcard-q' }, el('span', { className: 'ai-mark', text: '✦ ' }), gap.question),
-    gap.statusNote ? el('p', { className: 'gapcard-note', text: gap.statusNote }) : null,
+    el('div', { className: 'gapcard-desc' },
+      el('p', { className: 'gapcard-q' }, el('span', { className: 'ai-mark', text: '✦ ' }), gap.question),
+      gap.statusNote ? el('p', { className: 'gapcard-note', text: gap.statusNote }) : null,
+    ),
   ));
 
   const chips = el('div', { className: 'docchips', attrs: { role: 'tablist', 'aria-label': 'Documents for this gap' } },
@@ -135,6 +143,17 @@ function renderGapDetail(gap) {
   box.append(chips);
   box.append(renderDocPane(docId, gap));
   return box;
+}
+
+/** Gaps whose chat is expanded (and description folded). Display state only; not saved. */
+const chatOpen = new Set();
+
+function setChatOpen(box, gapId, open) {
+  if (open) chatOpen.add(gapId); else chatOpen.delete(gapId);
+  box.classList.toggle('chat-open', open);
+  if (!open && box.contains(document.activeElement)) document.activeElement.blur();
+  const msgs = $('.msgs', box);
+  if (open && msgs) requestAnimationFrame(() => { msgs.scrollTop = msgs.scrollHeight; });
 }
 
 function refreshMarksSelection() {
@@ -251,14 +270,19 @@ function renderChat(ctx) {
   const box = el('section', { className: 'chatbox' + (ctx.scope === 'case' ? ' tall' : ''), dataset: { key: ctx.key } });
   const label = ctx.scope === 'case'
     ? el('span', {}, el('b', { text: 'Case chat' }), ' · all documents')
-    : el('span', {}, el('b', { text: 'Ask this document' }), ' · this document only', ctx.gap ? ` · gap ${ctx.gap.n}` : '');
+    : el('span', {}, el('b', { text: 'Rabbit Hole' }), ' · this document only', ctx.gap ? ` · gap ${ctx.gap.n}` : '');
   box.append(el('div', { className: 'chat-head' }, label));
   box.append(el('div', { className: 'msgs', attrs: { 'aria-live': 'polite' } }));
   box.append(el('div', { className: 'chips' }));
   const input = el('input', {
     type: 'text',
-    placeholder: ctx.scope === 'case' ? 'Ask anything about the case…' : 'Ask about this document…',
-    attrs: { 'aria-label': 'Your question' },
+    placeholder: ctx.scope === 'case' ? 'Ask anything about the case…' : 'Rabbit Hole: ask about this document…',
+    attrs: { 'aria-label': ctx.scope === 'case' ? 'Your question' : 'Rabbit Hole: your question' },
+  });
+  // In a gap's view the chat starts as this one line; clicking into it opens the conversation.
+  input.addEventListener('focus', () => {
+    const root = box.closest('.gap-detail.has-desc');
+    if (root && ctx.gap && !root.classList.contains('chat-open')) setChatOpen(root, ctx.gap.id, true);
   });
   box.append(el('form', {
     className: 'composer',
@@ -296,12 +320,11 @@ function fillChat(box, ctx) {
   msgsEl.scrollTop = msgsEl.scrollHeight;
 
   chipsEl.textContent = '';
+  if (ctx.scope !== 'case') return; // the Rabbit Hole offers no suggested questions
   const asked = new Set(msgs.filter((m) => m.qaId).map((m) => m.qaId));
   const askedText = new Set(msgs.filter((m) => m.role === 'user').map((m) => m.text.toLowerCase()));
   const last = [...msgs].reverse().find((m) => m.role === 'assistant' && !m.pending);
-  const suggestions = ctx.scope === 'case'
-    ? engine.suggestionsForCase(asked).map((s) => s.q)
-    : engine.suggestionsForDoc(ctx.docId, ctx.gap?.id, asked).map((s) => s.q);
+  const suggestions = engine.suggestionsForCase(asked).map((s) => s.q);
   const follow = (last?.followUps || []);
   for (const q of [...follow, ...suggestions].filter((q) => !askedText.has(q.toLowerCase())).slice(0, 4)) {
     chipsEl.append(button(q, () => ask(ctx, q)));
@@ -402,7 +425,7 @@ async function ask(ctx, question) {
       qaId: r.qaId || null,
     });
     log('answer_received', { scope: ctx.scope, qaId: r.qaId || null, hasFinding: Boolean(r.keyFinding) });
-    if (r.keyFinding && state.autoAdd) saveFinding(pending, ctx, 'auto');
+    if (r.keyFinding) saveFinding(pending, ctx, 'auto');
   } catch (err) {
     pending.pending = false;
     pending.error = err.message;

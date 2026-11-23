@@ -124,6 +124,24 @@ class Citation(BaseModel):
     paragraph: int
 
 
+class SupportedPassage(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    quote: str = Field(
+        description="An EXACT, verbatim substring of the negotiator's notes: just the clause whose claim "
+        "the documents confirm. Copy characters exactly; do not paraphrase."
+    )
+    citations: list[Citation] = Field(
+        description="1-2 (document id, 1-based paragraph number) pairs where the documents state it plainly."
+    )
+
+
+class SupportSet(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    passages: list[SupportedPassage]
+
+
 class CaseAnswer(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

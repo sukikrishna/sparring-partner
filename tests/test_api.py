@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 
 from sparring_partner import config, llm
 from sparring_partner.api import app
-from sparring_partner.schemas import Gap, GapSet, RecheckResult
+from sparring_partner.schemas import Citation, Gap, GapSet, RecheckResult, SupportedPassage, SupportSet
 
 client = TestClient(app)
 
@@ -81,6 +81,28 @@ def test_gaps_with_stub():
     r = client.post("/api/gaps", json={"case_id": "qiso", "role_id": "mayor", "notes": notes})
     assert r.status_code == 200
     assert r.json()[0]["doc_ids"] == ["police-memo"]
+
+
+def test_supported_offline_is_empty():
+    r = client.post("/api/supported", json={"case_id": "qiso", "role_id": "mayor", "notes": "some notes"})
+    assert r.status_code == 200
+    assert r.json() == []
+
+
+def test_supported_with_stub():
+    notes = "church is hosting ~900 in halls and homes."
+    llm.set_client(
+        llm.StubLLMClient(
+            {
+                SupportSet: lambda c: SupportSet(
+                    passages=[SupportedPassage(quote=notes, citations=[Citation(doc_id="church-letter", paragraph=7)])]
+                )
+            }
+        )
+    )
+    r = client.post("/api/supported", json={"case_id": "qiso", "role_id": "mayor", "notes": notes})
+    assert r.status_code == 200
+    assert r.json() == [{"quote": notes, "citations": [{"doc_id": "church-letter", "paragraph": 7}]}]
 
 
 def test_recheck_offline_similarity():

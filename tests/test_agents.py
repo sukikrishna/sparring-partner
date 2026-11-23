@@ -1,7 +1,7 @@
 import json
 
 from sparring_partner import agents
-from sparring_partner.agents import chat, gaps
+from sparring_partner.agents import chat, gaps, support
 from sparring_partner.agents.structure import heuristic_structure
 from sparring_partner.agents.common import anchor_quote, history_messages
 from sparring_partner.llm import StubLLMClient
@@ -17,6 +17,8 @@ from sparring_partner.schemas import (
     IslandOfAgreement,
     PartyView,
     StructuredView,
+    SupportedPassage,
+    SupportSet,
 )
 
 NOTES = (
@@ -108,6 +110,54 @@ def test_case_chat_prompt_respects_barrier(qiso):
     passages = chat.retrieve_for_case_chat(qiso, qiso.role("mayor"), "military-age men armed groups one in five", [])
     msgs = json.dumps(chat.build_case_messages(qiso, qiso.role("mayor"), NOTES, passages, [], "q"))
     assert OFFICER_ONLY not in msgs
+
+
+# --------------------------------------------------------------- supported passages
+
+SUPPORT_NOTES = "church is hosting ~900 in halls and homes. police can handle gathering people at the stadium."
+
+
+def _passage(quote, *cites):
+    return SupportedPassage(quote=quote, citations=[Citation(doc_id=d, paragraph=n) for d, n in cites])
+
+
+def test_find_supported_postprocesses(qiso):
+    stub = StubLLMClient(
+        {
+            SupportSet: lambda call: SupportSet(
+                passages=[
+                    _passage("church is hosting ~900 in halls and homes", ("church-letter", 7), ("church-letter", 7)),
+                    _passage("church is hosting ~900 in halls and homes", ("finance-memo", 29)),  # duplicate quote
+                    _passage("The moon is made of cheese and nobody can tell me otherwise", ("church-letter", 7)),  # invented
+                    _passage("police can handle gathering people", ("hq-instructions", 2), ("police-memo", 999)),  # no valid cite
+                    _passage("police can handle gathering people at the stadium", ("hq-instructions", 2), ("police-memo", 6)),
+                ]
+            )
+        }
+    )
+    out = agents.find_supported(stub, qiso, qiso.role("mayor"), SUPPORT_NOTES)
+    assert [p.quote for p in out] == [
+        "church is hosting ~900 in halls and homes",
+        "police can handle gathering people at the stadium",
+    ]
+    assert out[0].citations == [Citation(doc_id="church-letter", paragraph=7)]  # repeated citation collapsed
+    assert out[1].citations == [Citation(doc_id="police-memo", paragraph=6)]  # invisible document dropped
+    for p in out:
+        assert p.quote in SUPPORT_NOTES
+
+
+def test_find_supported_without_model_or_notes_is_empty(qiso):
+    assert agents.find_supported(None, qiso, qiso.role("mayor"), SUPPORT_NOTES) == []
+    stub = StubLLMClient({SupportSet: lambda call: SupportSet(passages=[])})
+    assert agents.find_supported(stub, qiso, qiso.role("mayor"), "  ") == []
+    assert stub.calls == []
+
+
+def test_support_prompt_respects_barrier(qiso):
+    mayor_prompt = json.dumps(support.build_messages(qiso, qiso.role("mayor"), SUPPORT_NOTES, 6))
+    officer_prompt = json.dumps(support.build_messages(qiso, qiso.role("border-officer"), SUPPORT_NOTES, 6))
+    assert OFFICER_ONLY not in mayor_prompt
+    assert OFFICER_ONLY in officer_prompt  # positive control
 
 
 # ------------------------------------------------------------------ chats

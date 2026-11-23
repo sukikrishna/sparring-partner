@@ -36,6 +36,11 @@ export const normalize = (s) =>
     .replace(/\s+/g, ' ')
     .trim();
 
+/** Headings pre-filled in the notes editor; they are structure, not the writer's own words. */
+export const SCAFFOLD_LABELS = ['What do I want?', 'What does the other side want?', 'What’s my plan?'];
+export const stripScaffold = (text) =>
+  SCAFFOLD_LABELS.reduce((t, label) => t.split(label).join(''), text || '').trim();
+
 const wordSet = (s) => new Set((normalize(s).toLowerCase().match(/[\p{L}\p{N}]+/gu) || []));
 
 /** Jaccard similarity over word sets (0..1). */

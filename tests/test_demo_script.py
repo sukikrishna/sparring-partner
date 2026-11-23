@@ -42,6 +42,16 @@ def test_gap_documents_are_visible(demo):
             assert doc_id in docs, (gap["id"], doc_id)
 
 
+def test_supported_passages_are_in_starter_notes_and_cite_real_paragraphs(demo):
+    _, role, docs = _visible(demo)
+    for item in demo.get("supported", []):
+        assert item["quote"] in role.starter_notes, item["quote"]
+        assert item["citations"], item["quote"]
+        for c in item["citations"]:
+            assert c["doc_id"] in docs, (item["quote"], c)
+            assert 1 <= c["paragraph"] <= len(docs[c["doc_id"]].paragraphs), (item["quote"], c)
+
+
 def test_doc_answers_cite_real_paragraphs(demo):
     _, _, docs = _visible(demo)
     gap_ids = {g["id"] for g in demo["gaps"]}

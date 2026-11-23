@@ -34,6 +34,7 @@ from .schemas import (
     RecheckResult,
     StructuredView,
     StructureRequest,
+    SupportedPassage,
 )
 
 log = logging.getLogger("sparring_partner")
@@ -106,6 +107,13 @@ def case_for_role(case_id: str, role: str) -> dict:
 def gaps(req: GapsRequest) -> list[Gap]:
     case, role = _case_and_role(req.case_id, req.role_id)
     return agents.find_gaps(get_client(), case, role, req.notes, req.max_gaps)
+
+
+@app.post("/api/supported", response_model=list[SupportedPassage])
+def supported(req: GapsRequest) -> list[SupportedPassage]:
+    """Passages of the notes the documents confirm (empty without a model)."""
+    case, role = _case_and_role(req.case_id, req.role_id)
+    return agents.find_supported(get_client(), case, role, req.notes)
 
 
 @app.post("/api/chat/document", response_model=DocAnswer)

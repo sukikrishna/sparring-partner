@@ -2,6 +2,20 @@
   "case_id": "qiso",
   "role_id": "mayor",
   "about": "Scripted demo. Gaps, answers and the structured view below were written by hand from the case documents so the interface can be explored without a language model. Every citation points at a real paragraph.",
+  "supported": [
+    {
+      "quote": "they want every chiasan in qiso in the stadium and bussed to the RDFs",
+      "citations": [{ "doc_id": "ba-letter", "paragraph": 8 }, { "doc_id": "ba-letter", "paragraph": 10 }]
+    },
+    {
+      "quote": "church is hosting ~900 in halls and homes",
+      "citations": [{ "doc_id": "church-letter", "paragraph": 7 }]
+    },
+    {
+      "quote": "they report straight to the president",
+      "citations": [{ "doc_id": "ba-letter", "paragraph": 5 }]
+    }
+  ],
   "gaps": [
     {
       "id": "g1",

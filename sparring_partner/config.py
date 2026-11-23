@@ -83,6 +83,7 @@ TASKS: dict[str, dict[str, str]] = {
     "case_chat": {"model": DEFAULT_MODEL, "effort": os.environ.get("SPARRING_EFFORT_CHAT", "low")},
     "structure": {"model": DEFAULT_MODEL, "effort": os.environ.get("SPARRING_EFFORT_STRUCTURE", "medium")},
     "recheck": {"model": DEFAULT_MODEL, "effort": "low"},
+    "support": {"model": DEFAULT_MODEL, "effort": os.environ.get("SPARRING_EFFORT_SUPPORT", "medium")},
 }
 
 MAX_TOKENS = int(os.environ.get("SPARRING_MAX_TOKENS", "16000"))
